@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Register Information</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link href="/assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/libs/css/style.css">
+    <link rel="stylesheet" href="/assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <style>
+    html,
+    body {
+        height: 100%;
+    }
+
+    body {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    </style>
+</head>
+<!-- ============================================================== -->
+<!-- signup form  -->
+<!-- ============================================================== -->
+
+<body>
+    <!-- ============================================================== -->
+    <!-- signup form  -->
+    <!-- ============================================================== -->
+    <form class="splash-container" method="POST" action="/register" onsubmit="return confirmPassword('pass1','pass2')">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-1">Registrations Form</h3>
+                <p>Please enter your user information.</p>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <input class="form-control form-control-lg" type="text" name="firstname" required placeholder="Firstname" autocomplete="off" value="<%- typeof(message) === 'object' ? message.firstname.value: '' %>">
+                    <% if (typeof(message) === 'object' && message.firstname.error) { %>
+                        <label for="firstname" class="label text-danger"><%= message.firstname.error %> </label>
+                    <% } %>  
+                </div>
+                <div class="form-group">
+                    <input class="form-control form-control-lg" type="text" name="initial" required placeholder="Initial" autocomplete="off" value="<%- typeof(message) === 'object' ? message.initial.value: '' %>">
+                    <% if (typeof(message) === 'object' && message.initial.error) { %>
+                        <label for="initial" class="label text-danger"><%= message.initial.error %> </label>
+                    <% } %> 
+                </div>
+                <div class="form-group">
+                    <input class="form-control form-control-lg" type="text" name="lastname" required placeholder="Lastname" autocomplete="off" value="<%- typeof(message) === 'object' ? message.lastname.value: '' %>">
+                    <% if (typeof(message) === 'object' && message.lastname.error) { %>
+                        <label for="lastname" class="label text-danger"><%= message.lastname.error %> </label>
+                    <% } %> 
+                </div>
+                <div class="form-group">
+                    <input class="form-control form-control-lg" type="text" name="address" required placeholder="Address" autocomplete="off" value="<%- typeof(message) === 'object' ? message.address.value: '' %>">
+                    <% if (typeof(message) === 'object' && message.address.error) { %>
+                        <label for="address" class="label text-danger"><%= message.address.error %> </label>
+                    <% } %> 
+                </div>
+                <div class="form-group">
+                    <input class="form-control form-control-lg" type="email" name="email" required placeholder="E-mail" autocomplete="off" value="<%- typeof(message) === 'object' ? message.email.value: '' %>">
+                    <% if (typeof(message) === 'object' && message.email.error) { %>
+                        <label for="email" class="label text-danger"><%= message.email.error %> </label>
+                    <% } %> 
+                </div>
+                <div class="form-group">
+                    <input class="form-control form-control-lg" id="pass1" name="password" type="password" required placeholder="Password" value="<%- typeof(message) === 'object' ? message.password.value: '' %>">
+                    <% if (typeof(message) === 'object' && message.password.error) { %>
+                        <label for="password" class="label text-danger"><%= message.password.error %> </label>
+                    <% } %>
+                </div>
+                <div class="form-group">
+                    <input class="form-control form-control-lg" required type="password" id="pass2" name="password2" placeholder="Confirm" value="<%- typeof(message) === 'object' ? message.password2.value: '' %>">
+                    <% if (typeof(message) === 'object' && message.password2.error) { %>
+                        <label for="password2" class="label text-danger"><%= message.password2.error %> </label>
+                    <% } %>
+                </div>
+                <div class="form-group pt-2">
+                    <button class="btn btn-block btn-primary" type="submit">Register My Account</button>
+                </div>
+                <div class="form-group">
+                    <label class="custom-control custom-checkbox">
+                        <input class="custom-control-input" id="condition" name="condition" type="checkbox"><span class="custom-control-label">By creating an account, you agree the <a href="#">terms and conditions</a></span>
+                    </label>
+                    <% if (typeof(message) === 'object' && message.condition.error) { %>
+                        <label for="password2" class="label text-danger"><%= message.condition.error %> </label>
+                    <% } %>
+                </div>
+            </div>
+            <div class="card-footer bg-white">
+                <p>Already member? <a href="#" class="text-secondary">Login Here.</a></p>
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript" src="/js/app.js"></script>
+</body>
+</html>
