@@ -6,13 +6,14 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
-    <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/libs/css/style.css">
-    <link rel="stylesheet" href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
-    <link rel="stylesheet" href="assets/vendor/charts/morris-bundle/morris.css">
-    <link rel="stylesheet" href="assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
+		<!-- Bootstrap CSS -->
+		<base href="<%- host %> ">
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link href="/assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/libs/css/style.css">
+    <link rel="stylesheet" href="/assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <link rel="stylesheet" href="/assets/vendor/charts/morris-bundle/morris.css">
+    <link rel="stylesheet" href="/assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
     <title>Concept - Bootstrap 4 Admin Dashboard Template</title>
 </head>
 
@@ -86,8 +87,7 @@
 	                                <h5 class="mb-0 text-white nav-user-name"><%- user.firstname.charAt(0).toUpperCase() + user.firstname.slice(1).toLowerCase() + " " + user.lastname.charAt(0).toUpperCase() + user.lastname.slice(1).toLowerCase() %></h5>
 	                                <span class="status"></span><span class="ml-2">Available</span>
 	                            </div>
-	                            <a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i>Account</a>
-	                            <a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i>Setting</a>
+	                            <a class="dropdown-item" href="/dashboard/profile"><i class="fas fa-user mr-2"></i>Account</a>
 	                            <a class="dropdown-item" href="/logout"><i class="fas fa-power-off mr-2"></i>Logout</a>
 	                        </div>
 	                    </li>
@@ -227,7 +227,7 @@
 	                                                <!--  <div class="float-right"><a href="#" class="user-avatar-email text-secondary">www.henrybarbara.com</a></div> -->
 	                                                <div class="user-avatar-address">
 	                                                    <p class="border-bottom pb-3">
-	                                                        <span class="d-xl-inline-block d-block mb-2"><i class="fa fa-map-marker-alt mr-2 text-primary "></i><%- user.address %> </span>
+	                                                        <span class="d-xl-inline-block d-block mb-2"><i class="fa fa-map-marker-alt mr-2 text-primary "></i>Location: <%- user.address %> </span>
 	                                                        <span class="mb-2 ml-xl-4 d-xl-inline-block d-block">Joined Date: <%- user.dateAdded.toString()  %> </span>
 	                                                    </p>
 																									</div>
