@@ -1,5 +1,5 @@
 const server = require('./lib/server');
-const test = require('./test');
+// const test = require('./test');
 
 const index = {};
 
