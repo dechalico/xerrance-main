@@ -96,8 +96,7 @@ router.post('/register',(req,res) => {
             RegistrationToken.create({userId: userResult._id},(err,tokenResult) => {
               if(!err && tokenResult){
                 // link to confirm the email
-                const linkToConfirm = process.env.HOST+
-                  "/register/confirmation?token="+tokenResult._id+"&id=" + userResult._id;
+                const linkToConfirm = req.hostname+"/register/confirmation?token="+tokenResult._id+"&id=" + userResult._id;
                 // send email
                 helper.sendMail(message.email.value,"Email Confirmation","Please click the email " + 
                   linkToConfirm,(isError,error) => {
