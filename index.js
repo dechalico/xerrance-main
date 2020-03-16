@@ -14,7 +14,7 @@ server.load = () => {
   });
 
   // starting the server to listen
-  server.app.listen(3000,(err) => {
+  server.app.listen(process.env.PORT || 8000,(err) => {
     if(!err){
       console.log('Server running');
     } else {
