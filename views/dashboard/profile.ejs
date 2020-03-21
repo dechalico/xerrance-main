@@ -1,0 +1,171 @@
+<%- include('../partials/header') %>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Dashboard</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Dashboard v1</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Main row -->
+      <div class="row">
+        <div class="col-md-3">
+          <!-- Profile Image -->
+          <div class="card card-primary card-outline">
+            <div class="card-body box-profile">
+              <div class="text-center">
+                <img class="profile-user-img img-fluid img-circle"
+                     src="dist/img/user4-128x128.jpg"
+                     alt="User profile picture">
+              </div>
+              <h3 class="profile-username text-center">
+                <%- user.firstname.charAt(0).toUpperCase() + user.firstname.slice(1).toLowerCase() + " " + 
+                  user.lastname.charAt(0).toUpperCase() + user.lastname.slice(1).toLowerCase() %> 
+              </h3>
+              <p class="text-muted text-center">Member</p>
+              <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item">
+                  <b>Coin Points</b> 
+                  <a class="float-right"><%- typeof(userSummary) === 'object' && userSummary !== null && typeof(userSummary.totalPoints) === 'number' ? userSummary.totalPoints : '0.00000000' %></a>
+                </li>
+                <li class="list-group-item">
+                  <b>Transactions</b> 
+                  <a class="float-right"><%- typeof(userSummary) === 'object' && userSummary !== null && typeof(userSummary.totalTransactions) === 'number' ? userSummary.totalTransactions : 0 %></a>
+                </li>
+                <li class="list-group-item">
+                  <b>Referrals</b> 
+                  <a class="float-right"><%- typeof(userSummary) === 'object' && userSummary !== null && typeof(userSummary.totalReferrals) === 'number' ? userSummary.totalReferrals : 0 %></a>
+                </li>
+                <li class="list-group-item">
+                  <b>Referral Points</b> 
+                  <a class="float-right"><%- typeof(userSummary) === 'object' && userSummary !== null && typeof(userSummary.totalReferralPoints) === 'number' ? userSummary.totalReferralPoints : '0.00' %></a>
+                </li>
+              </ul>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+          <!-- About Me Box -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">About Me</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <strong><i class="fas fa-book mr-1"></i>Wallet Address</strong>
+              <p class="text-muted">
+                asd9f7asd9f7asdf7asd8fasd8fas
+              </p>
+              <hr>
+              <strong><i class="fas fa-book mr-1"></i>Referral Link</strong>
+              <p class="text-muted">
+                <%- user.referralLink %> 
+              </p>
+              <hr>
+              <strong><i class="fas fa-book mr-1"></i>Email</strong>
+              <p class="text-muted">
+                <%- user.email %> 
+              </p>
+              <hr>
+              <strong><i class="fas fa-map-marker-alt mr-1"></i>Address</strong>
+              <p class="text-muted"><%- user.address %> </p>
+              <hr>
+              <strong><i class="fas fa-pencil-alt mr-1"></i>Contacts</strong>
+              <p class="text-muted">
+                09102920896, 0909126723
+              </p>
+              <hr>
+              <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <div class="col-md-9">
+          <div class="card card-primary card-outline">
+            <div class="card-header">
+              <h3 class="card-title">List of Transactions</h3>
+              <div class="card-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                  <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                  <div class="input-group-append">
+                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive p-0">
+              <table class="table table-hover text-nowrap">
+                <thead>
+                  <tr>
+                    <th>Transaction Date</th>
+                    <th>Transaction Type</th>
+                    <th>Amount</th>
+                    <th>To</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>March 01, 2020</td>
+                    <td>Sending</td>
+                    <td>0.00000000012</td>
+                    <td>asd9f7asd9f7asdf7asd8fasd8fas</span></td>
+                  </tr>
+                  <tr>
+                    <td>March 01, 2020</td>
+                    <td>Receiving</td>
+                    <td>0.00000000012</td>
+                    <td>asd9f7asd9f7asdf7asd8fasd8fas</span></td>
+                  </tr>
+                  <tr>
+                    <td>March 01, 2020</td>
+                    <td>Sending</td>
+                    <td>0.00000000012</td>
+                    <td>asd9f7asd9f7asdf7asd8fasd8fas</span></td>
+                  </tr>
+                  <tr>
+                    <td>March 01, 2020</td>
+                    <td>Receiving</td>
+                    <td>0.00000000012</td>
+                    <td>asd9f7asd9f7asdf7asd8fasd8fas</span></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                  <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                </ul>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+      <!-- /.row (main row) -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<%- include('../partials/footer') %>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Xerrance Buy Referral Code</title>
+  <base href="<%- host %>">
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition register-page">
+<div class="register-box">
+  <div class="register-logo">
+    <a href="/">XERRANCE</a>
+  </div>
+  <div class="card">
+    <div class="card-body register-card-body">
+      <p class="login-box-msg">Buy Referral Code</p>
+      <form class="form-horizontal" action="/buycode" method="POST">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" name="email" required placeholder="E-mail" value="<%- typeof(message) === 'object' && message.email.value ? message.email.value : ''%> ">
+          <% if(typeof(message) === 'object' && message.email.error) { %>
+            <span class="text-danger text-sm"><%- message.email.error %> </span>
+          <% } %>  
+        </div>
+        <div class="form-group">
+          <label for="quantity">Quantity</label>
+          <input type="number" class="form-control" id="quantity" required name="quantity" min="1" placeholder="Quantity" value="<%- typeof(message) === 'object' && message.quantity.value ? message.quantity.value : 0 %> ">
+          <% if(typeof(message) === 'object' && message.quantity.error) { %>
+            <span class="text-danger text-sm"><%- message.quantity.error %> </span>
+          <% } %> 
+        </div>
+        <div class="form-group">
+          <label for="pricePHP">Price</label>
+          <input type="text" class="form-control" id="pricePHP" required name="pricePHP" readonly placeholder="PHP" value="PHP <%- data.phpPrice.toLocaleString() %>">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" id="priceUSDT" required name="priceUSDT" readonly placeholder="USDT" value="USDT <%- data.usdtPrice.toLocaleString() %>">
+        </div>
+        <hr>
+        <div class="form-group">
+          <label for="totalPHP">Total</label>
+          <input type="text" class="form-control" id="totalPHP" required name="totalPHP" readonly placeholder="PHP" value="0.00">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" id="totalUSDT" required name="totalUSDT" readonly placeholder="USDT" value="0.00">
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <a href="/login" class="text-center">I already have a membership</a>
+          </div>
+          <!-- /.col -->
+          <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">Buy Code</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+      <input type="hidden" id="hidPricePHP" value="<%- data.phpPrice %>">
+      <input type="hidden" id="hidPriceUSDT" value="<%- data.usdtPrice %>">
+    </div>
+    <!-- /.form-box -->
+  </div><!-- /.card -->
+</div>
+<!-- /.register-box -->
+<!-- jQuery -->
+<script>
+  const quantity = document.getElementById('quantity');
+  const hidPricePHP = document.getElementById('hidPricePHP');
+  const hidPriceUSDT = document.getElementById('hidPriceUSDT');
+  const totalPHP = document.getElementById('totalPHP');
+  const totalUSDT = document.getElementById('totalUSDT');
+
+  function computeTotal(){
+    const value = typeof(quantity.value) === 'string' ? Number(quantity.value) : 0;
+    const pricePHP = typeof(hidPricePHP.value) === 'string' ? Number(hidPricePHP.value) : 0;
+    const priceUSDT = typeof(hidPriceUSDT.value) === 'string' ? Number(hidPriceUSDT.value) : 0;
+
+    totalPHP.value = "PHP  " + (value * pricePHP).toLocaleString();
+    totalUSDT.value = "USDT " + (value * priceUSDT).toLocaleString();
+  };
+  quantity.addEventListener("change",computeTotal);
+  quantity.addEventListener("keypress",computeTotal);
+</script>
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+</body>
+</html>

@@ -1,28 +1,14 @@
-const express = require('express');
-const path = require('path');
+const server = require('./lib/server');
+//const test = require('./test');
 
-const server = {};
+const index = {};
 
-server.app = express();
+index.init = () => {
+  server.init();
+  // test.init();
+  //test.clear();
+};
 
-server.load = () => {
-  server.app.use(express.static(path.join(__dirname,"public")));
-  server.app.set("view engine","ejs");
+index.init();
 
-  server.app.get('*',(req,res) => {
-    res.render('index',{dateEnd: new Date(2020,5,16), currentDate: new Date()});
-  });
-
-  // starting the server to listen
-  server.app.listen(process.env.PORT || 8000,(err) => {
-    if(!err){
-      console.log('Server running');
-    } else {
-      console.log(err);
-    }
-  });
-}
-
-server.load();
-
-module.exports = server;
+module.exports = index;
