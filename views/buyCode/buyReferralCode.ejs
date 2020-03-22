@@ -1,0 +1,53 @@
+<%- include('../partials/index-header') %>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container">
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header --> 
+  <!-- Main content -->
+  <section class="content" style="margin-top: 100px;">
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col-md-8 col-lg-5">
+          <p class="lead">Amount Due <%- (data.currentDate.getMonth() + 1) + "/" + (data.currentDate.getDate()) + "/" + (data.currentDate.getFullYear()) %> </p>
+          <form class="form-horizontal" action="/buycode" method="POST">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" name="email" required placeholder="E-mail" value="">
+            </div>
+            <div class="table-responsive">
+              <table class="table">
+                <tr>
+                  <th style="width:50%">Quantity:</th>
+                  <td><%- data.quantity %>  Pcs</td>
+                </tr>
+                <tr>
+                  <th>Price:</th>
+                  <td>PHP <%- data.phpPrice.toLocaleString() %> / <span class="text-sm text-muted">USDT <%- data.usdtPrice.toLocaleString() %> </span></td>
+                </tr>
+                <tr>
+                  <th>Overall Total:</th>
+                  <td>PHP <%- data.totalPHP.toLocaleString() %> / <span class="text-sm text-muted">USDT <%- data.totalUSDT.toLocaleString() %> </span></td>
+                </tr>
+              </table>
+            </div>
+            <div class="row">
+              <div class="col-8">
+                <a href="/login" class="text-center">I already have a membership</a>
+              </div>
+              <div class="col-4">
+                <button type="submit" class="btn btn-primary btn-block">Buy Code</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<%- include('../partials/index-footer') %>

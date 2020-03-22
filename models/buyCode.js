@@ -6,7 +6,11 @@ const buyCode = new mongoose.Schema({
   phpPrice: Number,
   usdtPrice: Number,
   totalPHP: Number,
-  totalUSDT: Number
+  totalUSDT: Number,
+  isValidated: {
+    type: Boolean,
+    default: false
+  }
 });
 
 module.exports = mongoose.model('buyCode',buyCode);

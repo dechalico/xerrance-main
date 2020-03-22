@@ -6,8 +6,6 @@ const User = require('../models/users');
 const UserSummary = require('../models/userSummary');
 const RegistrationToken = require('../models/registrationToken');
 const NotSendEmail = require('../models/notSendEmail');
-const Convertion = require('../models/convertion');
-const BuyCode = require('../models/buyCode');
 const helper = require('../lib/helpers');
 const indexMiddleware =require('../middleware/index');
 
@@ -21,7 +19,7 @@ router.get('/register',(req,res) => {
   if(req.isAuthenticated()){
     res.redirect('/dashboard');
   } else {
-    res.render('register');
+    res.render('register',{host: process.env.HOST});
   }
 });
 
@@ -170,11 +168,11 @@ router.post('/register',(req,res) => {
     }else {
       // if referral url link is invalid format
       message.referral.error = "Specified referral link is invalid";
-      res.render('register',{message: message});
+      res.render('register',{message: message,host: process.env.HOST});
     }
   } else {
     // error if some fields are invalid
-    res.render('register',{message: message});
+    res.render('register',{message: message,host: process.env.HOST});
   }
 });
 
@@ -300,104 +298,8 @@ router.get('/logout',(req,res) => {
   res.redirect('/login');
 });
 
-router.get('/buycode',(req,res) => {
-  // get the convertion
-  Convertion.findOne({},(err,convertionResult) => {
-    if(!err && convertionResult){
-      const data = {
-        phpPrice: 3500,
-        usdtPrice: 3500 / convertionResult.php,
-      }
-      res.render('buyReferralCode',{data: data,host: process.env.HOST});
-    } else {
-      // if error or no convertion found
-      res.redirect("/server-error");
-    }
-  });
-});
-
-router.post('/buycode',(req,res) => {
-  let isValidAllField = true;
-  // validate all fields 
-  const message= {
-    email: {
-      value: typeof(req.body.email) === 'string' && req.body.email.trim().length > 3 ? req.body.email.trim() : ''
-    },
-    quantity: {
-      value: typeof(req.body.quantity) === 'string' && req.body.quantity.trim().length > 0 ? Number(req.body.quantity) : 0
-    }
-  }
-  // check if all fields are valid
-  if(message.email.value.length === 0){
-    message.email.error = "Please provide valid email address"
-    isValidAllField = false;
-  }
-  if(message.quantity.value === 0){
-    message.quantity.error = "Please provide valid quantity"
-    isValidAllField = false;
-  }
-
-  if(isValidAllField){
-    // get the convertion if any
-    Convertion.findOne({},(err,convertionResult) => {
-      if(!err && convertionResult){
-        // if no error and their is convertion data
-        const data = {
-          email: message.email.value,
-          quantity: message.quantity.value,
-          phpPrice: 3500,
-          usdtPrice: 3500 / convertionResult.php,
-          totalPHP: message.quantity.value * 3500,
-          totalUSDT: (3500 / convertionResult.php) * message.quantity.value,
-        }
-        BuyCode.create(data,(err,buyCodeData) => {
-          if(!err && buyCodeData){
-            // if no error redirect to payment information
-            res.redirect("/buycode/payment?ref=" + buyCodeData._id);
-          } else {
-            // if error or no convertion found
-            res.redirect("/server-error");
-          }
-        });
-      } else {
-        // if error or no convertion found
-      res.redirect("/server-error");
-      }
-    });
-  } else {
-    // get the convertion and return error messages
-  Convertion.findOne({},(err,convertionResult) => {
-    if(!err && convertionResult){
-      const data = {
-        phpPrice: 3500,
-        usdtPrice: 3500 / convertionResult.php,
-      }
-      res.render('buyReferralCode',{data: data,message: message,host: process.env.HOST});
-    } else {
-      // if error or no convertion found
-      res.redirect("/server-error");
-    }
-  });
-  }
-});
-
-router.get('/buycode/payment',(req,res) => {
-  if(typeof(req.query.ref) === 'string' && req.query.ref.trim().length > 0){
-    BuyCode.findById(req.query.ref,(err,buyCodeResult) => {
-      if(!err && buyCodeResult){
-        res.render('payment',{host: process.env.HOST});
-      } else {
-        res.redirect('/buycode');
-      }
-    });
-  } else {
-    res.redirect('/buycode');
-  }
-});
-
 router.get('/cook',(req,res) => {
-  const cookies = req.headers.cookie.split(';');
-  console.log(cookies);
+  res.render('buyCode/emailSent',{host: process.env.HOST});
 });
 
 router.get('/test/clear',(req,res) => {
