@@ -12,7 +12,7 @@ const indexMiddleware =require('../middleware/index');
 const router = express.Router();
 
 router.get('/',(req,res) => {
-  res.render('comingSoon',{host: process.env.HOST});
+  res.render('index',{host: process.env.HOST});
 });
 
 router.get('/register',(req,res) => {
@@ -299,7 +299,7 @@ router.get('/logout',(req,res) => {
 });
 
 router.get('/cook',(req,res) => {
-  res.render('buyCode/emailSent',{host: process.env.HOST});
+  res.render('cryptian/x-login',{host: process.env.HOST});
 });
 
 router.get('/test/clear',(req,res) => {
