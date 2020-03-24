@@ -1,126 +1,220 @@
-<%- include('./partials/index-header') %>
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container">
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header --> 
-  <!-- Main content -->
-  <section class="content" style="margin-top: 100px;">
-    <div class="container-fluid">
-      <div class="row justify-content-md-center">
-        <div class="col-md-8 col-lg-5 col-xl-4">
-          <div class="card">
-            <div class="card-body register-card-body">
-              <p class="login-box-msg">Register a new membership</p>
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Xerrance</title>
+    <!-- Required meta tags -->
+		<meta charset="utf-8">
+		<base href="<%- host %>">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- carousel CSS -->
+    <link rel="stylesheet" href="cryptian/assets/css/owl.carousel.min.css">
+    <!--header icon CSS -->
+    <link rel="icon" href="images/icons/favicon.ico">
+    <!-- animations CSS -->
+    <link rel="stylesheet" href="cryptian/assets/css/animate.min.css">
+    <!-- font-awsome CSS -->
+    <link rel="stylesheet" href="cryptian/assets/css/font-awesome.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="cryptian/assets/css/bootstrap.min.css">
+    <!-- mobile menu CSS -->
+    <link rel="stylesheet" href="cryptian/assets/css/slicknav.min.css">
+    <!--css animation-->
+    <link rel="stylesheet" href="cryptian/assets/css/animation.css">
+    <!--css animation-->
+    <link rel="stylesheet" href="cryptian/assets/css/material-design-iconic-font.min.css">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="cryptian/style.css">
+    <!-- responsive CSS -->
+    <link rel="stylesheet" href="cryptian/assets/css/responsive.css">
+  </head>
+  <body>
+    <!--header area start-->
+    <div class="header-area wow fadeInDown header-absolate" id="nav" data-0="position:fixed;" data-top-top="position:fixed;top:0;" data-edge-strategy="set">
+      <div class="container">
+        <div class="row">
+          <div class="col-4 d-block d-lg-none">
+            <div class="mobile-menu"></div>
+          </div>
+          <div class="col-4 col-lg-2 ">
+            <div class="logo-area">
+              <a href="#"><img src="assets/img/logo-top.png" alt=""></a>
+            </div>
+          </div>
+          <div class="col-4 col-lg-8 d-none d-lg-block">
+            <div class="main-menu text-center">
+              <nav>
+                <ul id="slick-nav">
+                  
+                </ul>
+              </nav>
+            </div>
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/login" class="logibtn gradient-btn">login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--header area end-->
+    
+    <!--welcome area start-->
+    <div class="welcome-area v2 wow fadeInUp" id="home">
+      <div id="particles-js"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-5 ">
+            <div class="v2 welcome-progress">
+              <h3>Register Membership</h3>
+              <div class="space-10"></div>
               <form action="/register" method="POST">
-                <% if(typeof(message) === 'object' && typeof(message.firstname.error) === 'string') { %>
-                  <span class="text-danger text-sm"><%- message.firstname.error %> </span>
-                <% } %>  
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control" name="firstname" placeholder="First name" required value="<%- typeof(message) === 'object' ? message.firstname.value : ''  %>">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-user"></span>
-                    </div>
-                  </div>
+                <div class="form-group">
+                  <label for="firstname">First name</label>
+                  <input type="text" class="form-control form-control-sm" id="firstname" name="firstname" 
+                    aria-describedby="firstnameHelp" required placeholder="first name" value="<%- typeof(message) === 'object' ? message.firstname.value : '' %>">
+                  <% if(typeof(message) === 'object' && typeof(message.firstname.error) === 'string') { %>
+                    <span class="text-danger"><%- message.firstname.error %></span>
+                  <% } %>  
                 </div>
-                <% if(typeof(message) == 'object' && typeof(message.lastname.error) === 'string') { %>
-                  <span class="text-danger text-sm"><%- message.lastname.error %> </span>
-                <% } %>
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control" name="lastname" placeholder="Last name" required value="<%- typeof(message) === 'object' ? message.lastname.value : ''  %>">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-user"></span>
-                    </div>
-                  </div>
+                <div class="form-group">
+                  <label for="lastname">Last name</label>
+                  <input type="text" class="form-control form-control-sm" id="lastname" name="lastname" 
+                    aria-describedby="lastnameHelp" required placeholder="last name" value="<%- typeof(message) === 'object' ? message.lastname.value : ''  %>">
+                  <% if(typeof(message) == 'object' && typeof(message.lastname.error) === 'string') { %>
+                    <span class="text-danger"><%- message.lastname.error %></span>
+                  <% } %>
                 </div>
-                <% if(typeof(message) == 'object' && typeof(message.address.error) === 'string') { %>
-                  <span lass="text-danger text-sm"><%- message.address.error %> </span>
-                <% } %>
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control" name="address" placeholder="Address" required value="<%- typeof(message) === 'object' ? message.address.value : ''  %>">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-user"></span>
-                    </div>
-                  </div>
+                <div class="form-group">
+                  <label for="address">Address</label>
+                  <input type="text" class="form-control form-control-sm" id="address" name="address" 
+                    aria-describedby="addressHelp" required placeholder="address" value="<%- typeof(message) === 'object' ? message.address.value : ''  %>">
+                  <% if(typeof(message) == 'object' && typeof(message.address.error) === 'string') { %>
+                    <span class="text-danger"><%- message.address.error %></span>
+                  <% } %>
                 </div>
-                <% if(typeof(message) == 'object' && typeof(message.referral.error) === 'string') { %>
-                  <span class="text-danger text-sm"><%- message.referral.error %> </span>
-                <% } %>
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control" name="referral" placeholder="Referral code" required value="<%- typeof(message) === 'object' ? message.referral.value : ''  %>">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-user"></span>
-                    </div>
-                  </div>
+                <div class="form-group">
+                  <label for="referral">Referral Code</label>
+                  <input type="text" class="form-control form-control-sm" id="referral" name="referral" 
+                    aria-describedby="referralHelp" required placeholder="referral code" value="<%- typeof(message) === 'object' ? message.referral.value : ''  %>">
+                  <% if(typeof(message) == 'object' && typeof(message.referral.error) === 'string') { %>
+                    <span class="text-danger"><%- message.referral.error %></span>
+                  <% } %>
                 </div>
-                <% if(typeof(message) == 'object' && typeof(message.email.error) === 'string') { %>
-                  <span class="text-danger text-sm"><%- message.email.error %> </span>
-                <% } %>
-                <div class="input-group mb-3">
-                  <input type="email" class="form-control" placeholder="Email" name="email" required value="<%- typeof(message) === 'object' ? message.email.value : ''  %>">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-envelope"></span>
-                    </div>
-                  </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control form-control-sm" id="email" name="email" 
+                    aria-describedby="emaillHelp" required placeholder="email" value="<%- typeof(message) === 'object' ? message.email.value : ''  %>">
+                  <% if(typeof(message) == 'object' && typeof(message.email.error) === 'string') { %>
+                    <span class="text-danger"><%- message.email.error %></span>
+                  <% } %>
                 </div>
-                <% if(typeof(message) == 'object' && typeof(message.password.error) === 'string') { %>
-                  <span class="text-danger text-sm"><%- message.password.error %> </span>
-                <% } %>
-                <div class="input-group mb-3">
-                  <input type="password" class="form-control" name="password" placeholder="Password" required value="<%- typeof(message) === 'object' ? message.password.value : ''  %>">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-lock"></span>
-                    </div>
-                  </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control form-control-sm" id="password" name="password" 
+                    aria-describedby="passwordlHelp" required placeholder="password" value="<%- typeof(message) === 'object' ? message.password.value : ''  %>">
+                  <% if(typeof(message) == 'object' && typeof(message.password.error) === 'string') { %>
+                    <span class="text-danger"><%- message.password.error %></span>
+                  <% } %>
                 </div>
-                <% if(typeof(message) == 'object' && typeof(message.password2.error) === 'string') { %>
-                  <span class="text-danger text-sm"><%- message.password2.error %> </span>
-                <% } %>
-                <div class="input-group mb-3">
-                  <input type="password" class="form-control" name="password2" placeholder="Retype password" required value="<%- typeof(message) === 'object' ? message.password2.value : ''  %>">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-lock"></span>
-                    </div>
-                  </div>
+                <div class="form-group">
+                  <label for="password2">Re-type</label>
+                  <input type="password" class="form-control form-control-sm" id="password2" name="password2" 
+                    aria-describedby="password2Help" required placeholder="re-type password" value="<%- typeof(message) === 'object' ? message.password2.value : ''  %>">
+                  <% if(typeof(message) == 'object' && typeof(message.password2.error) === 'string') { %>
+                    <span class="text-danger"><%- message.password2.error %></span>
+                  <% } %>
                 </div>
-                <div class="row">
-                  <div class="col-8">
-                    <% if(typeof(message) == 'object' && typeof(message.condition.error) === 'string') { %>
-                      <span class="text-danger text-sm"><%- message.condition.error %> </span>
-                    <% } %>
-                    <div class="icheck-primary">
-                      <input type="checkbox" id="agreeTerms" name="condition" value="agree">
-                      <label for="agreeTerms">
-                       I agree to the <a href="#">terms</a>
-                      </label>
-                    </div>
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-4">
-                    <button type="submit" class="btn btn-primary btn-block">Register</button>
-                  </div>
-                  <!-- /.col -->
+                <div class="form-group form-check">
+                  <input type="checkbox" id="condition" name="condition">
+                  <label class="form-check-label" for="condition">I agree to terms and condition</label>
+                  <% if(typeof(message) == 'object' && typeof(message.condition.error) === 'string') { %>
+                    <span class="text-danger"><%- message.condition.error %></span>
+                  <% } %>
+                </div>
+                <div class="form-group form-check">
+                  <input type="submit" class="btn btn-success" value="Register">
+                </div>
+                <div class="form-group">
+                  <a href="/login">I already have an account</a><br>
+                  <a href="/buycode">Buy referral code</a>
                 </div>
               </form>
-              <a href="/buycode" class="text-center">Buy referral code</a><br>
-              <a href="/login" class="text-center">I already have a membership</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
-<%- include('./partials/index-footer') %>
+    <!--welcome area end-->
+
+    <!--community area start-->
+    <div class="community-area v2 wow fadeInUp section-padding" id="contact">
+      <div class="container">
+      <!--footer area start-->
+      <div class="footera-area wow fadeInDown">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-6 col-lg-4">
+              <div class="single-footer">
+                <div class="logo-area footer">
+                  <a href="#"><img src="assets/img/logo-top.png" alt=""></a>
+                </div>
+                <div class="space-20"></div>
+                <p>Xerrance Digital Mining Firm</p>
+                <div class="space-10"></div>
+                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | Developed</i> by <a href="https://xerrance.com" target="_blank">Team Xerrance</a>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </p>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-2">
+              <div class="single-footer">
+                <ul>
+                    
+                </ul>
+              </div>
+            </div>
+            <div class="col-6 col-lg-2">
+              <div class="single-footer">
+                <ul>
+                    
+                </ul>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+              <div class="single-footer">
+                <p>Subscribe to our Newsletter</p>
+                <div class="space-20"></div>
+                <div class="footer-form v2">
+                  <form action="#">
+                    <input type="email" placeholder="Email Address">
+                    <a href="" class="gradient-btn subscribe">GO</a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--footer area end-->
+    </div>
+    <!--community area end-->
+    <!-- jquery 2.2.4 js-->
+    <script src="cryptian/assets/js/jquery-2.2.4.min.js"></script>
+    <!-- popper js-->
+    <!-- <script src="cryptian/assets/js/popper.js"></script> -->
+    <!-- carousel js-->
+    <script src="cryptian/assets/js/owl.carousel.min.js"></script>
+    <!-- wow js-->
+    <script src="cryptian/assets/js/wow.min.js"></script>
+    <!-- bootstrap js-->
+    <!-- <script src="cryptian/assets/js/bootstrap.min.js"></script> -->
+    <!--skroller js-->
+    <!-- <script src="cryptian/assets/js/skrollr.min.js"></script> -->
+    <!--mobile menu js-->
+    <script src="cryptian/assets/js/jquery.slicknav.min.js"></script>
+    <!--particle s-->
+    <script src="cryptian/assets/js/particles.min.js"></script>
+    <!-- main js-->
+    <script src="cryptian/assets/js/main.js"></script>
+  </body>
+</html>

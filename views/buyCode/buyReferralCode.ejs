@@ -1,53 +1,188 @@
-<%- include('../partials/index-header') %>
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container">
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header --> 
-  <!-- Main content -->
-  <section class="content" style="margin-top: 100px;">
-    <div class="container-fluid">
-      <div class="row justify-content-md-center">
-        <div class="col-md-8 col-lg-5">
-          <p class="lead">Amount Due <%- (data.currentDate.getMonth() + 1) + "/" + (data.currentDate.getDate()) + "/" + (data.currentDate.getFullYear()) %> </p>
-          <form class="form-horizontal" action="/buycode" method="POST">
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" class="form-control" id="email" name="email" required placeholder="E-mail" value="">
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Xerrance</title>
+    <!-- Required meta tags -->
+		<meta charset="utf-8">
+		<base href="<%- host %>">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- carousel CSS -->
+    <link rel="stylesheet" href="cryptian/assets/css/owl.carousel.min.css">
+    <!--header icon CSS -->
+    <link rel="icon" href="images/icons/favicon.ico">
+    <!-- animations CSS -->
+    <link rel="stylesheet" href="cryptian/assets/css/animate.min.css">
+    <!-- font-awsome CSS -->
+    <link rel="stylesheet" href="cryptian/assets/css/font-awesome.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="cryptian/assets/css/bootstrap.min.css">
+    <!-- mobile menu CSS -->
+    <link rel="stylesheet" href="cryptian/assets/css/slicknav.min.css">
+    <!--css animation-->
+    <link rel="stylesheet" href="cryptian/assets/css/animation.css">
+    <!--css animation-->
+    <link rel="stylesheet" href="cryptian/assets/css/material-design-iconic-font.min.css">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="cryptian/style.css">
+    <!-- responsive CSS -->
+    <link rel="stylesheet" href="cryptian/assets/css/responsive.css">
+  </head>
+  <body>
+    <!--header area start-->
+    <div class="header-area wow fadeInDown header-absolate" id="nav" data-0="position:fixed;" data-top-top="position:fixed;top:0;" data-edge-strategy="set">
+      <div class="container">
+        <div class="row">
+          <div class="col-4 d-block d-lg-none">
+            <div class="mobile-menu"></div>
+          </div>
+          <div class="col-4 col-lg-2 ">
+            <div class="logo-area">
+              <a href="#"><img src="assets/img/logo-top.png" alt=""></a>
             </div>
-            <div class="table-responsive">
-              <table class="table">
-                <tr>
-                  <th style="width:50%">Quantity:</th>
-                  <td><%- data.quantity %>  Pcs</td>
-                </tr>
-                <tr>
-                  <th>Price:</th>
-                  <td>PHP <%- data.phpPrice.toLocaleString() %> / <span class="text-sm text-muted">USDT <%- data.usdtPrice.toLocaleString() %> </span></td>
-                </tr>
-                <tr>
-                  <th>Overall Total:</th>
-                  <td>PHP <%- data.totalPHP.toLocaleString() %> / <span class="text-sm text-muted">USDT <%- data.totalUSDT.toLocaleString() %> </span></td>
-                </tr>
-              </table>
+          </div>
+          <div class="col-4 col-lg-8 d-none d-lg-block">
+            <div class="main-menu text-center">
+              <nav>
+                <ul id="slick-nav">
+                  
+                </ul>
+              </nav>
             </div>
-            <div class="row">
-              <div class="col-8">
-                <a href="/login" class="text-center">I already have a membership</a>
-              </div>
-              <div class="col-4">
-                <button type="submit" class="btn btn-primary btn-block">Buy Code</button>
-              </div>
-            </div>
-          </form>
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/login" class="logibtn gradient-btn">login</a>
+          </div>
         </div>
       </div>
     </div>
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
-<%- include('../partials/index-footer') %>
+    <!--header area end-->
+    
+    <!--welcome area start-->
+    <div class="welcome-area v2 wow fadeInUp" id="home">
+      <div id="particles-js"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-5 ">
+            <div class="v2 welcome-progress">
+              <h3>Buy referral code</h3>
+              <div class="space-10"></div>
+              <form action="/buycode" method="POST">
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control form-control-sm" id="email" name="email" 
+                    aria-describedby="emaillHelp" required placeholder="email">
+                </div>
+                <div class="prgress-bar">
+                  <div class="row">
+                    <div class="col">
+                      <div class="single-prgress-b">
+                        <p>Original Price : </p>
+                        <p>Less : </p>
+                      </div>
+                        
+                    </div>
+                    <div class="col">
+                      <div class="single-prgress-w text-right">
+                        <p>PHP 3,500.00</p>
+                        <p>-30%</p>
+                      </div>
+                    </div>
+                  </div>
+                    
+                  <div class="row">
+                    <div class="col">
+                      <div class="single-prgress-b">
+                        <p>Total: </p>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="single-prgress-w text-right">
+                        <p>PHP 2,450.00</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input type="submit" class="btn btn-success " value="Buy now">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--welcome area end-->
+
+    <!--community area start-->
+    <div class="community-area v2 wow fadeInUp section-padding" id="contact">
+      <div class="container">
+      <!--footer area start-->
+      <div class="footera-area wow fadeInDown">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-6 col-lg-4">
+              <div class="single-footer">
+                <div class="logo-area footer">
+                  <a href="#"><img src="assets/img/logo-top.png" alt=""></a>
+                </div>
+                <div class="space-20"></div>
+                <p>Xerrance Digital Mining Firm</p>
+                <div class="space-10"></div>
+                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | Developed</i> by <a href="https://xerrance.com" target="_blank">Team Xerrance</a>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </p>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-2">
+              <div class="single-footer">
+                <ul>
+                    
+                </ul>
+              </div>
+            </div>
+            <div class="col-6 col-lg-2">
+              <div class="single-footer">
+                <ul>
+                    
+                </ul>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+              <div class="single-footer">
+                <p>Subscribe to our Newsletter</p>
+                <div class="space-20"></div>
+                <div class="footer-form v2">
+                  <form action="#">
+                    <input type="email" placeholder="Email Address">
+                    <a href="" class="gradient-btn subscribe">GO</a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--footer area end-->
+    </div>
+    <!--community area end-->
+    <!-- jquery 2.2.4 js-->
+    <script src="cryptian/assets/js/jquery-2.2.4.min.js"></script>
+    <!-- popper js-->
+    <!-- <script src="cryptian/assets/js/popper.js"></script> -->
+    <!-- carousel js-->
+    <script src="cryptian/assets/js/owl.carousel.min.js"></script>
+    <!-- wow js-->
+    <script src="cryptian/assets/js/wow.min.js"></script>
+    <!-- bootstrap js-->
+    <!-- <script src="cryptian/assets/js/bootstrap.min.js"></script> -->
+    <!--skroller js-->
+    <!-- <script src="cryptian/assets/js/skrollr.min.js"></script> -->
+    <!--mobile menu js-->
+    <script src="cryptian/assets/js/jquery.slicknav.min.js"></script>
+    <!--particle s-->
+    <script src="cryptian/assets/js/particles.min.js"></script>
+    <!-- main js-->
+    <script src="cryptian/assets/js/main.js"></script>
+  </body>
+</html>

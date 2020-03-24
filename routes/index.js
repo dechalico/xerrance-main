@@ -105,7 +105,7 @@ router.post('/register',(req,res) => {
         if(userResult === null){
           // if refToken key is invalid
           message.referral.error = "Specified referral link is invalid";
-          res.render('register',{message: message});
+          res.render('register',{message: message,host: process.env.HOST});
         }else {
           // check if user reffered is validated
           if(userResult.isValidated){
@@ -152,7 +152,7 @@ router.post('/register',(req,res) => {
                 // if email already existed
                 if(err.name === 'UserExistsError'){
                   message.email.error = "Specified email address already registered"
-                  res.render('register',{message: message});
+                  res.render('register',{message: message,host: process.env.HOST});
                 } else{
                   console.log(err);
                 }
@@ -161,7 +161,7 @@ router.post('/register',(req,res) => {
           } else {
             // user exist but not validated means referral link not acceptable 
             message.referral.error = "Specified referral link is invalid";
-            res.render('register',{message: message});
+            res.render('register',{message: message,host: process.env.HOST});
           }
         }
       });
@@ -271,24 +271,24 @@ router.post('/login', function(req, res, next) {
         // try to authenticate the account
         passport.authenticate('local', function(err, user, info) {
           if (err) {
-            return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.", email: email}});
+            return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.", email: email},host: process.env.HOST});
           }
           if (!user) {
-            return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email}});
+            return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
           }
           // try to login and set sesssion the account
           req.logIn(user, function(err) {
             if (err) { 
-              return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email}});
+              return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
             }
             return res.redirect('/dashboard');
           });
         })(req, res, next);
       } else {
-        return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email}});
+        return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
       }
     } else {
-      return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email}});
+      return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
     }
   });
 });

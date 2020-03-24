@@ -49,10 +49,10 @@ router.post('/buycode',(req,res) => {
         const data = {
           email: message.email.value,
           quantity: 1,
-          phpPrice: 3500,
-          usdtPrice: 3500 / convertionResult.php,
-          totalPHP: 1 * 3500,
-          totalUSDT: (3500 / convertionResult.php) * 1,
+          phpPrice: 2450,
+          usdtPrice: 2450 / convertionResult.php,
+          totalPHP: 1 * 2450,
+          totalUSDT: (2450 / convertionResult.php) * 1,
         }
         BuyCode.create(data,(err,buyCodeData) => {
           if(!err && buyCodeData){
