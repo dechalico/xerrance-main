@@ -1,6 +1,9 @@
 {
   "name": "xerrance",
   "version": "1.0.0",
+  "engines": {
+    "node": "12.16.x"
+  },
   "description": "bitcoin sending recieving web app",
   "main": "index.js",
   "scripts": {
