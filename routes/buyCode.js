@@ -149,7 +149,7 @@ router.get('/buycode/payment',(req,res) => {
 
 router.get("/buycode/payment/unconfirm",(req,res) => {
   if(typeof(req.query.token) === 'string' && req.query.token.trim() === process.env.CALLBACK_TOKEN){
-    res.render("buyCode/paymentSuccess",{host: process.env.PORT});
+    res.render("buyCode/paymentSuccess",{host: process.env.HOST});
   } else {
     res.redirect('/buycode');
   }
@@ -204,7 +204,7 @@ router.get("/buycode/payment/success",(req,res) => {
                         });
                         
                       }
-                      res.render("buyCode/paymentSuccess",{host: process.env.PORT});
+                      res.render("buyCode/paymentSuccess",{host: process.env.HOST});
                     });
                   } else {
                     // invalid transaction id
