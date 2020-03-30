@@ -161,6 +161,7 @@ router.get("/buycode/payment/unconfirm",(req,res) => {
   }
 });
 
+// get all paymeny success callback
 router.get("/buycode/payment/success",(req,res) => {
   // check if token string is valid for security purpose
   if(typeof(req.query.token) === 'string' && req.query.token.trim() === process.env.CALLBACK_TOKEN){
@@ -199,6 +200,7 @@ router.get("/buycode/payment/success",(req,res) => {
                     BuyCodeSuccess.create(buyCodeSuccessData,(err) => {
                       if(!err){
                         // if save successfully delete the data in buycode record
+                        console.log(buyCodeData._id);
                         BuyCode.findByIdAndDelete(buyCodeData._id);
                       }
                       res.redirect('/buycode');
