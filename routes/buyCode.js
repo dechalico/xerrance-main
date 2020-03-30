@@ -197,15 +197,20 @@ router.get("/buycode/payment/success",(req,res) => {
                       addr: data.address
                     };
                     // save to buyCodeSuccess table
-                    BuyCodeSuccess.create(buyCodeSuccessData,(err) => {
+                    BuyCodeSuccess.create(buyCodeSuccessData,(err,successCodeData) => {
                       if(!err){
                         // if save successfully delete the data in buycode record
                         BuyCode.findByIdAndDelete(buyCodeData._id,(err) => {
-                          console.log('deleted');
-                          console.log(err);
+                          // delete buycode data to clean up databases
                         });
+
+                        const message = 'Thank you for buying referral code, Your referral code is: ' + successCodeData._id;
+                        helper.sendMail(successCodeData.email,"Referral Code",message,(err) => {
+                          // email the referral code to user.
+                        });
+                        
                       }
-                      res.redirect('/buycode');
+                      res.render("buyCode/paymentSuccess",{host: process.env.PORT});
                     });
                   } else {
                     // invalid transaction id
