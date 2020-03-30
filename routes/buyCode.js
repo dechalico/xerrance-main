@@ -200,8 +200,7 @@ router.get("/buycode/payment/success",(req,res) => {
                     BuyCodeSuccess.create(buyCodeSuccessData,(err) => {
                       if(!err){
                         // if save successfully delete the data in buycode record
-                        console.log(buyCodeData._id);
-                        BuyCode.findByIdAndDelete(buyCodeData._id);
+                        BuyCode.deleteOne({_id:buyCodeData._id});
                       }
                       res.redirect('/buycode');
                     });
