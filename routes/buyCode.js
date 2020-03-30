@@ -148,6 +148,7 @@ router.get('/buycode/payment',(req,res) => {
 
 router.get("/buycode/payment/unconfirm",(req,res) => {
   if(typeof(req.query.token) === 'string' && req.query.token.trim() === process.env.CALLBACK_TOKEN){
+    helper.getBTCTransaction(req.query.addr);
     console.log(req.query);
     res.render('buyCode/payment',{host: process.env.HOST});
   } else {
@@ -157,6 +158,7 @@ router.get("/buycode/payment/unconfirm",(req,res) => {
 
 router.get("/buycode/payment/success",(req,res) => {
   if(typeof(req.query.token) === 'string' && req.query.token.trim() === process.env.CALLBACK_TOKEN){
+    helper.getBTCTransaction(req.query.addr);
     console.log(req.query);
     res.render('buyCode/payment',{host: process.env.HOST});
   } else {
