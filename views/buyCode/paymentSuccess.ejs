@@ -123,29 +123,6 @@
       <!--footer area end-->
     </div>
     <!--community area end-->
-    <script>
-		console.log();
-		const lib = {
-			days: document.getElementById('days'),
-			hours: document.getElementById('hours'),
-			minutes: document.getElementById('minutes'),
-			seconds: document.getElementById('seconds'),
-			dateEnd: new Date(2020,4,16)
-		};
-
-		lib.countdown = () => {
-			setInterval(() => {
-				const countdownDate = (lib.dateEnd - new Date());
-				const todayDate = new Date();
-				lib.days.innerText = parseInt((lib.dateEnd - todayDate) / (1000 * 60 * 60 * 24));
-				lib.hours.innerText = parseInt(Math.abs(lib.dateEnd - todayDate) / (1000 * 60 * 60) % 24);
-				lib.minutes.innerText = parseInt(Math.abs(lib.dateEnd.getTime() - todayDate.getTime()) / (1000 * 60) % 60);
-				lib.seconds.innerText = parseInt(Math.abs(lib.dateEnd.getTime() - todayDate.getTime()) / (1000) % 60); 
-			},1000);
-		};
-		
-		lib.countdown();
-	</script>
     <!-- jquery 2.2.4 js-->
     <script src="cryptian/assets/js/jquery-2.2.4.min.js"></script>
     <!-- popper js-->
