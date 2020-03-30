@@ -1,6 +1,7 @@
 const express = require('express');
 const Convertion = require('../models/convertion');
 const BuyCode = require('../models/buyCode');
+const BuyCodeSuccess = require('../models/buyCodeSuccess');
 const helper = require('../lib/helpers');
 
 const router = express.Router();
@@ -150,7 +151,6 @@ router.get("/buycode/payment/unconfirm",(req,res) => {
   if(typeof(req.query.token) === 'string' && req.query.token.trim() === process.env.CALLBACK_TOKEN){
     helper.getBTCTransaction(req.query.addr,(err,data) => {
       if(!err){
-        console.log(data);
         res.redirect('/buycode');
       } else {
         res.redirect('/buycode');
@@ -162,11 +162,68 @@ router.get("/buycode/payment/unconfirm",(req,res) => {
 });
 
 router.get("/buycode/payment/success",(req,res) => {
+  // check if token string is valid for security purpose
   if(typeof(req.query.token) === 'string' && req.query.token.trim() === process.env.CALLBACK_TOKEN){
+    // if token is valid then check the transaction data
     helper.getBTCTransaction(req.query.addr,(err,data) => {
       if(!err){
-        console.log(data);
-        res.redirect('/buycode');
+        // if thier is no error in getting transaction data and status == 2 means successfully paid
+        if(data.status === 2) {
+          // check if their is extra data value
+          const extraData = typeof(data.data.extradata) === 'string' ? data.data.extradata.trim() : false;
+          if(extraData){
+            // if their is extra data value then transaction is clean and valid data
+            // extraData value is : 'transId:asdfasd42134234asdf##type:head'
+            const arrExtraData = extraData.split('##');
+            // check the extra data is valid
+            const arrTrans = typeof(arrExtraData[0]) === 'string' ? arrExtraData[0].split(':') : false;
+            const arrTypes = typeof(arrExtraData[1]) === 'string' ? arrExtraData[1].split(':') : false;
+            if(typeof(arrTrans[1]) === 'string' && typeof(arrTypes[1]) === 'string'){
+              // valid extra data
+              // check what kind of payment transaction
+              if(arrTypes[1].trim() === 'head'){
+                // buy one referral code type
+                 BuyCode.findById(arrTrans[1].trim(),(err,buyCodeData) => {
+                  if(!err && buyCodeData){
+                    // if transaction id is valid, create buyCodeSuccessData to save
+                    const buyCodeSuccessData = {
+                      email: buyCodeData.email,
+                      phpPrice: buyCodeData.phpPrice,
+                      usdtPrice: buyCodeData.usdtPrice,
+                      disountedPercent: buyCodeData.disountedPercent,
+                      totalPHP: buyCodeData.totalPHP,
+                      totalUSDT: buyCodeData.totalUSDT,
+                      addr: data.address
+                    };
+                    // save to buyCodeSuccess table
+                    BuyCodeSuccess.create(buyCodeSuccessData,(err) => {
+                      if(!err){
+                        // if save successfully delete the data in buycode record
+                        BuyCode.findByIdAndDelete(buyCodeData._id);
+                      }
+                      res.redirect('/buycode');
+                    });
+                  } else {
+                    // invalid transaction id
+                    res.redirect('/buycode');
+                  }
+                 });
+              } else {
+                // invalid transaction type
+                res.redirect('/buycode');
+              }
+            } else {
+              // invalid extra data
+              res.redirect('/buycode');
+            }
+          } else {
+            //if thier is no extra data value then save to database
+            res.redirect('/buycode');
+          }
+        } else {
+          // if their is error in getting the transaction data
+          res.redirect('/buycode');
+        }
       } else {
         res.redirect('/buycode');
       }
