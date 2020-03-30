@@ -149,13 +149,7 @@ router.get('/buycode/payment',(req,res) => {
 
 router.get("/buycode/payment/unconfirm",(req,res) => {
   if(typeof(req.query.token) === 'string' && req.query.token.trim() === process.env.CALLBACK_TOKEN){
-    helper.getBTCTransaction(req.query.addr,(err,data) => {
-      if(!err){
-        res.redirect('/buycode');
-      } else {
-        res.redirect('/buycode');
-      }
-    });
+    res.render("buyCode/paymentSuccess",{host: process.env.PORT});
   } else {
     res.redirect('/buycode');
   }
