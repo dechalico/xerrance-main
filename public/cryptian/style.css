@@ -231,7 +231,7 @@ a.single-about,
 }
 .welcome-area{
 	position: relative;
-	z-index: 999999;
+	/* z-index: 999999; */
   padding-top: 80px;
 }
 
@@ -261,7 +261,7 @@ a.single-about,
   background: ;
   top: -62%;
   left: -29%;
-  z-index: -1;
+  /* z-index: -1; */
 }
 
 .gradient-btn.v2 {
@@ -1417,7 +1417,7 @@ blog page css
   background-size: cover;
   background-position: center;
   position: relative;
-  z-index: 2;
+  /* z-index: 2; */
 }
 .welcome-area.bv:after{
   position: absolute;
@@ -1428,7 +1428,7 @@ blog page css
   opacity: .8;
   left: 0;
   top: 0;
-  z-index: -1;
+  /* z-index: -1; */
 }
 .single-blog-image {
   background: ;

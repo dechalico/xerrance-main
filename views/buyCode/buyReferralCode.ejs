@@ -77,18 +77,27 @@
                     <div class="col">
                       <div class="single-prgress-b">
                         <p>Original Price : </p>
-                        <p>Less : </p>
                       </div>
-                        
                     </div>
                     <div class="col">
-                      <div class="single-prgress-w text-right">
-                        <p>PHP 3,500.00</p>
-                        <p>-30%</p>
+                      <div class="single-prgress-w text-right" style="margin-bottom: 15px;">
+                        <p style="margin-bottom: 0px;">PHP <%- data.phpPrice %></p>
+                        <span style="font-size: small;">USD <%- data.usdtPrice %> </span>
                       </div>
                     </div>
                   </div>
-                    
+                  <div class="row">
+                    <div class="col">
+                      <div class="single-prgress-b">
+                        <p>Less : </p>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="single-prgress-w text-right" style="margin-bottom: 15px;">
+                        <p>-<%- data.disount %>%</p>
+                      </div>
+                    </div>
+                  </div>
                   <div class="row">
                     <div class="col">
                       <div class="single-prgress-b">
@@ -96,8 +105,9 @@
                       </div>
                     </div>
                     <div class="col">
-                      <div class="single-prgress-w text-right">
-                        <p>PHP 2,450.00</p>
+                      <div class="single-prgress-w text-right" style="margin-bottom: 15px;">
+                        <p style="margin-bottom: 0px;">PHP <%- data.totalPHP %></p>
+                        <span style="font-size: small;">USD <%- data.totalUSDT %> </span>
                       </div>
                     </div>
                   </div>

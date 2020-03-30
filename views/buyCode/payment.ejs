@@ -65,13 +65,10 @@
           <div class="col-lg-5 ">
             <div class="v2 welcome-progress">
               <h3>Payment method</h3>
-              <div class="text-center">
-                <label>Send USDT Wallet here</label><br>
-                <img src="images/resources/qrcode.png" ><br>
-                <span>13nTHS2KeSzRvS6ATZxQkghKEb7CYpv2iz</span><br>
-                <p class="text-sm">If you already paid, Please check you email for your referral codes</p>
-                <a href="/login" class="text-center">I already have a membership</a>
-              </div>
+              <a href="" class="blockoPayBtn" data-toggle="modal" data-uid=4f219a8a71e911ea 
+                data-price="<%- data.totalUSD %> " data-extra="transId-<%- data.transID %> :type-head">
+                <img width=160 src="https://www.blockonomics.co/img/pay_with_bitcoin_medium.png">
+              </a>
             </div>
           </div>
         </div>
@@ -133,7 +130,8 @@
     </div>
     <!--community area end-->
     <!-- jquery 2.2.4 js-->
-    <script src="cryptian/assets/js/jquery-2.2.4.min.js"></script>
+    <script src="https://www.blockonomics.co/js/pay_button.js"></script>
+    <!-- <script src="cryptian/assets/js/jquery-2.2.4.min.js"></script> -->
     <!-- popper js-->
     <!-- <script src="cryptian/assets/js/popper.js"></script> -->
     <!-- carousel js-->
