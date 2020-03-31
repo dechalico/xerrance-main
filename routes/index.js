@@ -171,25 +171,33 @@ router.get('/login',(req,res) => {
   }
 });
 
-router.post('/login', function(req, res, next) {
-  const email = req.body.username || '';
-  passport.authenticate('local', function(err, member, info) {
-    if (err) {
-      return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.", email: email},host: process.env.HOST});
-    }
-    if (!member) {
-      return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
-    }
-    // try to login and set sesssion the account
-    req.logIn(member, function(err) {
-      if (err) { 
-        console.log('error');
-        return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
-      }
-      console.log('no error');
-      return res.redirect('/dashboard');
-    });
-  })(req, res, next);
+// router.post('/login', function(req, res, next) {
+//   const email = req.body.username || '';
+//   passport.authenticate('local', function(err, user, info) {
+//     if (err) {
+//       return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.", email: email},host: process.env.HOST});
+//     }
+//     if (!user) {
+//       return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
+//     }
+//     // try to login and set sesssion the account
+//     req.logIn(user, function(err) {
+//       if (err) { 
+//         console.log('error');
+//         return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
+//       }
+//       console.log('no error');
+//       return res.redirect('/dashboard');
+//     });
+//   })(req, res, next);
+// });
+
+router.post("/login",passport.authenticate("local",
+  {
+    successRedirect: "/dashboard",
+    failureRedirect: "/login"
+  }),
+  (req,res) => {
 });
 
 router.get('/logout',(req,res) => {

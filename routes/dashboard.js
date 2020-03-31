@@ -1,13 +1,13 @@
 // declare dependencies
 const express = require('express');
 const indexMiddleware = require('../middleware/index');
-const UserSummary = require('../models/userSummary');
 
 const router = express.Router();
 
 router.get('/dashboard',indexMiddleware.isLoggedIn,(req,res) => {
   // assign user to session user and create referral link
   const user = req.user;
+  console.log('no error');
   res.render('dashboard/profile',{user: user,host: process.env.HOST,type: 'member'});
 });
 
