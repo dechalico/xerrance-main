@@ -4,6 +4,10 @@ const mongoose = require('mongoose');
 // if payment succed delete the record and transfer to successfull payments
 const buyCode = new mongoose.Schema({
   email: String,
+  quantity: {
+    type: Number,
+    default: 1
+  },
   phpPrice: Number,
   usdtPrice: Number,
   disountedPercent:Number,

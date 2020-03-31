@@ -136,7 +136,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="" class="brand-link">
+    <a href="/" class="brand-link">
       <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">XERRANCE</span>
@@ -149,7 +149,8 @@
           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="/dashboard" class="d-block"><%- user.firstname.charAt(0).toUpperCase() + user.firstname.slice(1).toLowerCase() + " " + 
+            user.lastname.charAt(0).toUpperCase() + user.lastname.slice(1).toLowerCase() %></a>
         </div>
       </div>
 
@@ -159,16 +160,18 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-header">Dashboard</li>
+          <% if (type !== 'member') { %>
+            <li class="nav-item">
+              <a href="" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Users
+                </p>
+              </a>
+            </li>
+          <% } %>  
           <li class="nav-item">
-            <a href="" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Users
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="/dashboard" class="nav-link">
               <i class="nav-icon far fa-image"></i>
               <p>
                 Transactions
@@ -176,7 +179,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="/dashboard" class="nav-link">
               <i class="nav-icon far fa-image"></i>
               <p>
                 Profile
@@ -184,16 +187,18 @@
             </a>
           </li>
           <li class="nav-header">Settings</li>
+          <% if(type !== 'member') { %> 
+            <li class="nav-item">
+              <a href="" class="nav-link">
+                <i class="nav-icon far fa-image"></i>
+                <p>
+                  Admin Users
+                </p>
+              </a>
+            </li>
+          <% } %>
           <li class="nav-item">
-            <a href="" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
-              <p>
-                Admin Users
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="/dashboard/setting" class="nav-link">
               <i class="nav-icon far fa-image"></i>
               <p>
                 Site Setting

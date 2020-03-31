@@ -8,6 +8,9 @@ const RegistrationToken = require('../models/registrationToken');
 const NotSendEmail = require('../models/notSendEmail');
 const helper = require('../lib/helpers');
 const indexMiddleware =require('../middleware/index');
+const BuyCodeSuccess = require('../models/buyCodeSuccess');
+const Member = require('../models/member');
+const ReferralCode = require('../models/referralCode');
 
 const router = express.Router();
 
@@ -69,8 +72,8 @@ router.post('/register',(req,res) => {
     message.email.error = "Please provide valid email";
     isValid = false;
   }
-  if(message.referral.value.length <= req.hostname.length + 5){
-    message.referral.error = "Please provide valid referral link";
+  if(message.referral.value.length <= 0){
+    message.referral.error = "Please provide valid referral code";
     isValid = false;
   }
   if(message.password.value.length <= 7){
@@ -87,169 +90,83 @@ router.post('/register',(req,res) => {
   }
   // if all fields are valid
   if(isValid){
-    // create new user fields
-    const newUser = {
-      firstname: message.firstname.value,
-      lastname: message.lastname.value,
-      address: message.address.value,
-      email: message.email.value,
-      username: message.email.value,
-    }
-    // parse the referral link to get the query string refToken
-    const parseUrl = url.parse(message.referral.value,true);
-    const refToken = parseUrl.query.refToken;
-    // check referral link if valid
-    if(typeof(refToken) == 'string' && refToken.trim().length > 0){
-      // check if refToken user is valid
-      User.findById(refToken.trim(),(err,userResult) => {
-        if(userResult === null){
-          // if refToken key is invalid
-          message.referral.error = "Specified referral link is invalid";
-          res.render('register',{message: message,host: process.env.HOST});
-        }else {
-          // check if user reffered is validated
-          if(userResult.isValidated){
-            // add refToken to newUser referral
-            newUser.referral = refToken;
-            // inserting new user to database if valid
-            User.register(newUser,message.password.value,(err) => {
-              if(!err){
-                // get the registered user
-                User.findOne({username: message.email.value},(err,userResult) => {
-                  if(!err && userResult){
-                    // insert registered token to database
-                    RegistrationToken.create({userId: userResult._id},(err,tokenResult) => {
-                      if(!err && tokenResult){
-                        // link to confirm the email
-                        const linkToConfirm = process.env.HOST +"/register/confirmation?token="+tokenResult._id+"&id=" + userResult._id;
-                        // send email
-                        helper.sendMail(message.email.value,"Email Confirmation","Please click the email " + 
-                          linkToConfirm,(isError,error) => {
-                            if(!isError){
-                              // if email sent to user registered
-                              res.redirect('/login');
-                            } else {
-                              // if email not sent to user registered
-                              NotSendEmail.create({
-                                _id: userResult._id,
-                                token: tokenResult._id
-                              },(err,notSendEmailResult) => {
-                                if(err){
-                                  console.log(err);
-                                }
-                              });
-                            }
-                        });
-                      } else {
-                        console.log(err);
-                      }
-                    });
-                  } else {
-                    console.log(err);
-                  }
-                });
-              } else{
-                // if email already existed
-                if(err.name === 'UserExistsError'){
-                  message.email.error = "Specified email address already registered"
-                  res.render('register',{message: message,host: process.env.HOST});
-                } else{
-                  console.log(err);
-                }
-              }
-            });
-          } else {
-            // user exist but not validated means referral link not acceptable 
-            message.referral.error = "Specified referral link is invalid";
-            res.render('register',{message: message,host: process.env.HOST});
-          }
-        }
-      });
-    }else {
-      // if referral url link is invalid format
-      message.referral.error = "Specified referral link is invalid";
-      res.render('register',{message: message,host: process.env.HOST});
-    }
-  } else {
-    // error if some fields are invalid
-    res.render('register',{message: message,host: process.env.HOST});
-  }
-});
-
-router.get('/register/confirmation',(req,res) => {
-  // validating query strings
-  const token = typeof(req.query.token) === 'string' && req.query.token.trim().length > 0 ? req.query.token.trim() : false;
-  const id = typeof(req.query.id) === 'string' && req.query.id.trim().length > 0 ? req.query.id.trim() : false;
-  // check if valid
-  if(token && id){
-    // find the registration token if exist
-    RegistrationToken.findById(token,(err,tokenResult) => {
-      // validate if token and id are have reference
-      if(!err && tokenResult){
-        if(tokenResult.userId === id){
-          // find the user and update is verified = true
-          User.findById(id,(userError,userResult) => {
-            if(!userError && userResult){
-              // update isValidated field in user and link summary to user summary
-              userResult.isValidated = true;
-              userResult.summary = userResult._id;
-              // save the user to update the is verified status
-              userResult.save((err) => {
-                if(!err){
-                  res.redirect('/login');
-                } else {
-                  res.redirect('/login');
-                }
-              });
-              // delete the confirmation token to free-up database
-              RegistrationToken.findByIdAndDelete(token,(err) => {
-                if(err){
-                  console.log(err);
-                }
-              });
-              // give referral Point to user who refer
-              const referralId = userResult.referral;
-              User.findById(referralId,(err,userReferral) => {
-                // if user who refer exist,
-                if(!err && userReferral){
-                  // try to check if have userSummary
-                  UserSummary.findById(userReferral._id,(err,referralSummary) => {
-                    if(!err && referralSummary){
-                      // if already have user summary so increament to 1
-                      referralSummary.totalReferrals = referralSummary.totalReferrals +1;
-                      UserSummary.findByIdAndUpdate(referralSummary._id,referralSummary,(err,updatedReferralSummary) => {
-                        // log the error
-                        if(err){
-                          console.log(err)
-                        }
-                      });
-                    } else if (err === null && referralSummary === null){
-                      // if no have user summary yet then create
-                      UserSummary.create({_id: referralId, totalReferrals: 1},(err,summaryRessult) => {
-                        if(err){
-                          // log the error if their is error occur
-                          console.log(err);
+    // check referral code is valid
+    BuyCodeSuccess.findById(message.referral.value,(err,buyCodeSuccessData) => {
+      if(buyCodeSuccessData === null) {
+        // if refToken key is invalid
+        message.referral.error = "Specified referral code is invalid";
+        res.render('register',{message: message,host: process.env.HOST});
+      }else {
+        // check referral code already used, if not use then proceed to register
+        if(!buyCodeSuccessData.isUsed){
+          // create new user fields
+          const newUser = {
+            firstname: message.firstname.value,
+            lastname: message.lastname.value,
+            address: message.address.value,
+            referral: message.referral.value,
+            email: message.email.value,
+            username: message.email.value,
+          };
+          // inserting new user to database if valid
+          Member.register(newUser,message.password.value,(err) => {
+            if(!err){
+              // get the registered user
+              Member.findOne({username: message.email.value},(err,memberResult) => {
+                if(!err && memberResult) {
+                  // create referralCode data to new registered user
+                  const referralData = {
+                    referralCodes:[message.referral.value],
+                    left: [message.referral.value]
+                  };
+                  ReferralCode.create(referralData,(err,referralCodeResult) => {
+                    if(!err) {
+                      // if no error assign referralCode id to new registered user
+                      memberResult.referralCodes = referralCodeResult._id;
+                      memberResult.save((err) => {
+                        // if no error registration process is successful
+                        if(!err){
+                          // redirect to login if no error
+                          res.redirect('/login');
+                        } else {
+                          // error redirect in register
+                          res.render('register',{message: message,host: process.env.HOST});
                         }
                       });
                     } else {
-                      console.log('dri nag last');
+                      console.log(err);
+                      res.render('register',{message: message,host: process.env.HOST});
                     }
                   });
+                } else {
+                  console.log(err);
+                  res.render('register',{message: message,host: process.env.HOST});
                 }
               });
-            } else {
-              res.redirect('/login');
+              // update the referral code to isUsed = true and save to database
+              buyCodeSuccessData.isUsed = true;
+              buyCodeSuccessData.save();
+            } else{
+              // if email already existed
+              if(err.name === 'UserExistsError'){
+                message.email.error = "Specified email address already registered"
+                res.render('register',{message: message,host: process.env.HOST});
+              } else{
+                console.log(err);
+                res.render('register',{message: message,host: process.env.HOST});
+              }
             }
           });
         } else {
-          res.redirect('/login');
+          // referral code exist but already in used
+          message.referral.error = "Specified referral code is invalid";
+          res.render('register',{message: message,host: process.env.HOST});
         }
-      } else {
-        res.redirect('/login');
       }
     });
   } else {
-    res.redirect('/login');
+    // error if some fields are invalid
+    res.render('register',{message: message,host: process.env.HOST});
   }
 });
 
@@ -263,66 +180,28 @@ router.get('/login',(req,res) => {
 
 router.post('/login', function(req, res, next) {
   const email = req.body.username || '';
-  // check if username exist and validate
-  User.findOne({username: email},(err,userResult) => {
-    if(!err && userResult){
-      // check if user is validated
-      if(userResult.isValidated){
-        // try to authenticate the account
-        passport.authenticate('local', function(err, user, info) {
-          if (err) {
-            return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.", email: email},host: process.env.HOST});
-          }
-          if (!user) {
-            return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
-          }
-          // try to login and set sesssion the account
-          req.logIn(user, function(err) {
-            if (err) { 
-              return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
-            }
-            return res.redirect('/dashboard');
-          });
-        })(req, res, next);
-      } else {
-        return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
-      }
-    } else {
+  passport.authenticate('local', function(err, member, info) {
+    if (err) {
+      return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.", email: email},host: process.env.HOST});
+    }
+    if (!member) {
       return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
     }
-  });
+    // try to login and set sesssion the account
+    req.logIn(member, function(err) {
+      if (err) { 
+        console.log('error');
+        return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
+      }
+      console.log('no error');
+      return res.redirect('/dashboard');
+    });
+  })(req, res, next);
 });
 
 router.get('/logout',(req,res) => {
   req.logOut();
   res.redirect('/login');
 });
-
-router.get('/cook',(req,res) => {
-  res.render('cryptian/x-login',{host: process.env.HOST});
-});
-
-router.get('/test/clear',(req,res) => {
-  User.deleteMany({},(err) => {
-    if(!err){
-      User.create({
-        firstname: "dexter",
-        lastname: "echalico",
-        address: "Davao City",
-        email: "admin@gmail.com",
-        isValidated: true
-      },(err) => {
-        console.log(err);
-      });
-    }
-  });
-  RegistrationToken.deleteMany({},(err) => {
-    console.log(err);
-  });
-  UserSummary.deleteMany({},(err) => {
-    console.log(err);
-  });
-});
-
 
 module.exports = router;
