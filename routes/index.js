@@ -1,13 +1,6 @@
 // declare dependencies
-const url = require('url');
 const express = require('express');
 const passport = require('passport');
-const User = require('../models/users');
-const UserSummary = require('../models/userSummary');
-const RegistrationToken = require('../models/registrationToken');
-const NotSendEmail = require('../models/notSendEmail');
-const helper = require('../lib/helpers');
-const indexMiddleware =require('../middleware/index');
 const BuyCodeSuccess = require('../models/buyCodeSuccess');
 const Member = require('../models/member');
 const ReferralCode = require('../models/referralCode');
