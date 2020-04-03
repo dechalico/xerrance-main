@@ -4,6 +4,8 @@ const passport = require('passport');
 const BuyCodeSuccess = require('../models/buyCodeSuccess');
 const Member = require('../models/member');
 const ReferralCode = require('../models/referralCode');
+const MemberSummary = require('../models/memberSummary');
+const MiningEngine = require('../models/miningEngine');
 
 const router = express.Router();
 
@@ -83,7 +85,7 @@ router.post('/register',(req,res) => {
   }
   // if all fields are valid
   if(isValid){
-    // check referral code is valid
+    // check if referral code is valid
     BuyCodeSuccess.findById(message.referral.value,(err,buyCodeSuccessData) => {
       if(buyCodeSuccessData === null) {
         // if refToken key is invalid
@@ -109,24 +111,51 @@ router.post('/register',(req,res) => {
                 if(!err && memberResult) {
                   // create referralCode data to new registered user
                   const referralData = {
-                    referralCodes:[message.referral.value],
-                    left: [message.referral.value]
+                    referralCodes:[],
+                    left: [],
+                    right: []
                   };
                   ReferralCode.create(referralData,(err,referralCodeResult) => {
                     if(!err) {
                       // if no error assign referralCode id to new registered user
                       memberResult.referralCodes = referralCodeResult._id;
-                      memberResult.save((err) => {
-                        // if no error registration process is successful
+                      // create member summary to default values
+                      MemberSummary.create({downline: 0},(err,summaryData) => {
                         if(!err){
-                          // redirect to login if no error
-                          res.redirect('/login');
+                          // assign new created memberSummaryID to new member with defaults values
+                          memberResult.memberSummary = summaryData._id;
+                          // create mining engine to new member
+                          MiningEngine.create({minings: []},(err,miningData) =>{
+                            // if no error then refenrence mining engine id to new member
+                            if(!err){
+                              // refenrence mining engine id to new member
+                              memberResult.mining = miningData._id;
+                              // save and update new member
+                              memberResult.save((err) => {
+                                // if no error registration process is successful
+                                if(!err){
+                                  // redirect to login if no error
+                                  res.redirect('/login');
+                                } else {
+                                  // error redirect in register
+                                  console.log(err);
+                                  res.render('register',{message: message,host: process.env.HOST});
+                                }
+                              });
+                            } else {
+                              // error when creating member summary
+                              console.log(err);
+                              res.render('register',{message: message,host: process.env.HOST});
+                            }
+                          });
                         } else {
-                          // error redirect in register
+                          // error when creating member summary
+                          console.log(err);
                           res.render('register',{message: message,host: process.env.HOST});
                         }
                       });
                     } else {
+                      // error when creating referral code
                       console.log(err);
                       res.render('register',{message: message,host: process.env.HOST});
                     }
@@ -171,34 +200,32 @@ router.get('/login',(req,res) => {
   }
 });
 
-// router.post('/login', function(req, res, next) {
-//   const email = req.body.username || '';
-//   passport.authenticate('local', function(err, user, info) {
-//     if (err) {
-//       return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.", email: email},host: process.env.HOST});
-//     }
-//     if (!user) {
-//       return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
-//     }
-//     // try to login and set sesssion the account
-//     req.logIn(user, function(err) {
-//       if (err) { 
-//         console.log('error');
-//         return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
-//       }
-//       console.log('no error');
-//       return res.redirect('/dashboard');
-//     });
-//   })(req, res, next);
-// });
-
-router.post("/login",passport.authenticate("local",
-  {
-    successRedirect: "/dashboard",
-    failureRedirect: "/login"
-  }),
-  (req,res) => {
+router.post('/login', function(req, res, next) {
+  const email = req.body.username || '';
+  passport.authenticate('local', function(err, user, info) {
+    if (err) {
+      return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.", email: email},host: process.env.HOST});
+    }
+    if (!user) {
+      return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
+    }
+    // try to login and set sesssion the account
+    req.logIn(user, function(err) {
+      if (err) { 
+        return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
+      }
+      return res.redirect('/dashboard');
+    });
+  })(req, res, next);
 });
+
+// router.post("/login",passport.authenticate("local",
+//   {
+//     successRedirect: "/dashboard",
+//     failureRedirect: "/login"
+//   }),
+//   (req,res) => {
+// });
 
 router.get('/logout',(req,res) => {
   req.logOut();

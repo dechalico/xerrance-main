@@ -5,7 +5,10 @@ const mongoose = require('mongoose');
 // ownerId: id who own or who buy the referral code
 // if no ownerId means buy without membership
 const buyCodeSuccess = new mongoose.Schema({
-  ownerId: String,
+  ownerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'member'
+  },
   email: String,
   phpPrice: Number,
   usdtPrice: Number,
@@ -13,6 +16,10 @@ const buyCodeSuccess = new mongoose.Schema({
   totalPHP: Number,
   totalUSDT: Number,
   addr: String,
+  dateCreated:{
+    type: Date,
+    default: Date.now
+  },
   isUsed: {
     type: Boolean,
     default: false

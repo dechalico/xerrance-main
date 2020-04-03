@@ -4,6 +4,7 @@ const localMongoose = require('passport-local-mongoose');
 // referral: refer to buyCodeSuccess
 // rederralCodes: referral codes bought, refer to referralCodes
 // note use index in email,username,referral 
+// member summary referance to memberSummary document,
 const member = new mongoose.Schema({
   firstname: String,
   lastname: String,
@@ -15,6 +16,14 @@ const member = new mongoose.Schema({
   referralCodes:{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'referralCode'
+  },
+  memberSummary:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'memberSummary'
+  },
+  mining:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'miningEngine'
   },
   email: String,
   username: String,
