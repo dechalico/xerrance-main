@@ -92,7 +92,7 @@ router.post('/register',(req,res) => {
         message.referral.error = "Specified referral code is invalid";
         res.render('register',{message: message,host: process.env.HOST});
       }else {
-        // check referral code already used, if not use then proceed to register
+        // check if referral code already used, if not use then proceed to register
         if(!buyCodeSuccessData.isUsed){
           // create new user fields
           const newUser = {
@@ -106,20 +106,23 @@ router.post('/register',(req,res) => {
           // inserting new user to database if valid
           Member.register(newUser,message.password.value,(err) => {
             if(!err){
-              // get the registered user
+              // if no error get the registered user and associate some fields
               Member.findOne({username: message.email.value},(err,memberResult) => {
                 if(!err && memberResult) {
-                  // create referralCode data to new registered user
+                  // construct referralCode data to new registered user with empty values
                   const referralData = {
                     referralCodes:[],
                     left: [],
-                    right: []
+                    right: [],
+                    usedReferralCodes:[],
+                    unUsedReferralCodes: []
                   };
+                  // create and save referral codes to database
                   ReferralCode.create(referralData,(err,referralCodeResult) => {
                     if(!err) {
                       // if no error assign referralCode id to new registered user
                       memberResult.referralCodes = referralCodeResult._id;
-                      // create member summary to default values
+                      // create member summary data to new registered user with empty values
                       MemberSummary.create({downline: 0},(err,summaryData) => {
                         if(!err){
                           // assign new created memberSummaryID to new member with defaults values

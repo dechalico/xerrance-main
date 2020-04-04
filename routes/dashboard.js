@@ -18,16 +18,13 @@ router.get('/dashboard/home',indexMiddleware.isLoggedIn,(req,res) => {
     if(!err && summaryData){
       tmpSummaryData = summaryData;
     }
+    // get member referral codes associate to member
     ReferralCodes.findById(user.referralCodes).populate('referralCodes').exec((err,referralCodes) => {
-      // get the member referral coes
       let tmpReferralCodes = {};
       if(!err){
         tmpReferralCodes = referralCodes;
       }
-      // count used referral codes
-      const arrUnusedReferralCodes = tmpReferralCodes.referralCodes ? tmpReferralCodes.referralCodes.filter(s => !s.isUsed) : [];
-      const usedCodes = tmpReferralCodes.referralCodes.length - arrUnusedReferralCodes.length;
-      // count pairs
+      // count how many pairs 
       const pairs = tmpSummaryData.leftLeg > tmpSummaryData.rightLeg ? tmpSummaryData.rightLeg : tmpSummaryData.leftLeg;
       // construct data pass to webpage
       const data = {
@@ -46,10 +43,10 @@ router.get('/dashboard/home',indexMiddleware.isLoggedIn,(req,res) => {
             pairs >= 300 ? 'Team Leader III' : pairs >= 150 ? 'Team Leader II' : pairs >= 50 ? 'Team Leader I' : 'Newbie'
         },
         referral: {
-          isUsed: usedCodes,
-          unUsed: arrUnusedReferralCodes.length,
+          isUsed: tmpSummaryData.usedReferralCodes,
+          unUsed: tmpSummaryData.unUsedReferralCodes,
           codes: tmpReferralCodes.referralCodes ? tmpReferralCodes.referralCodes.length : 0,
-          unUsedCodes: arrUnusedReferralCodes.length > 10 ? arrUnusedReferralCodes.slice(0,10) : arrUnusedReferralCodes,
+          unUsedCodes: tmpReferralCodes.unUsedReferralCodes,
           left: tmpReferralCodes.left,
           right: tmpReferralCodes.right
         }
@@ -75,7 +72,7 @@ router.get('/dashboard/mining',indexMiddleware.isLoggedIn,(req,res) => {
     if(!err && result){
       count = result.minings.length;
     }
-    // page number
+    // get the page number 
     const dif = Math.ceil(count / limit);
     const page = typeof(req.query.page) === 'string' && Number.isInteger(Number(req.query.page.trim())) &&
       Number(req.query.page.trim()) > 0 && Number(req.query.page.trim()) <= dif ? Number(req.query.page.trim()) : 1;

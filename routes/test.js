@@ -34,7 +34,7 @@ route.get('/test/referral',(req,res) => {
 
 function createReferralsPromise (ownerId){
   return new Promise(resolve => {
-    BuyCodeSuccess.create({ownerId: ownerId},(err,data) => {
+    BuyCodeSuccess.create({ownerId: ownerId,isUsed: true},(err,data) => {
       if(!err && data){
         resolve(data._id);
       } else {
@@ -60,29 +60,37 @@ route.get('/test/auto/referral',(req,res) => {
   const email = typeof(req.query.email) === 'string' && req.query.email.trim().length > 3 ? req.query.email.trim() : false;
   const count = typeof(req.query.count) === 'string' && Number.isInteger(Number(req.query.count.trim())) ? Number(req.query.count.trim()) : 1;
   
+  // if email is valid format
   if(email){
     // check if email member is valid
     Member.findOne({email: email},(err,memberResult) => {
       if(!err && memberResult){
         // create referral codes through promise
         createReferral(memberResult._id,count).then(r => {
-          // get referralCode refers to member
+          // get referralCode refers to member to insert to new generated referral codes
           ReferralCode.findById(memberResult.referralCodes,(err,referralCodeData) => {
             if(!err && referralCodeData){
-              // assign generated referral codes to member
+              // if no error and thier is referral code found assign generated referral codes to referral code of members
               for(i =0; i < r.length; i++){
+                // add new generated referral codes to array
                 referralCodeData.referralCodes.push(r[i]);
+                // add new generated referral codes to used array, beacuse referral codes auto used for dummy purpose only
+                referralCodeData.usedReferralCodes.push(r[i]);
+                // push new generated referral codes to left or right array
                 if(referralCodeData.right.length > referralCodeData.left.length){
                   referralCodeData.left.push(r[i]);
                 } else {
                   referralCodeData.right.push(r[i]);
                 }
               }
+              // save and update new genrated referral codes
               referralCodeData.save();
-              // find and update memberSummary document
+              // points declarations
               const referralPoint = 4.91;
               const pairingPoint = 5.9;
+              // count how many pairs
               const pairs = referralCodeData.left.length > referralCodeData.right.length ? referralCodeData.right.length : referralCodeData.left.length;
+              // calculate network bonus
               let networkBonus = 0;
               if(pairs >= 2000){
                 networkBonus =9720;
@@ -105,27 +113,45 @@ route.get('/test/auto/referral',(req,res) => {
               }else{
                 networkBonus = 0;
               }
-              const summary = {
-                downline: referralCodeData.referralCodes.length,
-                referralCommission: referralCodeData.referralCodes.length >= 10 ? 50 : referralCodeData.referralCodes.length * referralPoint,
-                leftLeg: referralCodeData.left.length,
-                rightLeg: referralCodeData.right.length,
-                pairingCommission: referralCodeData.referralCodes.length > 10 ? (pairs > 5 ? (5 * pairingPoint) + ((pairs -5) * 0.98) : pairs * pairingPoint) : (pairs * pairingPoint),
-                networkBonus: networkBonus,
-                grossIncome: (referralCodeData.referralCodes.length >= 10 ? 50 : referralCodeData.referralCodes.length * referralPoint) +
-                  (referralCodeData.referralCodes.length > 10 ? (pairs > 5 ? (5 * pairingPoint) + ((pairs -5) * 0.98) : pairs * pairingPoint) : (pairs * pairingPoint)) +
-                  networkBonus
-              }
-              MemberSummary.findByIdAndUpdate(memberResult.memberSummary,summary,(err) => {
-                if(!err){
-                  res.write("Successfully created downlines");
-                  res.end();
+              // find membersummary data to update fields
+              MemberSummary.findById(memberResult.memberSummary,(err,summaryData) => {
+                if(!err && summaryData){
+                  // if no error and thier is summary data found
+                  // update summary fields
+                  summaryData.usedReferralCodes = referralCodeData.usedReferralCodes.length;
+                  summaryData.unUsedReferralCodes = referralCodeData.unUsedReferralCodes.length;
+                  summaryData.downline = referralCodeData.usedReferralCodes.length;
+                  summaryData.referralCommission = referralCodeData.referralCodes.length >= 10 ? 50 : referralCodeData.referralCodes.length * referralPoint;
+                  summaryData.leftLeg = referralCodeData.left.length;
+                  summaryData.rightLeg = referralCodeData.right.length;
+                  summaryData.pairingCommission = referralCodeData.referralCodes.length > 10 ? (pairs > 5 ? (5 * pairingPoint) + ((pairs -5) * 0.98) : pairs * pairingPoint) : (pairs * pairingPoint);
+                  summaryData.networkBonus = networkBonus;
+                  summaryData.grossIncome = (referralCodeData.referralCodes.length >= 10 ? 50 : referralCodeData.referralCodes.length * referralPoint) +
+                    (referralCodeData.referralCodes.length > 10 ? (pairs > 5 ? (5 * pairingPoint) + ((pairs -5) * 0.98) : pairs * pairingPoint) : (pairs * pairingPoint)) +
+                    networkBonus + summaryData.miningIncome;
+                  
+                  // save and update to database
+                  summaryData.save((err) => {
+                    if(!err) {
+                      // if no error when saving to database
+                      // response to user
+                      res.write("Successfully created downlines");
+                      res.end();
+                    } else {
+                      // if their is error when saving to database
+                      console.log('No Summary Data Found');
+                      res.end();
+                    }
+                  });
                 } else {
-                  console.log('Error when updating member summary');
+                  // if thier is error or no summary data found
+                  console.log('No Summary Data Found');
+                  res.end();
                 }
               });
             } else {
               console.log('no referral found.');
+              res.end();
             }
           });
         });
@@ -162,12 +188,14 @@ function createMiningPromise(summaryId,dateCreated){
         // create and save mining data
         Mining.create(data,(err,result) => {
           if(!err && result){
+            // if no error update member summary mining income and gross income field
             summarydata.miningIncome = data.miningIncome;
             summarydata.grossIncome = data.grossIncome;
-            MemberSummary.updateOne(summarydata,(err) => {
+            summarydata.save((err) => {
               if(!err){
                 resolve(result);
               } else {
+                console.log(err);
                 resolve(false);
               }
             });
@@ -200,14 +228,17 @@ route.get('/test/auto/mining',(req,res) => {
   const email = typeof(req.query.email) === 'string' && req.query.email.trim().length > 3 ? req.query.email.trim() : false;
   const days = typeof(req.query.days) === 'string' && Number.isInteger(Number(req.query.days.trim())) ? Number(req.query.days.trim()) : 1;
 
+  // if email is valid format
   if(email){
     // check if email is existed in database
     Member.findOne({email: email},(err,memberData) => {
       if(!err && memberData){
-        // check if have price amounts
+        // create dummy mining transaction
         createMining(memberData.memberSummary,days).then(r => {
+          // find mining engine associated in member to add mining data
           MiningEngine.findById(memberData.mining,(err,miningEngineData) => {
             if(!err && miningEngineData){
+              // if no error and theri is miningEngine data found update and save
               miningEngineData.minings.push(...r);
               miningEngineData.save((err) => {
                 if(!err){ 

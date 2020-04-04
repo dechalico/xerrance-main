@@ -1,6 +1,14 @@
 const mongoose =require('mongoose');
 
 const memberSummary = new mongoose.Schema({
+  usedReferralCodes: {
+    type: Number,
+    default: 0
+  },
+  unUsedReferralCodes: {
+    type: Number,
+    default: 0
+  },
   downline: {
     type: Number,
     default: 0
