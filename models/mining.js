@@ -1,15 +1,20 @@
 const mongoose = require('mongoose');
 
+// mining history
 const mining = new mongoose.Schema({
-  dateCreated: {
-    type: Date,
-    default: Date.now
-  },
   downline: {
     type: Number,
     default: 0
   },
-  referralCommission:{
+  rightCodes: {
+    type: Number,
+    default: 0
+  },
+  leftCodes: {
+    type: Number,
+    default: 0
+  },
+  referralCommission: {
     type: Number,
     default: 0
   },
@@ -17,13 +22,13 @@ const mining = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  paringCommission:{
+  pairingCommission: {
     type: Number,
     default: 0
   },
   networkBonus: {
     type: Number,
-    default: 0,
+    default: 0
   },
   grossIncome: {
     type: Number,
@@ -31,4 +36,4 @@ const mining = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('mining',mining);
+module.exports=  mongoose.model('mining',mining);

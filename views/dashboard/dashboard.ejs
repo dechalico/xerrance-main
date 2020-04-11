@@ -198,8 +198,8 @@
 												<% let day = dateCreated.getDate().toString(); %>
 												<% day = day.length > 1 ? day : '0' + day; %>
 												<% let legStatus = ''; %>
-												<% const leftIndex = data.referral.left.indexOf(code._id) %>
-												<% const rightIndex = data.referral.right.indexOf(code._id)  %> 
+												<% const leftIndex = data.referral.leftCodes.indexOf(code._id) %>
+												<% const rightIndex = data.referral.rightCodes.indexOf(code._id)  %> 
 												<% if(leftIndex > -1) { %>
 													<% legStatus = 'Left'; %>
 													<% data.referral.left.splice(leftIndex,1) %> 

@@ -1,292 +1,624 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Xerrance</title>
-    <!-- Required meta tags -->
-		<meta charset="utf-8">
-		<base href="<%- host %>">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- carousel CSS -->
-    <link rel="stylesheet" href="cryptian/assets/css/owl.carousel.min.css">
-    <!--header icon CSS -->
-    <link rel="icon" href="images/icons/favicon.ico">
-    <!-- animations CSS -->
-    <link rel="stylesheet" href="cryptian/assets/css/animate.min.css">
-    <!-- font-awsome CSS -->
-    <link rel="stylesheet" href="cryptian/assets/css/font-awesome.min.css">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="cryptian/assets/css/bootstrap.min.css">
-    <!-- mobile menu CSS -->
-    <link rel="stylesheet" href="cryptian/assets/css/slicknav.min.css">
-    <!--css animation-->
-    <link rel="stylesheet" href="cryptian/assets/css/animation.css">
-    <!--css animation-->
-    <link rel="stylesheet" href="cryptian/assets/css/material-design-iconic-font.min.css">
-    <!-- style CSS -->
-    <link rel="stylesheet" href="cryptian/style.css">
-    <!-- responsive CSS -->
-    <link rel="stylesheet" href="cryptian/assets/css/responsive.css">
-  </head>
-  <body>
-    <!--header area start-->
-    <div class="header-area wow fadeInDown header-absolate" id="nav" data-0="position:fixed;" data-top-top="position:fixed;top:0;" data-edge-strategy="set">
-      <div class="container">
-        <div class="row">
-          <div class="col-4 d-block d-lg-none">
-            <div class="mobile-menu"></div>
-          </div>
-          <div class="col-4 col-lg-2 ">
-            <div class="logo-area">
-              <a href="#"><img src="assets/img/logo-top.png" alt=""></a>
-            </div>
-          </div>
-          <div class="col-4 col-lg-8 d-none d-lg-block">
-            <div class="main-menu text-center">
-              <nav>
-                <ul id="slick-nav">
-                    
-                </ul>
-              </nav>
-            </div>
-          </div>
-          <div class="col-4 col-lg-2 text-right">
-            <a href="/login" class="logibtn gradient-btn">login</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--header area end-->
-    
-    <!--welcome area start-->
-    <div class="welcome-area v2 wow fadeInUp" id="home">
-      <div id="particles-js"></div>
-      <div class="container">
-        <div class="row">
-          <div class="col-12 col-lg-6 align-self-center">
-            <div class="welcome-right">
-              <div class="welcome-text">
-                 <h1>
-                 Mine with us and build your future.
-                 The digital mining firm you can trust.</h1>
-                 <h4>Be part of the fast growing multi-level digital network.</h4>
-              </div>
-              <div class="welcome-btn">
-                <a href="/register" class="gradient-btn v2 mr-20">Register Now</a>
-                <a href="/buycode" class="gradient-btn v2">Buy referral code</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-lg-5 offset-1">
-              <div class="v2 welcome-progress">
-                  <h3>PROMO</h3>
-                  <h5>Buy referral code before the grand launching and get 30% discount</h5>
-                  <div class="progress-time">
-                      <div class="row">
-                        <div class="col">
-                            <span id="days" class="timeOne"></span>
-                            <h5>days</h5>
-                        </div>
-                        <div class="col">
-                            <span id="hours" class="timeTwo"></span>
-                            <h5>hours</h5>
-                        </div>
-                        <div class="col">
-                            <span id="minutes" class="timeTrhee"></span>
-                              <h5>minutes</h5>
-                        </div>
-                        <div class="col">
-                            <span id="seconds" class="timeFour"></span>
-                            <h5>seconds</h5>
-                        </div>
-                    </div>
-                  </div>
-                  <div class="space-10"></div>
-                  <div class="prgress-bar">
-                    <div class="row">
-                      <div class="col">
-                        <div class="single-prgress-b">
-                          <p>Original Price : </p>
-                          <p>Less : </p>
-                        </div>
-                          
-                      </div>
-                      <div class="col">
-                        <div class="single-prgress-w text-right">
-                          <p>PHP 3,500.00</p>
-                          <p>-30%</p>
-                        </div>
-                      </div>
-                    </div>
-                      
-                    <div class="row">
-                      <div class="col">
-                        <div class="single-prgress-b">
-                          <p>Total: </p>
-                        </div>
-                      </div>
-                      <div class="col">
-                        <div class="single-prgress-w text-right">
-                          <p>PHP 2,450.00</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="space-10"></div>
-                  <a href="/buycode" class="gradient-btn">BUY NOW</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--welcome area end-->
+<head>
 
-    <!--community area start-->
-    <div class="community-area v2 wow fadeInUp section-padding" id="contact">
-      <div class="container">
-        <div class="row">
-          <div class="col-12 text-center">
-            <div class="heading">
-              <h5>Contact us</h5>
-              <div class="space-10"></div>
-              <h1>Drop Your Message</h1>
-            </div>
-            <div class="space-60"></div>
+<title>Xerrance Digital Mining</title>
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="dist-home/css/bootstrap.min.css">
+<link rel="stylesheet" href="dist-home/css/font-awesome.min.css">
+<link rel="stylesheet" href="dist-home/css/magnific-popup.css">
+
+<link rel="stylesheet" href="dist-home/css/owl.theme.css">
+<link rel="stylesheet" href="dist-home/css/owl.carousel.css">
+
+<!-- MAIN CSS -->
+<link rel="stylesheet" href="dist-home/css/tooplate-style.css">
+
+</head>
+<body>
+
+<!-- PRE LOADER -->
+<div class="preloader">
+     <div class="spinner">
+          <span class="sk-inner-circle"></span>
+     </div>
+</div>
+
+<!-- MENU -->
+<div class="navbar custom-navbar navbar-fixed-top" role="navigation">
+     <div class="container">
+
+          <!-- NAVBAR HEADER -->
+          <div class="navbar-header">
+               <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+               </button>
+               <!-- lOGO -->
+               <a href="index.html" class="navbar-brand">XERRANCE</a>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-5 offset-2">
-            <div class="contact-form">
-              <form action="#">
-                <input type="text" placeholder="your name">
-                <div class="space-20"></div>
-                <input type="email" placeholder="your email">
-                <div class="space-20"></div>
-                <textarea name="text" id="message" cols="30" placeholder="Write your message" rows="5"></textarea>
-              </form>
-              <div class="space-20"></div>
-              <a href="#" class="gradient-btn v2">Send message</a>
-            </div>
+
+          <!-- MENU LINKS -->
+          <div class="collapse navbar-collapse">
+               <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#about" class="smoothScroll">Introduction</a></li>  
+                    <li><a href="#pricing" class="smoothScroll">Pricing</a></li>  
+                    <li><a href="#contact" class="smoothScroll">Contact Us</a></li> 
+                    <li><a href="#footer" class="smoothScroll">About</a></li>
+                    <li><a href="#" class="smoothScroll"></a></li> 
+                    <li><a href="faq.html" class="smoothScroll">FAQ</a></li>
+                    <li><a href="login.html" class="smoothScroll">Sign In</a></li>
+               </ul>
           </div>
-        </div>
-        <div class="space-90"></div>
-        <div class="row">
-          <div class="col-12 text-center">
-            <div class="heading">
-              <h1>Join our community</h1>
-            </div>
-            <div class="space-60"></div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <div class="single-community text-center">
-              <ul>
-                <li>
-                <a class="google-plus" href="#"><i class="fa fa-google-plus"></i></a> </li>
-                <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
-                <li><a class="youtube" href="#"><i class="fa fa-youtube"></i></a></li>
-                <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="space-90"></div>
-      
-      <!--footer area start-->
-      <div class="footera-area wow fadeInDown">
-        <div class="container">
+
+     </div>
+</div>
+
+
+<!-- HOME -->
+<section id="home" class="parallax-section">
+     <div class="overlay"></div>
+     <div class="container">
           <div class="row">
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="single-footer">
-                <div class="logo-area footer">
-                  <a href="#"><img src="assets/img/logo-top.png" alt=""></a>
-                </div>
-                <div class="space-20"></div>
-                <p>Xerrance Digital Mining Firm</p>
-                <div class="space-10"></div>
-                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | Developed</i> by <a href="https://xerrance.com" target="_blank">Team Xerrance</a>
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                </p>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-2">
-              <div class="single-footer">
-                <ul>
-                    
-                </ul>
-              </div>
-            </div>
-            <div class="col-6 col-lg-2">
-              <div class="single-footer">
-                <ul>
-                    
-                </ul>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="single-footer">
-                <p>Subscribe to our Newsletter</p>
-                <div class="space-20"></div>
-                <div class="footer-form v2">
-                  <form action="#">
-                    <input type="email" placeholder="Email Address">
-                    <a href="" class="gradient-btn subscribe">GO</a>
-                  </form>
-                </div>
-              </div>
-            </div>
+
+               <div class="col-md-8 col-sm-12">
+                    <div class="home-text">
+                         <h1>Mine With Us And Build Your Future</h1>
+                         <h2 style="color:whitesmoke">The Digital Mining Firm You Can Trust</h2>
+                         <p>Be Part Of The Fast Growing Multi-Level Digital Network</p>
+                         <ul class="section-btn">
+                              <a href="register.html" class="smoothScroll">
+                                   <span data-hover="Join Now And Get 56Th/s (2520 W) Mining Power for FREE!">
+                                        Join Now And Get 56Th/s (2520 W) Mining Power for FREE!
+                                   </span>
+                              </a></h2>
+                         </ul>
+                    </div>
+               </div>
+
           </div>
-        </div>
-      </div>
-      <!--footer area end-->
-    </div>
-    <!--community area end-->
-    <script>
-		console.log();
-		const lib = {
-			days: document.getElementById('days'),
-			hours: document.getElementById('hours'),
-			minutes: document.getElementById('minutes'),
-			seconds: document.getElementById('seconds'),
-			dateEnd: new Date(2020,4,16)
-		};
+     </div>
 
-		lib.countdown = () => {
-			setInterval(() => {
-				const countdownDate = (lib.dateEnd - new Date());
-				const todayDate = new Date();
-				lib.days.innerText = parseInt((lib.dateEnd - todayDate) / (1000 * 60 * 60 * 24));
-				lib.hours.innerText = parseInt(Math.abs(lib.dateEnd - todayDate) / (1000 * 60 * 60) % 24);
-				lib.minutes.innerText = parseInt(Math.abs(lib.dateEnd.getTime() - todayDate.getTime()) / (1000 * 60) % 60);
-				lib.seconds.innerText = parseInt(Math.abs(lib.dateEnd.getTime() - todayDate.getTime()) / (1000) % 60); 
-			},1000);
-		};
-		
-		lib.countdown();
-	</script>
-    <!-- jquery 2.2.4 js-->
-    <script src="cryptian/assets/js/jquery-2.2.4.min.js"></script>
-    <!-- popper js-->
-    <!-- <script src="cryptian/assets/js/popper.js"></script> -->
-    <!-- carousel js-->
-    <script src="cryptian/assets/js/owl.carousel.min.js"></script>
-    <!-- wow js-->
-    <script src="cryptian/assets/js/wow.min.js"></script>
-    <!-- bootstrap js-->
-    <!-- <script src="cryptian/assets/js/bootstrap.min.js"></script> -->
-    <!--skroller js-->
-    <!-- <script src="cryptian/assets/js/skrollr.min.js"></script> -->
-    <!--mobile menu js-->
-    <script src="cryptian/assets/js/jquery.slicknav.min.js"></script>
-    <!--particle s-->
-    <script src="cryptian/assets/js/particles.min.js"></script>
-    <!-- main js-->
-    <script src="cryptian/assets/js/main.js"></script>
+     <!-- Video -->
+     <video controls autoplay loop muted>
+          <source src="dist-home/videos/video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+     </video>
+</section>
 
-  </body>
+
+<!-- ABOUT -->
+<section id="about" class="parallax-section">
+     <div class="container">
+          <div class="row">
+
+               <div class="col-md-offset-1 col-md-10 col-sm-12">
+                    <div class="about-info">
+                         <h3>Introducing Xerrance</h3>
+                         <h1>Earn in Digital Mining and get Bonuses from Referrals, Network and Pairing Commissions.</h1>
+                    </div>
+               </div>
+
+          </div>
+     </div>
+</section>
+
+
+<!-- PROJECT -->
+<section id="project" class="parallax-section">
+     <div class="container">
+          <div class="row">
+
+               <div class="col-md-6 col-sm-6">
+                    <div class="project-item">
+                         <a href="dist-home/images/mining.jpg" class="image-popup">
+                              <!-- Video -->
+                              <img src="dist-home/images/mining.jpg" class="img-responsive" alt="">
+                              <div class="project-overlay">
+                                   <div class="project-info">
+                                        <h1>Digital Mining</h1>
+                                        <h3>Click to pop up!</h3>
+                                   </div>
+                              </div>
+                         </a>
+                    </div>
+               </div>
+
+               <div class="col-md-6 col-sm-6">
+                    <!-- PROJECT ITEM -->
+                    <div class="project-item">
+                         <a href="dist-home/images/referral.jpg" class="image-popup">
+                              <img src="dist-home/images/referral.jpg" class="img-responsive" alt="">
+                              <div class="project-overlay">
+                                   <div class="project-info">
+                                        <h1>Referral Bonus</h1>
+                                        <h3>Click to pop up!</h3>
+                                   </div>
+                              </div>
+                         </a>
+                    </div>
+               </div>
+
+               <div class="col-md-6 col-sm-6">
+                    <!-- PROJECT ITEM -->
+                    <div class="project-item">
+                         <a href="dist-home/images/pairing.jpg" class="image-popup">
+                              <img src="dist-home/images/pairing.jpg" class="img-responsive" alt="">
+                         
+                              <div class="project-overlay">
+                                   <div class="project-info">
+                                        <h1>Pairing Bonus</h1>
+                                        <h3>Mollis aliquam faucibus urna</h3>
+                                   </div>
+                              </div>
+                         </a>
+                    </div>
+               </div>   
+
+               <div class="col-md-6 col-sm-6">
+                    <!-- PROJECT ITEM -->
+                    <div class="project-item">
+                         <a href="dist-home/images/network.jpg" class="image-popup">
+                              <img src="dist-home/images/network.jpg" class="img-responsive" alt="">
+                         
+                              <div class="project-overlay">
+                                   <div class="project-info">
+                                        <h1>Network Bonus</h1>
+                                        <h3>Click to pop up!</h3>
+                                   </div>
+                              </div>
+                         </a>
+                    </div>
+               </div>
+          </div>
+     </div>
+</section>
+
+
+<!-- pricing -->
+<section id="pricing" class="parallax-section">
+     <div class="container">
+          <div class="row">
+
+               <div class="col-md-offset-2 col-md-8 col-sm-12">
+                    <!-- SECTION TITLE -->
+                    <div class="section-title">
+                         <h1>Pricing</h1>
+                    </div>
+               </div>
+
+               <div class="clearfix"></div>
+
+               <div id="owl-pricing" class="owl-carousel">
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/1.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>Bitmain Antminer S17 (56Th)</h4>
+                              <h3>56Th/s | 2520W | SHA-256<br>Earn $0.59/day</h3>
+                              <h2>FREE</h2>
+                         </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/2.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>Bitmain Antminer S17e (64Th)</h4>
+                              <h3>64 Th/s | 2880 W | SHA-256<br>Earn $1.72/day</h3>
+                              <h2>$205.88</h2>
+                         </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/3.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>FusionSilicon X7 Miner</h4>
+                              <h3>262 Gh/s | 1420 W | X11<br> Earn $3.78/day</h3>
+                              <h2>$411.76</h2>
+                         </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/4.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>Innosilicon A9++ Zmaster</h4>
+                              <h3>140 Ksol/s | 1550 W | EQUI<br>Earn $5.35/day</h3>
+                              <h2>$617.65</h2>
+                         </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/5.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>ASICminer 8 Nano S 58Th</h4>
+                              <h3>58 Th/s | 2500 W | SHA-256<br>Earn $7.14/day</h3>
+                              <h2>$823.53</h2>
+                         </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/6.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>Innosilicon T3+ 52T</h4>
+                              <h3>52 Th/s | 2800 W | SHA-256<br>Earn $8.92/day</h3>
+                              <h2>$1,029.41</h2>
+                         </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/7.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>Bitmain Antminer Z11</h4>
+                              <h3>135 Ksol/s | 1418 W | EQUI<br>Earn $10.71/day</h3>
+                              <h2>$1,235.29</h2>
+                         </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/8.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>Bitmain Antminer S17 Pro (50Th)</h4>
+                              <h3>50 Th/s | 1975 W | SHA-256<br>Earn $11.90/day</h3>
+                              <h2>$1,372.55</h2>
+                         </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/9.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>Bitmain Antminer S17 Pro (53Th)</h4>
+                              <h3>53 Th/s | 2094 W | X11<br>Earn $13.68/day</h3>
+                              <h2>$1,578.43</h2>
+                         </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/10.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>Bitmain Antminer B7 (96Kh)</h4>
+                              <h3>96 Kh/s | 528 W | TENSO<br>Earn $15.46/day</h3>
+                              <h2>$1,784.31</h2>
+                         </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/11.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>Bitmain Antminer S17+ (73Th)</h4>
+                              <h3>73 Th/s | 2920 W | SHA-256<br>Earn $17.25/day</h3>
+                              <h2>$1,990.20</h2>
+                         </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/12.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>StrongU STU-U6</h4>
+                              <h3>440 Gh/s | 2200 W | X11<br>Earn $34.50/day</h3>
+                              <h2>$3,980.39</h2>
+                         </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/13.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>MicroBT Whatsminer M30S</h4>
+                              <h3>86 Th/s | 3268 W | SHA-256<br>Earn $51.15/day</h3>
+                              <h2>$5,901.96</h2>
+                         </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/14.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>Innosilicon A10 ETHMaster (365Mh)</h4>
+                              <h3>365 Mh/s | 650 W | EtHash<br>Earn $68.40/day</h3>
+                              <h2>$7,892.16</h2>
+                         </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/15.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>Innosilicon A10 ETHMaster (432Mh)</h4>
+                              <h3>432 Mh/s | 740 W | EtHash<br>Earn $85.05/day</h3>
+                              <h2>$9,813.73.76</h2>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/16.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>FusionSilicon X7 Miner</h4>
+                              <h3>485 Mh/s | 850 W | EtHash<br>Earn $102.30/day</h3>
+                              <h2>$11,803.92</h2>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/17.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>Bitmain Antminer S19 (95Th)</h4>
+                              <h3>95 Th/s | 3250 W | SHA-256<br>Earn $118.95/day</h3>
+                              <h2>$13,725.49</h2>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/18.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>Innosilicon A10 ETHMaster (500Mh)</h4>
+                              <h3>500 GMh/s | 750 W | EtHash<br>Earn $136.20/day</h3>
+                              <h2>$13,725.49</h2>
+                         </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/19.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>Bitmain Antminer S19 Pro (110Th)</h4>
+                              <h3>110 Th/s | 3250 W | SHA-256<br>Earn $153.45/day</h3>
+                              <h2>$17,705.88</h2>
+                         </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 item">
+                         <div class="pricing-item">
+                              <img src="dist-home/images/miner/20.png" class="img-responsive" alt="">
+                              <div class="pricing-overlay">
+                                   <ul class="social-icon">
+                                        <ul class="section-btn">
+                                             <a href="login.html" class="smoothScroll"><span data-hover="Avail Now!">Avail Now!</span></a>
+                                        </ul>
+                                   </ul>
+                              </div>
+                              <h4>Bitmain Antminer K5 (1130Gh)</h4>
+                              <h3>1.13 Th/s | 1580 W | Eagle<br>Earn $170.10/day</h3>
+                              <h2>$19.627.45</h2>
+                         </div>
+                    </div>
+               </div>
+
+          </div>
+     </div>
+</section>
+
+
+<!-- CONTACT -->
+<section id="contact" class="parallax-section">
+     <div class="container">
+          <div class="row">
+
+               <div class="col-md-offset-3 col-md-6 col-sm-12">
+                    <div class="section-title">
+                         <h1>Talk to us!</h1>
+                    </div>
+               </div>
+
+               <div class="clearfix"></div>
+
+               <div class="col-md-offset-2 col-md-8 col-sm-12">
+                    <!-- CONTACT FORM HERE -->
+                    <form id="contact-form" action="#" method="get" role="form">
+
+                         <!-- IF MAIL SENT SUCCESSFULLY -->
+                         <h6 class="text-success">Your message has been sent successfully. </h6>
+                         
+                         <!-- IF MAIL SENDING UNSUCCESSFULL -->
+                         <h6 class="text-danger">E-mail must be valid and message must be longer than 1 character.</h6>
+
+                         <div class="col-md-6 col-sm-6">
+                              <input type="text" class="form-control" id="cf-name" name="cf-name" placeholder="Name">
+                         </div>
+
+                         <div class="col-md-6 col-sm-6">
+                              <input type="email" class="form-control" id="cf-email" name="cf-email" placeholder="Email Address">
+                         </div>
+
+                         <div class="col-md-12 col-sm-12">
+                              <input type="text" class="form-control" id="cf-subject" name="subject" placeholder="Subject">
+                              <textarea class="form-control" rows="5" id="cf-message" name="cf-message" placeholder="Message"></textarea>
+                         </div>
+
+                         <div class="col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4">
+                              <div class="section-btn">
+                                   <button type="submit" class="form-control" id="cf-submit" name="submit"><span data-hover="Send Message">Send Message</span></button>
+                              </div>
+                         </div>
+                    </form>
+               </div>
+
+          </div>
+     </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+     <div class="container">
+          <div class="row">
+
+               <div class="col-md-5 col-sm-6">
+                    <h2>About Xerrance</h2>
+                         <p>We are passionate of Cryptocurrency and Blockchain Technology.
+                              Our service makes mining accessible to everyone. We believe in the future of cryptocurrencies and we love to be part of this growing community. Our Digital Mining System is suitable for those who are new to the world of cryptocurrencies and looking for easy way to invent money.
+                              “With us you will have more money tomorrow than yesterday.”
+                         </p>
+                    
+               </div>
+
+               <div class="col-md-4 col-sm-6">
+                    <div class="footer-info">
+                         <h2>Version</h2>
+                         <p>Xerrance Digital Mining Firm (version 1.0) and its user interface are protected by
+                              trademark and other pending or existing intellectual property rights
+                              in the Republic of Cyprus and other countries/regions.
+                         </p>
+                    </div>
+               </div>
+
+               <div class="col-md-3 col-sm-12">
+                    
+                    <div class="footer-info">
+                    	<h2>Keep in touch</h2>
+                         <p><a href="dist-home/tel:010-090-0780">010-090-0780</a></p>
+                         <p><a href="dist-home/mailto:support@xerrance.com">support@xerrance.com</a></p>
+                         <p><a href="#">Our Location</a></p>
+
+                         <ul class="social-icon">
+                              <li><a href="#" class="fa fa-twitter"></a></li>
+                              <li><a href="#" class="fa fa-facebook"></a></li>
+                              <li><a href="#" class="fa fa-instagram"></a></li>
+                              <li><a href="#" class="fa fa-linkedin"></a></li>
+                         </ul>
+                    </div>
+                   
+               </div>
+
+               <div class="col-md-12 col-sm-12">
+                    <div class="copyright-text">
+                         <p>Copyright © 2020 Xerrance 
+                         | Design by Team Xerrance</p>
+                    </div>
+               </div>
+               
+          </div>
+     </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="dist-home/js/jquery.js"></script>
+<script src="dist-home/js/bootstrap.min.js"></script>
+<script src="dist-home/js/jquery.parallax.js"></script>
+<script src="dist-home/js/owl.carousel.min.js"></script>
+<script src="dist-home/js/jquery.magnific-popup.min.js"></script>
+<script src="dist-home/js/magnific-popup-options.js"></script>
+<script src="dist-home/js/modernizr.custom.js"></script>
+<script src="dist-home/js/smoothscroll.js"></script>
+<script src="dist-home/js/custom.js"></script>
+
+</body>
 </html>
