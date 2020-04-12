@@ -202,10 +202,10 @@
 												<% const rightIndex = data.referral.rightCodes.indexOf(code._id)  %> 
 												<% if(leftIndex > -1) { %>
 													<% legStatus = 'Left'; %>
-													<% data.referral.left.splice(leftIndex,1) %> 
+													<% data.referral.leftCodes.splice(leftIndex,1) %> 
 												<% } else if (rightIndex > -1) { %>
 													<% legStatus = 'Right'; %>
-													<% data.referral.right.splice(rightIndex,1) %> 
+													<% data.referral.rightCodes.splice(rightIndex,1) %> 
 												<% } else { %>
 													<% legStatus = 'Pending' %> 
 												<% } %>  

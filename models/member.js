@@ -8,7 +8,10 @@ const member =  new mongoose.Schema({
   email: String,
   username: String,
   password: String,
-  isEmailVerified: Boolean,
+  isEmailVerified:{
+    type: Boolean,
+    default: false
+  },
   // member's account id
   accountId: {
     type: mongoose.Schema.Types.ObjectId,

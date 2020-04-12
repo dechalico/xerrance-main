@@ -49,10 +49,10 @@
 											<% const rightIndex = data.referrals.rightCodes.indexOf(codes._id)  %> 
 											<% if(leftIndex > -1) { %>
 												<% legStatus = 'Left'; %>
-												<% data.referrals.left.splice(leftIndex,1) %> 
+												<% data.referrals.leftCodes.splice(leftIndex,1) %> 
 											<% } else if (rightIndex > -1) { %>
 												<% legStatus = 'Right'; %>
-												<% data.referrals.right.splice(rightIndex,1) %> 
+												<% data.referrals.rightCodes.splice(rightIndex,1) %> 
 											<% } else { %>
 												<% legStatus = 'Pending' %> 
 											<% } %>  

@@ -31,16 +31,6 @@ const account = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'miningEngine'
   },
-  // associated to networkDownline model, all subdownlines of subdownlines
-  networkDownlineId:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'networkDownline'
-  },
-  // associated to networkReferral model, where accountId stored to increment their points
-  networkReferralId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'networkReferral'
-  },
   dateCreated: {
     type: Date,
     default: Date.now

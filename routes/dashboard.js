@@ -183,6 +183,7 @@ router.get('/dashboard/referralcodes/:id',indexMiddleware.isLoggedIn,(req,res) =
           AccountReferral.findById(account.accountReferralCodeId,(err,accountReferral) => {
             if(!err && accountReferral){
               let isFound = false;
+              // Note: must change the logic for faster search
               for(let i=0; i < accountReferral.referralCodes.length; i++){
                 if(String(referralCode._id) == String(accountReferral.referralCodes[i])){
                   isFound = true;
@@ -190,7 +191,69 @@ router.get('/dashboard/referralcodes/:id',indexMiddleware.isLoggedIn,(req,res) =
                 }
               }
               if(isFound){
-                res.redirect('/test');
+                const data = {
+                  id: referralCode._id,
+                  dateCreated: helper.fomatDate(new Date(referralCode.dateCreated)),
+                  used:{
+                    isUsed: false,
+                    downlinerAccountId: null,
+                    downlinerAccountName: null,
+                    usedAccountId: null,
+                    usedAccountName: null
+                  },
+                  isPending: true,
+                  status: 'Pending'
+                };
+                // check the leg of referral code
+                // check if referralcode is in right leg
+                let isRight = false;
+                for(let i=0; i < accountReferral.rightCodes.length; i++){
+                  if(String(referralCode._id) == String(accountReferral.rightCodes[i])){
+                    isRight = true;
+                    break;
+                  }
+                }
+                // check if referralcode is in left leg
+                let isLeft = false;
+                if(!isRight){
+                  for(let i=0; i < accountReferral.leftCodes.length; i++){
+                    if(String(referralCode._id) == String(accountReferral.leftCodes[i])){
+                      isLeft = true;
+                      break;
+                    }
+                  }
+                }
+                if(isRight){
+                  data.isPending = false;
+                  data.status = "Right Leg";
+                } else if(isLeft){
+                  data.isPending = false;
+                  data.status = "Left Leg";
+                }
+                if(referralCode.isUsed){
+                  data.used.isUsed = true;
+                  // get the downliner Account of referral code
+                  Account.findById(referralCode.downlineAccountId).populate('memberId').exec((err,downlinerAccount) => {
+                    if(!err && downlinerAccount){
+                      data.used.downlinerAccountId = downlinerAccount._id;
+                      data.used.downlinerAccountName = downlinerAccount.memberId.firstname + " " + downlinerAccount.memberId.lastname;
+                      // get the account who use the referral code
+                      Account.findById(referralCode.usedBy).populate('memberId').exec((err,accountUsed) => {
+                        if(!err && accountUsed){
+                          data.used.usedAccountId = accountUsed._id;
+                          data.used.usedAccountName = accountUsed.memberId.firstname + " " + accountUsed.memberId.lastname;
+                          res.render('dashboard/referralCode',{data: data});
+                        } else {
+                          console.log('No Downliner account found');
+                        }
+                      });
+                    } else {
+                      console.log('No Downliner account found');
+                    }
+                  });
+                } else {
+                  res.render('dashboard/referralCode',{data: data});
+                }
               } else {
                 res.redirect('/dashboard/referralcodes');
               }
@@ -206,6 +269,78 @@ router.get('/dashboard/referralcodes/:id',indexMiddleware.isLoggedIn,(req,res) =
       console.log('No account found in member');
     }
   });
+});
+
+router.post('/dashboard/referralcodes/:id',indexMiddleware.isLoggedIn,(req,res) => {
+  const leg = req.body.leg;
+  if(leg){
+     // get the account of member login
+    Account.findById(req.user.accountId,(err,account) => {
+      if(!err && account){
+        // check if referral code id is valid
+        GeneratedReferralCode.findById(req.params.id,(err,referralCode) => {
+          if(!err && referralCode){
+            // get the referral code of account and check if referral code belongs to account
+            AccountReferral.findById(account.accountReferralCodeId,(err,accountReferral) => {
+              if(!err && accountReferral){
+                let isFound = false;
+                // Note: must change the logic for faster search
+                for(let i=0; i < accountReferral.referralCodes.length; i++){
+                  if(String(referralCode._id) == String(accountReferral.referralCodes[i])){
+                    isFound = true;
+                    break;
+                  }
+                }
+                if(isFound){
+                  // remove referral code in unAssigned array
+                  // make sure that the leg is have a value of left or right
+                  if(leg.toLowerCase().trim() == 'right leg' || leg.toLowerCase().trim() == 'left leg'){
+                    for(let i=0; i < accountReferral.unAssignCodes.length; i++){
+                      if(String(accountReferral.unAssignCodes[i]) == String(referralCode._id)){
+                        accountReferral.unAssignCodes.splice(i,1);
+                        break;
+                      }
+                    }
+                  }
+                  // push the referralCode in rightCodes or leftCodes
+                  if(leg.toLowerCase().trim() == 'right leg'){
+                    accountReferral.rightCodes.push(referralCode._id);
+                  } else if(leg.toLowerCase().trim() == 'left leg'){
+                    accountReferral.leftCodes.push(referralCode._id);
+                  }
+                  accountReferral.save(err => {
+                    if(!err){
+                      res.redirect('/dashboard/referralcodes');
+                    } else {
+                      console.log('Error when updating the referral code');
+                    }
+                  });
+                  // update referral code
+                  referralCode.leg = leg;
+                  referralCode.isAssign = true;
+                  referralCode.save(err => {
+                    if(err){
+                      console.log('Erro when updating referral Code');
+                    }
+                  });
+                } else {
+                  res.redirect('/dashboard/referralcodes');
+                }
+              } else {
+                res.redirect('/dashboard/referralcodes');
+              }
+            });
+          } else {
+            res.redirect('/dashboard/referralcodes');
+          }
+        });
+      } else {
+        console.log('No account found in member');
+      }
+    });
+  } else {
+    res.redirect('/dashboard/referralcodes');
+  }
 });
 
 router.get('/dashboard/profile',indexMiddleware.isLoggedIn,(req,res) => {

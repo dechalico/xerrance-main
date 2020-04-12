@@ -28,6 +28,12 @@ const accountReferralCode = new mongoose.Schema({
       ref: 'generatedReferralCode'
     }
   ],
+  unAssignCodes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'generatedReferralCode'
+    }
+  ],
   // all used referral codes
   usedReferralCodes: [
     {
@@ -49,7 +55,11 @@ const accountReferralCode = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'account'
       },
-      leg: String
+      leg: String,
+      parentAccount: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'account'
+      }
     }
   ],
   referrals:[

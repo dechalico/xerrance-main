@@ -11,7 +11,8 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
-            <li class="breadcrumb-item active">Referral Codes</li>
+            <li class="breadcrumb-item"><a href="/dashboard/referralcodes">Referral Codes</a></li>
+            <li class="breadcrumb-item active"><%- data.id %> </li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -23,10 +24,53 @@
     <div class="container-fluid">
         <div class="col-md-12">
 					<div class="card card-primary card-outline">
-						<!-- /.card-header -->
-						<div class="card-body p-0">
-							
-						</div>
+            <!-- /.card-header -->
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="fas fa-text-width"></i>
+                About Referral Code
+              </h3>
+            </div>
+						<div class="card-body">
+              <dl>
+                <dt>Referral Code</dt>
+                <dd><%- data.id %> </dd>
+                <dt>Date Created</dt>
+                <dd><%- data.dateCreated %> </dd>
+                <% if(!data.isPending) { %>
+                  <dt>Leg Assigned</dt>
+                  <dd><%- data.status %> </dd>
+                <% } %>  
+                <dt>Downliner Account</dt>
+                <% if(data.used.isUsed) { %>
+                  <dd><a href="/dashboard/account/<%- data.used.downlinerAccountId %> "><%- data.used.downlinerAccountName %> </a></dd>
+                <% } else { %>
+                  <dd>Not been use</dd>
+                <% } %>   
+                <dt>Used By</dt>
+                <% if(data.used.isUsed) { %>
+                  <dd><a href="/dashboard/account/<%- data.used.usedAccountId %> "><%- data.used.usedAccountName %> </a></dd>
+                <% } else { %>
+                  <dd>Not been use</dd>
+                <% } %>  
+              </dl>
+              <% if(data.isPending) { %>
+                <div class="row">
+                  <div class="col-md-3">
+                    <form method="POST" action="/dashboard/referralcodes/<%- data.id %> ">
+                      <div class="form-group">
+                        <label>Assign Leg</label>
+                        <select class="form-control" name="leg">
+                          <option>Left Leg</option>
+                          <option>Right Leg</option>
+                        </select>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Assign Leg</button>
+                    </form>
+                  </div>
+                </div>
+              <% } %>  
+            </div>
 						<!-- /.card-body -->
 					</div>
 				</div>

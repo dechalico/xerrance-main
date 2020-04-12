@@ -7,7 +7,7 @@ const Member = require('../models/member');
 const BuyCodeInAccount = require('../models/buyCodeInAccount');
 const Account = require('../models/account');
 const AccountReferralCode = require('../models/accountReferralCode');
-const AccountSummary = require('../models/buyCodeInAccount');
+const AccountSummary = require('../models/accountSummary');
 const MiningEngine = require('../models/miningEngine');
 
 router.get('/test/referral',(req,res) => {
@@ -17,7 +17,7 @@ router.get('/test/referral',(req,res) => {
     // create entry in buy in web transaction
     BuyCodeInWeb.create({email: 'xerrance01@gmail.com'},(err,buyResult) => {
       if(!err && buyResult){
-        GeneratedReferralCode.create({buyId: buyResult._id},(err,generatedResult) => {
+        GeneratedReferralCode.create({buyId: buyResult._id,leg: 'left',isAssign: true},(err,generatedResult) => {
           if(!err && generatedResult){
             res.write('Generated Referral Code: ' + generatedResult._id);
             res.end();
@@ -65,7 +65,7 @@ async function createBuyCodeInAccountPromise(buyId,accountId,count){
 }
 
 router.get('/test',(req,res) => {
-  res.render('dashboard/referralCode');
+  res.render('x-login');
 });
 
 router.get('/test/buycode',(req,res) => {
@@ -83,6 +83,7 @@ router.get('/test/buycode',(req,res) => {
                 write += r[i] + ', '
                 accountReferralResult.referralCodes.push(r[i]);
                 accountReferralResult.unUsedReferralCodes.push(r[i]);
+                accountReferralResult.unAssignCodes.push(r[i]);
               }
               accountReferralResult.save(err => {
                 if(err){

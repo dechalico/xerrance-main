@@ -27,6 +27,11 @@ const generatedReferralCode = new mongoose.Schema({
   dateCreated: {
     type: Date,
     default: Date.now
+  },
+  leg: String,
+  isAssign:{
+    type: Boolean,
+    default: false
   }
 });
 
