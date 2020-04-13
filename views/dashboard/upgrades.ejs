@@ -1,0 +1,71 @@
+<%- include('../partials/header') %>
+
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Upgrades</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/dashboard/mining">Mining</a></li>
+            <li class="breadcrumb-item active">Upgrade</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <section class="content">
+    <!-- Default box -->
+    <div class="card card-solid">
+      <div class="card-body pb-0">
+        <div class="row d-flex align-items-stretch">
+          <% for(let i=0; i < data.ranking.length; i++) { %>
+            <div class="col-md-4 col-sm-6 col-12">               
+              <div class="card bg-light">
+                <div class="card-header text-muted border-bottom-0">
+                  <%- data.ranking[i].rankName %> 
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-7">
+                      <h2 class="lead"><b>Price: <%- data.ranking[i].rankLevel == 1 ? 'Free' : '$ ' + data.ranking[i].investment %> </b></h2>
+                      <p class="text-muted "><b>Hashrate :</b> <%- data.ranking[i].hashRate + ' ' + data.ranking[i].hashRateStr %> </p>
+                      <p class="text-muted "><b>Power :</b> <%- data.ranking[i].power %>  W</p>
+                      <p class="text-muted "><b>Earning :</b> $ <%- data.ranking[i].incomePerDay %> /day</p>
+                      <h2 class="lead"><b><%- data.ranking[i].gpuModel %> </b></h2>
+                    </div>
+                    <div class="col-5 text-center">
+                      <img src="<%- data.ranking[i].gpuImagePath %> " alt="" class="img-circle img-fluid">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="text-right">
+                    <% if(String(data.currentRankingId) == String(data.ranking[i]._id)) { %>
+                      <a href="#" class="btn btn-sm btn-danger disabled">
+                        Current Rank
+                      </a>
+                    <% } else { %>
+                      <a href="#" class="btn btn-sm btn-primary">
+                        Upgrade Now
+                      </a>
+                    <% } %>   
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% } %> 
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<%- include('../partials/footer') %>

@@ -7,6 +7,8 @@ const AccountSummary = require('../models/accountSummary');
 const MiningEngine = require('../models/miningEngine');
 const GeneratedReferralCode = require('../models/generatedReferralCode');
 const helper = require('../lib/helpers');
+const UpdateAccountSummary = require('../lib/code/updateAccountSummary');
+const Ranking = require('../models/ranking');
 
 const router = express.Router();
 
@@ -88,7 +90,7 @@ router.get('/dashboard/mining',indexMiddleware.isLoggedIn,(req,res) => {
           Number(req.query.page.trim()) > 0 && Number(req.query.page.trim()) <= dif ? Number(req.query.page.trim()) : 1;
         // options getting the data in minings
         const options = {
-          path: 'minings',
+          path: 'mining',
           options:{
             limit: limit,
             sort: {_id:-1},
@@ -105,12 +107,25 @@ router.get('/dashboard/mining',indexMiddleware.isLoggedIn,(req,res) => {
               isActive: page === i ? true : false
             });
           }
-          const data = {
-            minings: dataMining && dataMining.minings ? dataMining.minings : [],
-            pages: pages,
-          }
-          // render mining page
-          res.render('dashboard/mining',{data: data});
+          // get the ranking level of the account
+          Ranking.findById(account.miningPower,(err,ranking) => {
+            const data = {
+              minings: dataMining && dataMining.mining ? dataMining.mining : [],
+              pages: pages,
+              ranking: ranking ? {
+                hashRate: ranking.hashRate,
+                hashRateStr: ranking.hashRateStr,
+                power: ranking.power,
+                algorithm: ranking.algorithm,
+                incomePerDay: helper.formatDecimalToString(ranking.incomePerDay),
+                rankName: ranking.rankName,
+                gpuModel: ranking.gpuModel
+              } : null,
+              totalMiningIncome: helper.formatDecimalToString(dataMining.currentGrossIncome)
+            }
+            // render mining page
+            res.render('dashboard/mining',{data: data});
+          });
         });
       });
     } else {
@@ -318,6 +333,9 @@ router.post('/dashboard/referralcodes/:id',indexMiddleware.isLoggedIn,(req,res) 
                   // update referral code
                   referralCode.leg = leg;
                   referralCode.isAssign = true;
+                  // update account summary
+                  UpdateAccountSummary(account.accountSummaryId,accountReferral);
+                  // save and update accountReferralCodes
                   referralCode.save(err => {
                     if(err){
                       console.log('Erro when updating referral Code');
@@ -343,10 +361,20 @@ router.post('/dashboard/referralcodes/:id',indexMiddleware.isLoggedIn,(req,res) 
   }
 });
 
-router.get('/dashboard/profile',indexMiddleware.isLoggedIn,(req,res) => {
-  // assign user to session user and create referral link
-  const user = req.user;
-  res.render('dashboard/profile',{user: user,host: process.env.HOST,type: 'member'});
+router.get('/dashboard/mining/upgrade',indexMiddleware.isLoggedIn,(req,res) => {
+  Ranking.find({},(err,rankingResult) => {
+    Account.findById(req.user.accountId,(err,account) => {
+      if(!err && account){
+        const data = {
+          ranking: rankingResult,
+          currentRankingId: account.miningPower
+        }
+        res.render('dashboard/upgrades',{data: data});
+      } else {
+        res.redirect('/dashboard');
+      }
+    });
+  });
 });
 
 router.get('/dashboard/setting',indexMiddleware.isLoggedIn,(req,res) => {

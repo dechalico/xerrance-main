@@ -8,10 +8,21 @@ const miningEngine = new mongoose.Schema({
       ref: 'mining'
     }
   ],
+  upgradeHistory:[
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'upgradeHistory'
+    }
+  ],
+  currentGrossIncome:{
+    type: Number,
+    default: 0
+  },
   dateCreated: {
     type: Date,
     default: Date.now
-  }
+  },
+  dateLastUpdated: Date
 });
 
 module.exports = mongoose.model('miningEngine',miningEngine);

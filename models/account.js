@@ -8,8 +8,8 @@ const account = new mongoose.Schema({
   },
   // mining power on how many mine to multiply to percent. Ex: 1 by 26%
   miningPower: {
-    type: Number,
-    default: 1
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'ranking'
   },
   // associated to generatedReferralCode model, referral code use in registration
   genratedReferralCodeId: {
