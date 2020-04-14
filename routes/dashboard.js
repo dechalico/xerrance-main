@@ -9,6 +9,7 @@ const GeneratedReferralCode = require('../models/generatedReferralCode');
 const helper = require('../lib/helpers');
 const UpdateAccountSummary = require('../lib/code/updateAccountSummary');
 const Ranking = require('../models/ranking');
+const UpgradeHistory = require('../models/upgradeHistory');
 
 const router = express.Router();
 
@@ -58,7 +59,7 @@ router.get('/dashboard/home',indexMiddleware.isLoggedIn,(req,res) => {
             }
           };
           // render dashboard page
-          res.render('dashboard/dashboard',{data: data,type: 'member'});
+          res.render('dashboard/index',{data: data,type: 'member'});
         });
       });
     } else {
@@ -89,7 +90,7 @@ router.get('/dashboard/mining',indexMiddleware.isLoggedIn,(req,res) => {
         const page = typeof(req.query.page) === 'string' && Number.isInteger(Number(req.query.page.trim())) &&
           Number(req.query.page.trim()) > 0 && Number(req.query.page.trim()) <= dif ? Number(req.query.page.trim()) : 1;
         // options getting the data in minings
-        const options = {
+        const miningOptions = {
           path: 'mining',
           options:{
             limit: limit,
@@ -97,8 +98,15 @@ router.get('/dashboard/mining',indexMiddleware.isLoggedIn,(req,res) => {
             skip: limit * (page - 1)
           }
         };
+        const upgradeHistOption = {
+          path: 'upgradeHistory',
+          populate:[
+            {path: 'upgradedRank'},
+            {path: 'prevRank'}
+          ]
+        };
         // get and populate the miningEngine data
-        MiningEngine.findById(account.miningEngineId).populate(options).exec((err,dataMining) => {
+        MiningEngine.findById(account.miningEngineId).populate(miningOptions).populate(upgradeHistOption).exec((err,dataMining) => {
           // get and populate the miningEngine data
           const pages = [];
           for(i =1; i <= dif; i++){
@@ -121,10 +129,11 @@ router.get('/dashboard/mining',indexMiddleware.isLoggedIn,(req,res) => {
                 rankName: ranking.rankName,
                 gpuModel: ranking.gpuModel
               } : null,
-              totalMiningIncome: helper.formatDecimalToString(dataMining.currentGrossIncome)
+              totalMiningIncome: helper.formatDecimalToString(dataMining.currentGrossIncome),
+              upgrades: dataMining ? dataMining.upgradeHistory : []
             }
             // render mining page
-            res.render('dashboard/mining',{data: data});
+            res.render('dashboard/minings',{data: data});
           });
         });
       });
@@ -375,6 +384,10 @@ router.get('/dashboard/mining/upgrade',indexMiddleware.isLoggedIn,(req,res) => {
       }
     });
   });
+});
+
+router.get('/dashboard/network',(req,res) => {
+  res.render('dashboard/network');
 });
 
 router.get('/dashboard/setting',indexMiddleware.isLoggedIn,(req,res) => {

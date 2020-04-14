@@ -1,0 +1,207 @@
+<%- include('../partials/header') %>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Digital Mining</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+            <li class="breadcrumb-item is-active">Minings</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-3">
+              <!-- Profile Image -->
+              <div class="card card-primary card-outline">
+                <div class="card-body box-profile">
+                  <div class="text-center">
+                  </div>
+                  <div class="text-center">
+                    <img class="profile-user-img img-fluid img-circle" src="dist/img/rank/rank01_Miner.png" alt="User profile picture">
+                  </div>
+                  <h3 class="profile-username text-center">$ <%- data.totalMiningIncome %></h3>
+                  <p class="text-muted text-center">Total Mined Earnings</p>
+                  <ul class="list-group list-group-unbordered mb-3">
+                    <li class="list-group-item">
+                      <b>Rank</b> <a class="float-right"><%- data.ranking ? data.ranking.rankName : '' %></a>
+                    </li>
+                    <li class="list-group-item">
+                      <b>Daily Income</b> <a class="float-right">$ <%- data.ranking ? data.ranking.incomePerDay : '0.00' %></a>
+                    </li>                   
+                    <li class="list-group-item">
+                      <b>Hashrate</b> <a class="float-right"><%- data.ranking ? data.ranking.hashRate : '0' %>  <%- data.ranking ? data.ranking.hashRateStr : '' %></a>
+                    </li>        
+                    <li class="list-group-item">
+                      <b>Power</b> <a class="float-right"><%- data.ranking ? data.ranking.power : '0' %> W</a>
+                    </li>      
+                    <li class="list-group-item">
+                      <b>Algo</b> <a class="float-right"><%- data.ranking ? data.ranking.algorithm : '' %></a>
+                    </li>   
+                    <li class="list-group-item">
+                      <b>Device</b> <a class="float-right"><%- data.ranking ? data.ranking.gpuModel : '' %></a>
+                    </li>                             
+                  </ul>
+                  <a href="/dashboard/mining/upgrade" class="btn btn-primary btn-block"><b>Upgrade</b></a>
+                  <a href="withdraw.html" class="btn btn-danger btn-block"><b>Withdraw</b></a>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+              <div class="card">
+                <div class="card-header p-2">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link active" href="#earnings" data-toggle="tab">Earnings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#purchases" data-toggle="tab">Purchases</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#withdrawals" data-toggle="tab">Withdrawals</a></li>
+                  </ul>
+                </div><!-- /.card-header -->
+                <div class="card-body">
+                  <div class="tab-content">
+                    <div class="active tab-pane" id="earnings">
+                      <div class="card">
+                        <div class="card-header">
+                          <h3 class="card-title">Daily Earnings</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                              <tr>
+                                <th>Date</th>
+                                <th>Rank</th>
+                                <th>Mining Power</th>
+                                <th>Earnings</th>
+                                <th>Gross Income</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <% for(let i=0; i < data.minings.length; i++) { %>
+                                <% const dateCreated = new Date(data.minings[i].dateCreated)  %> 
+                                <% let month = (1 + dateCreated.getMonth()).toString(); %>
+                                <% month = month.length > 1 ? month : '0' + month; %>
+                                <% let day = dateCreated.getDate().toString(); %>
+                                <% day = day.length > 1 ? day : '0' + day; %>
+                                <tr>
+                                  <td><%- month + "/" + day + "/" + dateCreated.getFullYear() %></td>
+                                  <td><%- data.minings[i].rank %> </td>
+                                  <td><%- data.minings[i].power %> </td>
+                                  <td><%- data.minings[i].miningIncome %> </td>
+                                  <td><%- data.minings[i].grossIncome %> </td>
+                                </tr>
+                              <% } %> 
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- /.card-body -->
+                      </div>
+                      <!-- /.card -->
+                    </div>
+                    <div class="tab-pane" id="purchases">
+                      <div class="card">
+                        <div class="card-header">
+                          <h3 class="card-title">Purchases History</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          <table id="example3" class="table table-bordered table-striped">
+                            <thead>
+                              <tr>
+                                <th>Date</th>
+                                <th>Previous Rank</th>
+                                <th>Upgraded Rank</th>
+                                <th>Daily Earnings</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <% for(let i =0; i < data.upgrades.length; i++) { %>
+                                <% const dateCreated = new Date(data.upgrades[i].dateUpgraded)  %> 
+                                <% let month = (1 + dateCreated.getMonth()).toString(); %>
+                                <% month = month.length > 1 ? month : '0' + month; %>
+                                <% let day = dateCreated.getDate().toString(); %>
+                                <% day = day.length > 1 ? day : '0' + day; %>
+                                <tr>
+                                  <td><%- month + "/" + day + "/" + dateCreated.getFullYear() %></td>
+                                  <td><%- data.upgrades[i].prevRank.rankName %> </td>
+                                  <td><%- data.upgrades[i].upgradedRank.rankName %></td>
+                                  <td>$ <%- data.upgrades[i].upgradedRank.incomePerDay %></td>
+                                </tr>
+                              <% } %>  
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- /.card-body -->
+                      </div>
+                      <!-- /.card -->
+                    </div>
+                    <!-- /.tab-pane -->
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="withdrawals">
+                      <!-- The timeline -->
+                      <div class="card">
+                        <div class="card-header">
+                          <h3 class="card-title">Top Latest Withdrawals</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          <table id="example5" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                              <th>Date</th>
+                              <th>Rank</th>
+                              <th>Mining Power</th>
+                              <th>Earnings</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                              <td>2020-04-07</td>
+                              <td>Miner</td>
+                              <td>10 GHz</td>
+                              <td>$ 0.60</td>
+                            </tr>
+                            <tr>
+                              <td>2020-04-07</td>
+                              <td>Miner</td>
+                              <td>10 GHz</td>
+                              <td>$ 0.60</td>
+                            </tr>
+                          </table>
+                        </div>
+                        <!-- /.card-body -->
+                      </div>
+                    </div>
+                    <!-- /.tab-pane -->
+                  </div>
+                  <!-- /.tab-content -->
+                </div><!-- /.card-body -->
+              </div>
+              <!-- /.nav-tabs-custom -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+    </div>
+    <!-- /.row -->
+  </section>
+</div>
+<%- include('../partials/footer') %>

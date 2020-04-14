@@ -69,7 +69,7 @@ async function createBuyCodeInAccountPromise(buyId,accountId,count){
 }
 
 router.get('/test',(req,res) => {
-  res.render('dashboard/upgrades');
+  res.render('dashboard/network');
 });
 
 router.get('/test/buycode',(req,res) => {
