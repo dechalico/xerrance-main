@@ -36,47 +36,28 @@
 									</tr>
 								</thead>
 								<tbody>
-									<% if(data.referrals.referralCodes){  %>
-										<% for(i=0; i < data.referrals.referralCodes.length; i++) { %>
-											<% const codes = data.referrals.referralCodes[i]; %>
-											<% const dateCreated = new Date(codes.dateCreated)  %> 
-											<% let month = (1 + dateCreated.getMonth()).toString(); %>
-											<% month = month.length > 1 ? month : '0' + month; %>
-											<% let day = dateCreated.getDate().toString(); %>
-											<% day = day.length > 1 ? day : '0' + day; %>
-											<% let legStatus = ''; %>
-											<% const leftIndex = data.referrals.leftCodes.indexOf(codes._id) %>
-											<% const rightIndex = data.referrals.rightCodes.indexOf(codes._id)  %> 
-											<% if(leftIndex > -1) { %>
-												<% legStatus = 'Left'; %>
-												<% data.referrals.leftCodes.splice(leftIndex,1) %> 
-											<% } else if (rightIndex > -1) { %>
-												<% legStatus = 'Right'; %>
-												<% data.referrals.rightCodes.splice(rightIndex,1) %> 
-											<% } else { %>
-												<% legStatus = 'Pending' %> 
-											<% } %>  
-											<tr>
-												<td><%- month + "/" + day + "/" + dateCreated.getFullYear() %></td>
-												<td><%- codes._id %></td>
-												<td>
-													<input type="checkbox" disabled <%- codes.isUsed ? 'checked' : '' %>>
-												</td>
-												<td><%- legStatus %> </td>
-												<td><a href="/dashboard/referralcodes/<%- codes._id %> ">View</a></td>
-											</tr>
-										<% } %>
-									<% }  %> 
+									<% for(i=0; i < data.referrals.length; i++) { %>
+										<% const codes = data.referrals[i]; %>
+										<% const dateCreated = new Date(codes.dateCreated)  %> 
+										<% let month = (1 + dateCreated.getMonth()).toString(); %>
+										<% month = month.length > 1 ? month : '0' + month; %>
+										<% let day = dateCreated.getDate().toString(); %>
+										<% day = day.length > 1 ? day : '0' + day; %> 
+										<tr>
+											<td><%- month + "/" + day + "/" + dateCreated.getFullYear() %></td>
+											<td><%- codes._id %></td>
+											<td>
+												<input type="checkbox" disabled <%- codes.isUsed ? 'checked' : '' %>>
+											</td>
+											<td><%- codes.leg || 'Not Assigned' %> </td>
+											<td><a href="/dashboard/referralcodes/<%- codes._id %> ">View</a></td>
+										</tr>
+									<% } %>
                 </tbody>
 								</tbody>
 							</table>
 						</div>
 						<div class="card-footer clearfix">
-							<ul class="pagination pagination-sm m-0 float-right">
-								<% for(i=0; i < data.pages.length; i++) { %>
-									<li class="page-item <%- data.pages[i].isActive ? 'active' : '' %> "><a class="page-link" href="/dashboard/referralcodes?page=<%- data.pages[i].cnt %>"><%- data.pages[i].cnt %></a></li>
-								<% } %>
-							</ul>
 						</div>
 						<!-- /.card-body -->
 					</div>

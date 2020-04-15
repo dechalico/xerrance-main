@@ -42,14 +42,14 @@
                   <dd><%- data.status %> </dd>
                 <% } %>  
                 <dt>Downliner Account</dt>
-                <% if(data.used.isUsed) { %>
-                  <dd><a href="/dashboard/account/<%- data.used.downlinerAccountId %> "><%- data.used.downlinerAccountName %> </a></dd>
+                <% if(data.isUsed) { %>
+                  <dd><a href="/dashboard/account/<%- data.downlinerAccountId %> "><%- data.downlinerAccountName %> </a></dd>
                 <% } else { %>
                   <dd>Not been use</dd>
                 <% } %>   
                 <dt>Used By</dt>
-                <% if(data.used.isUsed) { %>
-                  <dd><a href="/dashboard/account/<%- data.used.usedAccountId %> "><%- data.used.usedAccountName %> </a></dd>
+                <% if(data.isUsed) { %>
+                  <dd><a href="/dashboard/account/<%- data.usedAccountId %> "><%- data.usedAccountName %> </a></dd>
                 <% } else { %>
                   <dd>Not been use</dd>
                 <% } %>  

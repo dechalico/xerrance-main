@@ -67,6 +67,15 @@ const accountReferralCode = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'account'
     }
+  ],
+  downlinesPairing:[
+    {
+      count: Number,
+      account:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'account'
+      }
+    }
   ]
 });
 

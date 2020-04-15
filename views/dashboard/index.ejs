@@ -31,7 +31,7 @@
               </div>
               <!-- /.widget-user-image -->
               <h5 class="widget-user-desc">Account  Balance</h5>
-              <h3 class="widget-user-desc"><%- data.summary.gross %></h3>
+              <h3 class="widget-user-desc"><%- data.accountBalance %></h3>
             </div>
             <div class="card-footer p-0">
               <ul class="nav flex-column">
@@ -52,7 +52,7 @@
                         <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
                         <div class="info-box-content">
                           <span class="info-box-text">Digital Mining Income</span>
-                          <span class="info-box-number">$ <%- data.summary.mining %></span>
+                          <span class="info-box-number">$ <%- data.miningIncome %></span>
                         </div>
                       </div>
                     </a>
@@ -61,7 +61,7 @@
                         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
                         <div class="info-box-content">
                           <span class="info-box-text">Referral Commission</span>
-                          <span class="info-box-number">$ <%- data.summary.referral %></span>
+                          <span class="info-box-number">$ <%- data.referralCommission %></span>
                         </div>
                       </div>
                     </a>
@@ -70,7 +70,7 @@
                         <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
                         <div class="info-box-content">
                           <span class="info-box-text">Pairing Commission</span>
-                          <span class="info-box-number">$ <%- data.summary.pairing %></span>
+                          <span class="info-box-number">$ <%- data.pairingCommision %></span>
                         </div>
                       </div>
                     </a>
@@ -79,7 +79,7 @@
                         <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
                         <div class="info-box-content">
                           <span class="info-box-text">Network Bonus</span>
-                          <span class="info-box-number">$ <%- data.summary.network %></span>
+                          <span class="info-box-number">$ <%- data.networkBonus %></span>
                         </div>
                       </div>
                     </a>
@@ -93,12 +93,12 @@
               <span class="info-box-icon"><i class="far fa-calendar-alt"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">Contract</span>
-                <span class="info-box-number">1 / 124</span>
+                <span class="info-box-number"><%- data.daysConsume %> / 124</span>
                 <div class="progress">
-                  <div class="progress-bar" style="width: 1%"></div>
+                  <div class="progress-bar" style="width: <%- data.daysConsume %>%"></div>
                 </div>
                 <span class="progress-description">
-                  You have 124 days left
+                  You have <%- data.daysLeft %>  days left
                 </span>
               </div>
               <!-- /.info-box-content -->
@@ -114,14 +114,14 @@
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="widget-user-header bg-info">
               <h3 class="widget-user-desc">Network Stream</h3>
-              <h2 class="widget-user-desc"><%- data.summary.networkType %></h2>
-              <h6 class="description-header">Total Pair(s): <%- data.summary.pairs %></h6>
+              <h2 class="widget-user-desc"><%- data.networkTitle %></h2>
+              <h6 class="description-header">Total Pair(s): <%- data.totalPairs %></h6>
             </div>
             <div class="card-footer">
               <div class="row">
                 <div class="col-sm-4 border-right">
                   <div class="description-block">
-                    <h5 class="description-header"><%- data.summary.left %></h5>
+                    <h5 class="description-header"><%- data.left %></h5>
                     <span class="description-text">LEFT</span>
                   </div>
                   <!-- /.description-block -->
@@ -129,7 +129,7 @@
                 <!-- /.col -->
                 <div class="col-sm-4 border-right">
                   <div class="description-block">
-                    <h5 class="description-header"><%- data.summary.downline %></h5>
+                    <h5 class="description-header"><%- data.downlines %></h5>
                     <span class="description-text">Downline</span>
                   </div>
                   <!-- /.description-block -->
@@ -137,7 +137,7 @@
                 <!-- /.col -->
                 <div class="col-sm-4">
                   <div class="description-block">
-                    <h5 class="description-header"><%- data.summary.right %></h5>
+                    <h5 class="description-header"><%- data.right %></h5>
                     <span class="description-text">RIGHT</span>
                   </div>
                   <!-- /.description-block -->
@@ -163,17 +163,17 @@
               <ul class="nav flex-column">
                 <li class="nav-item">
                   <a href="#" class="nav-link">
-                    Referral Codes <span class="float-right badge bg-primary"><%- data.referral.codes %></span>
+                    Referral Codes <span class="float-right badge bg-primary"><%- data.referralCodes %></span>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="#" class="nav-link">
-                    Used <span class="float-right badge bg-info"><%- data.referral.isUsed %> 0</span>
+                    Used <span class="float-right badge bg-info"><%- data.usedReferralCodes %></span>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="#" class="nav-link">
-                    Unused <span class="float-right badge bg-danger"><%- data.referral.unUsed %></span>
+                    Unused <span class="float-right badge bg-danger"><%- data.unUsedReferralCodes %></span>
                   </a>
                 </li>
               </ul>

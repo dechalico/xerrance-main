@@ -37,22 +37,22 @@
                   <p class="text-muted text-center">Total Mined Earnings</p>
                   <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
-                      <b>Rank</b> <a class="float-right"><%- data.ranking ? data.ranking.rankName : '' %></a>
+                      <b>Rank</b> <a class="float-right"><%- data.rank %></a>
                     </li>
                     <li class="list-group-item">
-                      <b>Daily Income</b> <a class="float-right">$ <%- data.ranking ? data.ranking.incomePerDay : '0.00' %></a>
+                      <b>Daily Income</b> <a class="float-right">$ <%- data.dailyIncome %></a>
                     </li>                   
                     <li class="list-group-item">
-                      <b>Hashrate</b> <a class="float-right"><%- data.ranking ? data.ranking.hashRate : '0' %>  <%- data.ranking ? data.ranking.hashRateStr : '' %></a>
+                      <b>Hashrate</b> <a class="float-right"><%- data.hashRate %></a>
                     </li>        
                     <li class="list-group-item">
-                      <b>Power</b> <a class="float-right"><%- data.ranking ? data.ranking.power : '0' %> W</a>
+                      <b>Power</b> <a class="float-right"><%- data.power %> W</a>
                     </li>      
                     <li class="list-group-item">
-                      <b>Algo</b> <a class="float-right"><%- data.ranking ? data.ranking.algorithm : '' %></a>
+                      <b>Algo</b> <a class="float-right"><%- data.algo %></a>
                     </li>   
                     <li class="list-group-item">
-                      <b>Device</b> <a class="float-right"><%- data.ranking ? data.ranking.gpuModel : '' %></a>
+                      <b>Device</b> <a class="float-right"><%- data.device %></a>
                     </li>                             
                   </ul>
                   <a href="/dashboard/mining/upgrade" class="btn btn-primary btn-block"><b>Upgrade</b></a>
@@ -81,7 +81,7 @@
                           <h3 class="card-title">Daily Earnings</h3>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body">
+                        <div class="card-body table-responsive p-0">
                           <table id="example1" class="table table-bordered table-striped">
                             <thead>
                               <tr>
@@ -120,7 +120,7 @@
                           <h3 class="card-title">Purchases History</h3>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body">
+                        <div class="card-body table-responsive p-0">
                           <table id="example3" class="table table-bordered table-striped">
                             <thead>
                               <tr>
@@ -131,17 +131,17 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <% for(let i =0; i < data.upgrades.length; i++) { %>
-                                <% const dateCreated = new Date(data.upgrades[i].dateUpgraded)  %> 
+                              <% for(let i =0; i < data.purchases.length; i++) { %>
+                                <% const dateCreated = new Date(data.purchases[i].dateUpgraded)  %> 
                                 <% let month = (1 + dateCreated.getMonth()).toString(); %>
                                 <% month = month.length > 1 ? month : '0' + month; %>
                                 <% let day = dateCreated.getDate().toString(); %>
                                 <% day = day.length > 1 ? day : '0' + day; %>
                                 <tr>
                                   <td><%- month + "/" + day + "/" + dateCreated.getFullYear() %></td>
-                                  <td><%- data.upgrades[i].prevRank.rankName %> </td>
-                                  <td><%- data.upgrades[i].upgradedRank.rankName %></td>
-                                  <td>$ <%- data.upgrades[i].upgradedRank.incomePerDay %></td>
+                                  <td><%- data.purchases[i].prevRank.rankName %> </td>
+                                  <td><%- data.purchases[i].upgradedRank.rankName %></td>
+                                  <td>$ <%- data.purchases[i].upgradedRank.incomePerDay %></td>
                                 </tr>
                               <% } %>  
                             </tbody>
@@ -160,7 +160,7 @@
                           <h3 class="card-title">Top Latest Withdrawals</h3>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body">
+                        <div class="card-body table-responsive p-0">
                           <table id="example5" class="table table-bordered table-striped">
                             <thead>
                             <tr>

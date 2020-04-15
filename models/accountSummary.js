@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const accountSummary = new mongoose.Schema({
+  // date renew, default to current date when first account verified
+  lastDateRenew: {
+    type: Date,
+    default: Date.now
+  },
   // count of all used referral codes
   useReferralCodes: {
     type: Number,
@@ -50,6 +55,10 @@ const accountSummary = new mongoose.Schema({
   networkBonus: {
     type: Number,
     default: 0
+  },
+  networkTitle:{
+    type: String,
+    default: 'Newbie'
   },
   // total gross income
   grossIncome: {
