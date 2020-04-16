@@ -8,6 +8,8 @@ const DashboardMinings = require('../lib/code/dashboard/mining');
 const DashboardReferralCodes = require('../lib/code/dashboard/referralCodes');
 const DashboardReferralCode = require('../lib/code/dashboard/referralCode');
 const DashboardPostReferralCode =require('../lib/code/dashboard/PostreferralCode');
+const DashboardNetwork = require('../lib/code/dashboard/network');
+const DashboardNetworkAccount = require('../lib/code/dashboard/networkAccount');
 
 const router = express.Router();
 
@@ -94,8 +96,28 @@ router.get('/dashboard/mining/upgrade',indexMiddleware.isLoggedIn,(req,res) => {
   });
 });
 
-router.get('/dashboard/network',(req,res) => {
-  res.render('dashboard/network');
+router.get('/dashboard/network',indexMiddleware.isLoggedIn,(req,res) => {
+  // get the account of member login
+  const user = req.user;
+  DashboardNetwork(user.accountId,(isValid,data) => {
+    if(isValid){ 
+      res.render('dashboard/network',{data: data,isSearch : false});
+    } else {
+      res.redirect('/logout');
+    }
+  });
+});
+
+router.get('/dashboard/network/:id',indexMiddleware.isLoggedIn,(req,res) => {
+  // get the account of member login
+  const user = req.user;
+  DashboardNetworkAccount(user.accountId,req.params.id,(isValid,data) => {
+    if(isValid){ 
+      res.render('dashboard/network',{data: data,isSearch: true});
+    } else {
+      res.redirect('/logout');
+    }
+  });
 });
 
 router.get('/dashboard/setting',indexMiddleware.isLoggedIn,(req,res) => {

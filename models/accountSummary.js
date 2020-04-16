@@ -21,6 +21,11 @@ const accountSummary = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  // count of all direct referrals
+  directReferrals: {
+    type: Number,
+    default: 0
+  },
   // total referral commission
   referralCommission: {
     type: Number,
@@ -46,6 +51,16 @@ const accountSummary = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  // total count of left codes including downline accounts
+  totalLeftCodes:{
+    type: Number,
+    default: 0
+  },
+  // total count of right codes including downline accounts
+  totalRightCodes:{
+    type: Number,
+    default: 0
+  },
   // total of pairing commission
   pairingCommission: {
     type: Number,
@@ -59,6 +74,11 @@ const accountSummary = new mongoose.Schema({
   networkTitle:{
     type: String,
     default: 'Newbie'
+  },
+  // acount of return capital
+  returnedCapital: {
+    type: Number,
+    default: 0
   },
   // total gross income
   grossIncome: {

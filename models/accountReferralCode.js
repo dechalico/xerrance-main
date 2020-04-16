@@ -51,6 +51,10 @@ const accountReferralCode = new mongoose.Schema({
   levels:[
     {
       level: Number,
+      accountName: {
+        type: String,
+        default: ''
+      },
       account:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'account'
@@ -68,10 +72,12 @@ const accountReferralCode = new mongoose.Schema({
       ref: 'account'
     }
   ],
-  downlinesPairing:[
+  downlinesLeg:[
     {
-      count: Number,
-      account:{
+      pairCount: Number,
+      left: Number,
+      right: Number,
+      account: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'account'
       }

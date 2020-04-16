@@ -11,7 +11,12 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
-            <li class="breadcrumb-item">Network</a></li>
+            <% if(isSearch) { %>
+              <li class="breadcrumb-item"><a href="/dashboard/network">Network</a></li>
+              <li class="breadcrumb-item active"><%- data.searchId %> </li>
+            <% } else { %>
+              <li class="breadcrumb-item active">Network</li>
+            <% } %>  
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -33,35 +38,35 @@
                   <div class="text-center">
                     <img class="profile-user-img img-fluid img-circle" src="dist/img/rank/rank01_Miner.png" alt="User profile picture">
                   </div>
-                  <h3 class="profile-username text-center">$ 12,878.00</h3>
+                  <h3 class="profile-username text-center">$ <%- data.totalBonus %> </h3>
                   <p class="text-muted text-center">Total Earning Bonus</p>
                   <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
-                      <b>Level</b> <a class="float-right">Team Leader</a>
+                      <b>Level</b> <a class="float-right"><%- data.level %> </a>
                     </li>
                     <li class="list-group-item">
-                      <b>Pairs</b> <a class="float-right">50</a>
+                      <b>Pairs</b> <a class="float-right"><%- data.pairs %> </a>
                     </li>    
                     <li class="list-group-item">
-                      <b>Left</b> <a class="float-right">51</a>
+                      <b>Left</b> <a class="float-right"><%- data.left %> </a>
                     </li>
                     <li class="list-group-item">
-                      <b>Right</b> <a class="float-right">50</a>
+                      <b>Right</b> <a class="float-right"><%- data.right %> </a>
                     </li> 
                     <li class="list-group-item">
-                      <b>Downline</b> <a class="float-right">101</a>
+                      <b>Downline</b> <a class="float-right"><%- data.downline %> </a>
                     </li>   
                     <li class="list-group-item">
-                      <b>Network Bonus</b> <a class="float-right">$ 60.00</a>
+                      <b>Network Bonus</b> <a class="float-right">$ <%- data.networkBonus %> </a>
                     </li>    
                     <li class="list-group-item">
-                      <b>Pairing Bonus</b> <a class="float-right">$ 60.00</a>
+                      <b>Pairing Bonus</b> <a class="float-right">$ <%- data.pairingBonus %> </a>
                     </li>  
                     <li class="list-group-item">
-                      <b>Referral Bonus</b> <a class="float-right">$ 60.00</a>
+                      <b>Referral Bonus</b> <a class="float-right">$ <%- data.referralBonus %> </a>
                     </li>      
                     <li class="list-group-item">
-                      <b>Withdrawals</b> <a class="float-right">$ 60.00</a>
+                      <b>Withdrawals</b> <a class="float-right">$ <%- data.totalWithdrawals %> </a>
                     </li>                      
                   </ul>
                   <a href="buyreferral.html" class="btn btn-primary btn-block"><b>Buy Referral Code</b></a>
@@ -89,17 +94,17 @@
                   <ul class="nav flex-column">
                     <li class="nav-item">
                       <a href="referrals.html" class="nav-link">
-                        Referral Codes <span class="float-right badge bg-primary">109</span>
+                        Referral Codes <span class="float-right badge bg-primary"><%- data.referralCodes %> </span>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a href="referrals.html" class="nav-link">
-                        Used <span class="float-right badge bg-info">109</span>
+                        Used <span class="float-right badge bg-info"><%- data.usedReferrals %> </span>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a href="referrals.html" class="nav-link">
-                        Unused <span class="float-right badge bg-danger">0</span>
+                        Unused <span class="float-right badge bg-danger"><%- data.unUsedReferrals %> </span>
                       </a>
                     </li>
                   </ul>
@@ -132,44 +137,42 @@
                           <div class="tree">
                             <ul>
                               <li>
-                                <a href="#"><img src="dist/img/avatar04.png" style="border-radius: 50%;width:  100px;"></a>
-                                <h3>Ryan</h3>
+                                <a href="javascript:void(0)"><img src="dist/img/avatar04.png" style="border-radius: 50%;width:  100px;"></a>
+                                <h3><%- data.accountName %> </h3>
                                 <ul>
                                   <li>
-                                    <a href="#"><img src="dist/img/avatar04.png" style="border-radius: 50%;width:  50px;"></a>
-                                    <h5>Brian Gwapo</h5>   
-                                    <ul>
-                                      <a href="#"><img src="dist/img/avatar04.png" style="border-radius: 50%;width:  50px;"></a>
-                                      <h5>Kuya Deb</h5>  
-                                    </ul>                                        
+                                    <% if(data.leftTree.length > 0) { %>
+                                      <% for(let i=0; i < data.leftTree.length; i++){ %>
+                                        <% if(data.leftTree[i].level == 1) { %>
+                                          <a href="/dashboard/network/<%- data.leftTree[i].account %>"><img src="dist/img/avatar04.png" style="border-radius: 50%;width:  50px;"></a>
+                                          <h5><%- data.leftTree[i].accountName %></h5>   
+                                        <% } else { %>
+                                          <ul>
+                                            <a href="/dashboard/network/<%- data.leftTree[i].account %>"><img src="dist/img/avatar04.png" style="border-radius: 50%;width:  50px;"></a>
+                                            <h5><%- data.leftTree[i].accountName %></h5>  
+                                          </ul>  
+                                        <% } %>
+                                      <% } %>  
+                                    <% } else { %>
+                                      <a href="javascript:void(0)"><img src="dist/img/avatar04.png" style="border-radius: 50%;width:  50px;"></a>
+                                    <% } %>                         
                                   </li>
                                   <li>
-                                    <a href="#"><img src="dist/img/avatar04.png" style="border-radius: 50%;width:  50px;"></a>
-                                    <h5>Jiji Gwapo</h5>  
-                                    <ul>
-                                      <a href="#"><img src="dist/img/avatar04.png" style="border-radius: 50%;width:  50px;"></a>
-                                      <h5>Jiji Gwapo</h5>  
-                                    </ul>      
-                                    <ul>
-                                      <a href="#"><img src="dist/img/avatar04.png" style="border-radius: 50%;width:  50px;"></a>
-                                      <h5>Jiji Gwapo</h5>  
-                                    </ul>   
-                                    <ul>
-                                      <a href="#"><img src="dist/img/avatar04.png" style="border-radius: 50%;width:  50px;"></a>
-                                      <h5>Jiji Gwapo</h5>  
-                                    </ul>    
-                                    <ul>
-                                      <a href="#"><img src="dist/img/avatar04.png" style="border-radius: 50%;width:  50px;"></a>
-                                      <h5>Jiji Gwapo</h5>  
-                                    </ul>    
-                                    <ul>
-                                      <a href="#"><img src="dist/img/avatar04.png" style="border-radius: 50%;width:  50px;"></a>
-                                      <h5>Jiji Gwapo</h5>  
-                                    </ul>  
-                                    <ul>
-                                      <a href="#"><img src="dist/img/avatar04.png" style="border-radius: 50%;width:  50px;"></a>
-                                      <h5>Jiji Gwapo</h5>  
-                                    </ul>                                    
+                                    <% if(data.rightTree.length > 0) { %>
+                                      <% for(let i=0; i < data.rightTree.length; i++){ %>
+                                        <% if(data.rightTree[i].level == 1) { %>
+                                          <a href="/dashboard/network/<%- data.rightTree[i].account %>"><img src="dist/img/avatar04.png" style="border-radius: 50%;width:  50px;"></a>
+                                          <h5><%- data.rightTree[i].accountName %></h5>   
+                                        <% } else { %>
+                                          <ul>
+                                            <a href="/dashboard/network/<%- data.rightTree[i].account %>"><img src="dist/img/avatar04.png" style="border-radius: 50%;width:  50px;"></a>
+                                            <h5><%- data.rightTree[i].accountName %></h5>>  
+                                          </ul>  
+                                        <% } %>
+                                      <% } %>  
+                                    <% } else { %>
+                                      <a href="javascript:void(0)"><img src="dist/img/avatar04.png" style="border-radius: 50%;width:  50px;"></a>
+                                    <% } %>                                    
                                   </li> 
                                 </ul>
                               </li>
