@@ -202,18 +202,19 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>2020-04-07</td>
-                                <td>$ 70</td>
-                                <td>5</td>
-                                <td>$ 350</td>
-                              </tr>
-                              <tr>
-                                <td>2020-04-07</td>
-                                <td>$ 70</td>
-                                <td>5</td>
-                                <td>$ 350</td>
-                              </tr>
+                              <% for(let i=0; i < data.purchases.length; i++) { %>
+                                <% const dateCreated = new Date(data.purchases[i].dateCreated)  %> 
+                                <% let month = (1 + dateCreated.getMonth()).toString(); %>
+                                <% month = month.length > 1 ? month : '0' + month; %>
+                                <% let day = dateCreated.getDate().toString(); %>
+                                <% day = day.length > 1 ? day : '0' + day; %> 
+                                <tr>
+                                  <td><%- month + "/" + day + "/" + dateCreated.getFullYear() %></td>
+                                  <td>$ 70</td>
+                                  <td><%- data.purchases[i].quantity %> </td>
+                                  <td>$ <%- data.purchases[i].totalUsdPrice %> </td>
+                                </tr>
+                              <% } %>  
                             </tbody>
                           </table>
                         </div>

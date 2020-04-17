@@ -13,6 +13,7 @@ const Ranking = require('../models/ranking');
 const UpdateAccountSummary = require('../lib/code/updateAccountSummary');
 const MiningCycle = require('../lib/code/miningCycle');
 const UpgradeHistory = require('../models/upgradeHistory');
+const Purchase = require('../models/purchase');
 
 router.get('/test/referral',(req,res) => {
   if(typeof(req.query.token) === 'string' && req.query.token.trim().length > 0
@@ -78,7 +79,17 @@ router.get('/test/buycode',(req,res) => {
 
   Account.findById(id,(err,account) => {
     if(!err && account){
-      BuyCodeInAccount.create({accountId: id,quantity: count}).then(buyData => {
+      BuyCodeInAccount.create({accountId: id,quantity: count,totalUsdPrice: 0}).then(buyData => {
+        Purchase.findById(account.purchaseId,(err,purchase) => {
+          if(!err && purchase){
+            purchase.referralCodes.push(buyData._id);
+            purchase.save(err => {
+              if(err){
+                console.log('Error when updating purchase items in account');
+              }
+            });
+          }
+        });
         createBuyCodeInAccountPromise(buyData._id,id,count).then(r => {
           AccountReferralCode.findById(account.accountReferralCodeId,(err,accountReferralResult) => {
             if(!err && accountReferralResult){
@@ -89,10 +100,11 @@ router.get('/test/buycode',(req,res) => {
                 accountReferralResult.unUsedReferralCodes.push(r[i]);
                 accountReferralResult.unAssignCodes.push(r[i]);
               }
-              // update accountSummary
-              UpdateAccountSummary(account.accountSummaryId,accountReferralResult);
+              
               // update and save accountReferralCodes
               accountReferralResult.save(err => {
+                // update accountSummary
+                UpdateAccountSummary(account);
                 if(err){
                   console.log('Error when updating the account referral codes');
                 }
@@ -162,6 +174,18 @@ router.get('/test/clear',(req,res) => {
   MiningEngine.deleteMany({},err => {
     if(!err){
       console.log('Mining Engine Collection Successfully Clear Data');
+    }
+  });
+
+  UpgradeHistory.deleteMany({},err => {
+    if(!err){
+      console.log('Upgrade History Collection Successfully Clear Data');
+    }
+  });
+
+  Purchase.deleteMany({},err => {
+    if(!err){
+      console.log('Purchase Collection Successfully Clear Data');
     }
   });
 
@@ -478,7 +502,7 @@ router.get('/test/upgrade',(req,res) => {
       if(!err && accountData){
         Ranking.findById(accountData.miningPower,(err,ranking) => {
           if(!err && ranking){
-            if(ranking.rankLevel > level){
+            if(ranking.rankLevel >= level){
               res.write('Can\'t set downgrade ranking level');
               res.end();
             } else {

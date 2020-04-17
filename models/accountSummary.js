@@ -46,6 +46,16 @@ const accountSummary = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  // count of referral codes use in left leg
+  usedLeftCodes:{
+    type: Number,
+    default: 0
+  },
+  // count of referral codes use in right leg
+  usedRightCodes:{
+    type: Number,
+    default: 0
+  },
   // count of total pairs including pairs of downline accounts
   totalPairs: {
     type: Number,

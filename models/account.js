@@ -31,6 +31,11 @@ const account = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'miningEngine'
   },
+  // associated to purchase model, where all purchase trnsaction type stored
+  purchaseId:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'purchase'
+  },
   dateCreated: {
     type: Date,
     default: Date.now
