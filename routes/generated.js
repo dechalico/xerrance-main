@@ -70,7 +70,12 @@ async function createBuyCodeInAccountPromise(buyId,accountId,count){
 }
 
 router.get('/test',(req,res) => {
-  res.render('dashboard/network');
+  const data = {
+    header: 'Upgrade Rank',
+    title: ' We\'ve got your order!',
+    body: 'Your order has been placed. We send a message to your email to continue your payment.'
+  };
+  res.render('dashboard/message',{data: data});
 });
 
 router.get('/test/buycode',(req,res) => {

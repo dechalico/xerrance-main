@@ -1,0 +1,67 @@
+<%- include('../partials/header') %>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Upgrade Earnings</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>      
+            <li class="breadcrumb-item"><a href="/dashboard/mining">Mining</a></li>
+            <li class="breadcrumb-item"><a href="/dashboard/mining/upgrade">Upgrade</a></li>
+            <li class="breadcrumb-item active"><%- rank._id %> </li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <section class="content">
+    <section class="content">
+      <!-- Default box -->
+      <div class="card card-solid">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-sm-12">
+              <h3 class="my-3">Xerrance Ranking Upgrade</h3>
+              <hr>
+              <div class="bg-gray py-2 px-3 mt-4">
+                <h1 id="totals" class="mb-0"><%- rank.rankName %> </h1>
+                <h4 class="mt-0">
+                  <small>Power : <%- rank.power %>  W</small>
+                </h4>
+                <h4 class="mt-0">
+                  <small>Earning : $ <%- rank.incomePerDay %>  /day</small>
+                </h4>
+                <h4 class="mt-0">
+                  <small><%- rank.gpuModel %> </small>
+                </h4>
+                <h4 class="mt-0">
+                  <b>Pirce: $ <%- rank.investment %> </b>
+                </h4>
+              </div>
+              <div class="mt-4">
+                <a href="" class="blockoPayBtn" data-toggle="modal" data-uid=2bf2d066819c11ea 
+                  data-price="<%- rank.investment %> " data-extra="transId:<%- id %>##type:rank##token:<%- token %> ">
+                  <img width=160 src="https://www.blockonomics.co/img/pay_with_bitcoin_medium.png">
+              </a>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+    </section>
+    <!-- /.card-body -->
+  </section>
+</div>
+<!-- /.content-wrapper -->
+<%- include('../partials/footer') %>
+<script src="https://www.blockonomics.co/js/pay_button.js"></script>

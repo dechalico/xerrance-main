@@ -47,7 +47,11 @@ router.get('/login',(req,res) => {
   if(req.isAuthenticated()){
     res.redirect('/dashboard');
   } else{
-    res.render('login',{host: process.env.HOST});
+    let data = null;
+    if(req.query.callback && req.query.id){
+      data = req.query.callback + "&id=" + req.query.id;
+    }
+    res.render('login',{host: process.env.HOST, data: data});
   }
 });
 
@@ -67,7 +71,11 @@ router.post('/login', function(req, res, next) {
           if (err) { 
             return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
           }
-          return res.redirect('/dashboard');
+          if(typeof(req.body.callback) == 'string' && req.body.callback.trim().length > 10){
+            res.redirect(req.body.callback.trim());
+          } else {
+            return res.redirect('/dashboard');
+          }
         });
       })(req, res, next);
     } else {
