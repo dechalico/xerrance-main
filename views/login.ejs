@@ -65,7 +65,7 @@ style="background: url('dist/img/wallhaven-nzoywo.png') 100% 0 repeat-y fixed; b
           <span class="text-danger"> </span>
           <span class="text-sm text-danger"><%- message.error %></span>
         <% } %>
-        <input type="hidden" value="<%- data ? data : '' %> " name="callback">
+        <input type="hidden" value="<%- typeOf(data) == 'string' ? data : '' %> " name="callback">
       </form>
       <p class="mb-1">
         <a href="/register">I forgot my password</a>
