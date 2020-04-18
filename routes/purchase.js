@@ -4,6 +4,7 @@ const Purchase = require('../models/purchase');
 const UpgradeHist = require('../models/upgradeHistory');
 const MiningEngine = require('../models/miningEngine');
 const helper = require('../lib/helpers');
+const Ranking = require('../models/ranking');
 
 const router = express.Router();
 
