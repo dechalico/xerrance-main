@@ -7,6 +7,7 @@ const helper = require('../lib/helpers');
 const Ranking = require('../models/ranking');
 const BuyInAccoount = require('../models/buyCodeInAccount');
 const GeneratedReferralCode = require('../models/generatedReferralCode');
+const AccountReferralCodes = require('../models/accountReferralCode');
 
 const router = express.Router();
 
@@ -186,9 +187,6 @@ router.get("/purchase/payment/success",(req,res) => {
                                   if(err){
                                     // error when updating purchase details
                                     console.log('Error when updating purchase');
-                                  } else {
-                                    // successfully payed
-                                    res.redirect('/dashboard/referralcodes');
                                   }
                                 });
                               } else {
@@ -197,6 +195,30 @@ router.get("/purchase/payment/success",(req,res) => {
                                 res.redirect('/dashboard/network');
                               }
                             });
+                            // get the account referral codes
+                            AccountReferralCodes.findById(account.accountReferralCodeId,(err,accountReferralCodes) => {
+                              if(!err && accountReferralCodes){
+                                accountReferralCodes.referralCodes.push(...data);
+                                accountReferralCodes.unUsedReferralCodes.push(...data);
+                                accountReferralCodes.unAssignCodes.push(...data);
+                                // save and update account referralcodes
+                                accountReferralCodes.save(err => {
+                                  if(err){
+                                    // error when updating accountReferralCode
+                                    console.log('Error when updating account referral code');
+                                    res.redirect('/dashboard/network');
+                                  } else {
+                                    // successfully payed
+                                    res.redirect('/dashboard/network');
+                                  }
+                                });
+                              } else {
+                                // error no accounReferralCodes found
+                                console.log('No accountReferralCodes found');
+                                res.redirect('/dashboard/network');
+                              }
+                            });
+                            
                           });
                         } else {
                           // transaction data already payed
