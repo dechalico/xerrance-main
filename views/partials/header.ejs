@@ -162,7 +162,7 @@
                with font-awesome or any other icon font library -->
           <li class="nav-header">Transactions</li>
           <li class="nav-item">
-            <a href="/dashboard" class="nav-link">
+            <a href="/dashboard" class="nav-link <%- typeof(active) == 'number' && active == 1 ?  'active' : '' %>">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -170,7 +170,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/dashboard/mining" class="nav-link">
+            <a href="/dashboard/mining" class="nav-link <%- typeof(active) == 'number' && active == 2 ?  'active' : '' %>">
               <i class="nav-icon fas fa-cloud-download-alt"></i>
               <p>
                 Mining
@@ -178,7 +178,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/dashboard/referralcodes" class="nav-link">
+            <a href="/dashboard/referralcodes" class="nav-link <%- typeof(active) == 'number' && active == 3 ?  'active' : '' %>">
               <i class="nav-icon fas fa-key"></i>
               <p>
                 Referral Codes
@@ -186,7 +186,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/dashboard/network" class="nav-link">
+            <a href="/dashboard/network" class="nav-link <%- typeof(active) == 'number' && active == 4 ?  'active' : '' %>">
               <i class="nav-icon far fa-plus-square"></i>
               <p>
                 Network
@@ -195,7 +195,7 @@
           </li>
           <li class="nav-header">Settings</li>
           <li class="nav-item">
-            <a href="/dashboard/setting" class="nav-link">
+            <a href="/dashboard/setting" class="nav-link <%- typeof(active) == 'number' && active == 5 ?  'active' : '' %>">
               <i class="nav-icon fas fa-cogs"></i>
               <p>
                 Site Setting

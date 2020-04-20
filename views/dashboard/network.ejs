@@ -83,10 +83,10 @@
                 <div class="card-body">
                   <strong><i class="fas fa-book mr-1"></i> Direct referrals</strong>
                   <p class="text-muted">
-                    10 out of 10
+                    <%- data.directReferrals %>  out of 2
                   </p>
                   <div class="progress">
-                    <div class="progress-bar bg-primary progress-bar-striped" role="progressbar" aria-valuenow="1" aria-valuemin="20" aria-valuemax="20" style="width: 100%">
+                    <div class="progress-bar bg-primary progress-bar-striped" role="progressbar" aria-valuenow="1" aria-valuemin="20" aria-valuemax="20" style="<%- 'width: ' + ((data.directReferrals /2) * 100) + '%'%>">
                       <span class="sr-only">1% Complete (success)</span>
                     </div>
                   </div>
@@ -130,7 +130,7 @@
                     <div class="active tab-pane" id="tree">
                       <div class="card">
                         <div class="card-header">
-                          <h3 class="card-title">Tree</h3>
+                          <h3 class="card-title">Network Tree</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -191,7 +191,7 @@
                           <h3 class="card-title">Latest Purchases History</h3>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body">
+                        <div class="card-body table-responsive p-0">
                           <table id="example5" class="table table-bordered table-striped">
                             <thead>
                               <tr>
@@ -228,7 +228,7 @@
                           <h3 class="card-title">Latest Withdrawals History</h3>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body">
+                        <div class="card-body table-responsive p-0">
                           <table id="example7" class="table table-bordered table-striped">
                             <thead>
                               <tr>

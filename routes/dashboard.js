@@ -21,7 +21,7 @@ router.get('/dashboard/home',indexMiddleware.isLoggedIn,(req,res) => {
   const user = req.user;
   DashboardIndex(user.accountId,(isValid,data) => {
     if(isValid){
-      res.render('dashboard/index',{data: data});
+      res.render('dashboard/index',{data: data,active: 1});
     } else {
       res.redirect('/logout');
     }
@@ -38,7 +38,7 @@ router.get('/dashboard/mining',indexMiddleware.isLoggedIn,(req,res) => {
           Number(req.query.page.trim()) > 0 && Number(req.query.page.trim()) <= dif ? Number(req.query.page.trim()) : 1;
   DashboardMinings(user.accountId,0,page,(isValid,data) => {
     if(isValid){
-      res.render('dashboard/minings',{data: data});
+      res.render('dashboard/minings',{data: data,active: 2});
     } else {
       res.redirect('/logout');
     }
@@ -51,7 +51,7 @@ router.get('/dashboard/referralcodes',indexMiddleware.isLoggedIn,(req,res) => {
           Number(req.query.page.trim()) > 0 && Number(req.query.page.trim()) <= dif ? Number(req.query.page.trim()) : 1;
   DashboardReferralCodes(user.accountId,0,page,(isValid,data) => {
     if(isValid){
-      res.render('dashboard/referralCodes',{data: data});
+      res.render('dashboard/referralCodes',{data: data,active: 3});
     } else {
       res.redirect('/logout');
     }
@@ -63,7 +63,7 @@ router.get('/dashboard/referralcodes/:id',indexMiddleware.isLoggedIn,(req,res) =
   const user = req.user;
   DashboardReferralCode(user.accountId,req.params.id,(isValid,data) => {
     if(isValid){
-      res.render('dashboard/referralCode',{data: data});
+      res.render('dashboard/referralCode',{data: data,active: 3});
     } else {
       res.redirect('/dashboard/referralcodes');
     }
@@ -96,7 +96,7 @@ router.get('/dashboard/mining/upgrade',indexMiddleware.isLoggedIn,(req,res) => {
               ranking: rankingResult,
               currentRankLevel: accoungRank.rankLevel
             }
-            res.render('dashboard/upgrades',{data: data});
+            res.render('dashboard/upgrades',{data: data,active: 2});
           } else {
             res.redirect('/dashboard');
           }
@@ -118,7 +118,7 @@ router.get('/dashboard/mining/upgrade/:id',indexMiddleware.isLoggedIn,(req,res) 
           if(account.miningPower.rankLevel >= rank.rankLevel){
             res.redirect('/dashboard/mining/upgrade');
           } else {
-            res.render('dashboard/buyUpgradeRank',{rank: rank});
+            res.render('dashboard/buyUpgradeRank',{rank: rank,active: 2});
           }
         } else {
           res.redirect('/dashboard/mining/upgrade');
@@ -168,7 +168,7 @@ router.post('/dashboard/mining/upgrade/:id',indexMiddleware.isLoggedIn,(req,res)
                         data.title = 'Internal Error happens';
                         data.body = 'Sorry for inconvenience but seems their is error happens';
                       }
-                      res.render('dashboard/message',{data: data});
+                      res.render('dashboard/message',{data: data,active: 2});
                     });
                   } else {
                     res.redirect('/dashboard/mining/upgrade')
@@ -219,7 +219,7 @@ router.get('/dashboard/order/upgrade',indexMiddleware.isLoggedIn,(req,res) => {
                   // save the purchase details
                   purchase.save(err => {
                     if(!err){
-                      res.render('dashboard/payUpgradeRank',{rank: rank,id: id,token: token});
+                      res.render('dashboard/payUpgradeRank',{rank: rank,id: id,token: token,active: 2});
                     } else {
                       res.redirect('/dashboard/mining');
                     }
@@ -249,7 +249,7 @@ router.get('/dashboard/network',indexMiddleware.isLoggedIn,(req,res) => {
   const user = req.user;
   DashboardNetwork(user.accountId,(isValid,data) => {
     if(isValid){ 
-      res.render('dashboard/network',{data: data,isSearch : false});
+      res.render('dashboard/network',{data: data,isSearch : false,active: 4});
     } else {
       res.redirect('/logout');
     } 
@@ -257,7 +257,7 @@ router.get('/dashboard/network',indexMiddleware.isLoggedIn,(req,res) => {
 });
 
 router.get('/dashboard/network/buyreferral',indexMiddleware.isLoggedIn,(req,res) => {
-  res.render('dashboard/buyReferral');
+  res.render('dashboard/buyReferral',{active: 4});
 });
 
 router.post('/dashboard/network/buyreferral',indexMiddleware.isLoggedIn,(req,res) => {
@@ -296,7 +296,7 @@ router.post('/dashboard/network/buyreferral',indexMiddleware.isLoggedIn,(req,res
                 data.title = 'Internal Error happens';
                 data.body = 'Sorry for inconvenience but seems their is error happens';
               }
-              res.render('dashboard/message',{data: data});
+              res.render('dashboard/message',{data: data,active: 4});
             });
           } else {
             res.redirect('/dashboard/network/buyreferral');
@@ -335,7 +335,7 @@ router.get('/dashboard/order/buyreferral',indexMiddleware.isLoggedIn,(req,res) =
                 id: id,
                 token: token
               };
-              res.render('dashboard/payReferral',{data: data});
+              res.render('dashboard/payReferral',{data: data,active: 4});
             }
           } else {
             res.redirect('/dashboard/network/buyreferral');
@@ -355,7 +355,7 @@ router.get('/dashboard/network/:id',indexMiddleware.isLoggedIn,(req,res) => {
   const user = req.user;
   DashboardNetworkAccount(user.accountId,req.params.id,(isValid,data) => {
     if(isValid){ 
-      res.render('dashboard/network',{data: data,isSearch: true});
+      res.render('dashboard/network',{data: data,isSearch: true,active: 4});
     } else {
       res.redirect('/logout');
     }
@@ -365,7 +365,7 @@ router.get('/dashboard/network/:id',indexMiddleware.isLoggedIn,(req,res) => {
 router.get('/dashboard/setting',indexMiddleware.isLoggedIn,(req,res) => {
   // assign user to session user and create referral link
   const user = req.user;
-  res.render('dashboard/siteSetting',{user: user,host: process.env.HOST,type: 'member'});
+  res.render('dashboard/siteSetting',{active: 5});
 });
 
 module.exports = router;
