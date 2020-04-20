@@ -12,6 +12,7 @@ const DashboardNetwork = require('../lib/code/dashboard/network');
 const DashboardNetworkAccount = require('../lib/code/dashboard/networkAccount');
 const Purchase = require('../models/purchase');
 const helper = require('../lib/helpers');
+const BuyInAccount = require('../models/buyCodeInAccount');
 
 const router = express.Router();
 
@@ -155,7 +156,7 @@ router.post('/dashboard/mining/upgrade/:id',indexMiddleware.isLoggedIn,(req,res)
                     // get the last purchase id and construct data send to email
                     const lastId = savePurchase.upgradeRank[savePurchase.upgradeRank.length - 1]._id;
                     const email = account.memberId.email;
-                    const link = process.env.HOST + '/order/upgrade?token=' + account._id + '&id=' + lastId;
+                    const link = process.env.HOST + '/dashboard/order/upgrade?token=' + account._id + '&id=' + lastId;
                     const message = 'Thank you for trusting XERRANCE and upgrading your account. Please follow this link ' + link + ' to continue your transaction.';
                     helper.sendMail(email,'Upgrade Rank Verification',message,(err) => {
                       const data = {
@@ -188,7 +189,7 @@ router.post('/dashboard/mining/upgrade/:id',indexMiddleware.isLoggedIn,(req,res)
   });
 });
 
-router.get('/order/upgrade',indexMiddleware.isLoggedIn,(req,res) => {
+router.get('/dashboard/order/upgrade',indexMiddleware.isLoggedIn,(req,res) => {
   // validate request params
   const token = typeof(req.query.token) == 'string' ? req.query.token.trim() : false;
   const id = typeof(req.query.id) == 'string' ? req.query.id.trim() : false;
@@ -251,8 +252,102 @@ router.get('/dashboard/network',indexMiddleware.isLoggedIn,(req,res) => {
       res.render('dashboard/network',{data: data,isSearch : false});
     } else {
       res.redirect('/logout');
-    }
+    } 
   });
+});
+
+router.get('/dashboard/network/buyreferral',indexMiddleware.isLoggedIn,(req,res) => {
+  res.render('dashboard/buyReferral');
+});
+
+router.post('/dashboard/network/buyreferral',indexMiddleware.isLoggedIn,(req,res) => {
+  // get the account
+  // validate and check quantity payload
+  let quantity;
+  if(typeof(req.body.quantity) == 'string'){
+    quantity = Number(req.body.quantity);
+    quantity = Number.isInteger(quantity) ? quantity : false;
+  }
+
+  if(quantity){
+    Account.findById(req.user.accountId,(err,account) => {
+      if(!err && account){
+        const buyData = {
+          accountId: account._id,
+          quantity: quantity,
+          usdPrice: 70,
+          discountPercent: 0,
+          totalUsdPrice: 70 * quantity,
+          referralCodes: []
+        };
+        BuyInAccount.create(buyData,(err,buyResult) => {
+          if(!err && buyResult){
+            // construct data send to email
+            const email = req.user.email;
+            const link = process.env.HOST + '/dashboard/order/buyreferral?token=' + account._id + '&id=' + buyResult._id;
+            const message = 'Thank you for trusting XERRANCE and buying Referral Code. Please follow this link ' + link + ' to continue your transaction.';
+            helper.sendMail(email,'Buy Referral Code',message,(err) => {
+              const data = {
+                header: 'Buy Referral Code',
+                title: ' We\'ve got your order!',
+                body: 'Your order has been placed. We send a message to your email to continue your payment.'
+              };
+              if(err){
+                data.title = 'Internal Error happens';
+                data.body = 'Sorry for inconvenience but seems their is error happens';
+              }
+              res.render('dashboard/message',{data: data});
+            });
+          } else {
+            res.redirect('/dashboard/network/buyreferral');
+          }
+        })
+      } else {
+        res.redirect('/logout');
+      }
+    });
+  } else {
+    res.redirect('/dashboard/network/buyreferral');
+  }
+});
+
+router.get('/dashboard/order/buyreferral',indexMiddleware.isLoggedIn,(req,res) => {
+  // check and validate query string
+  const token = typeof(req.query.token) == 'string' ? req.query.token.trim() : false;
+  const id = typeof(req.query.id) == 'string' ? req.query.id.trim() : false;
+
+  if(token && id){
+    // check token id or account id if valid
+    Account.findById(token,(err,account) => {
+      if(!err && account){
+        // check id or buy id if valid
+        BuyInAccount.findById(id,(err,buyData) => {
+          if(!err && buyData){
+            // check if this buy details already paid
+            if(buyData.isPaymentSuccess){
+              res.redirect('/dashboard/network/buyreferral');
+            } else {
+              const data = {
+                totalPriceStr: helper.formatDecimalToString(buyData.totalUsdPrice),
+                priceStr: helper.formatDecimalToString(buyData.usdPrice),
+                totalPrice: buyData.totalUsdPrice,
+                quantity: buyData.quantity,
+                id: id,
+                token: token
+              };
+              res.render('dashboard/payReferral',{data: data});
+            }
+          } else {
+            res.redirect('/dashboard/network/buyreferral');
+          }
+        });
+      } else {
+        res.redirect('/dashboard/network');
+      }
+    });
+  } else {
+    res.redirect('/dashboard/network/buyreferral');
+  }
 });
 
 router.get('/dashboard/network/:id',indexMiddleware.isLoggedIn,(req,res) => {

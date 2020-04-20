@@ -5,6 +5,8 @@ const UpgradeHist = require('../models/upgradeHistory');
 const MiningEngine = require('../models/miningEngine');
 const helper = require('../lib/helpers');
 const Ranking = require('../models/ranking');
+const BuyInAccoount = require('../models/buyCodeInAccount');
+const GeneratedReferralCode = require('../models/generatedReferralCode');
 
 const router = express.Router();
 
@@ -19,7 +21,7 @@ router.get("/purchase/payment/unconfirm",(req,res) => {
 // get all paymeny success callback
 router.get("/purchase/payment/success",(req,res) => {
   // check if token string is valid for security purpose
-  if(typeof(req.query.token) === 'string' && req.query.token.trim() === process.env.CALLBACK_TOKEN){
+  if(typeof(req.query.token) === 'string' && req.query.token.trim() === process.env.CALLBACK_TOKEN && typeof(req.query.addr) == 'string'){
     // if token is valid then check the transaction data
     helper.getBTCTransaction(req.query.addr,(err,data) => {
       if(!err){
@@ -148,6 +150,71 @@ router.get("/purchase/payment/success",(req,res) => {
                     res.redirect('/dashboard/mining');
                   }
                 });
+              } else if(arrTypes[1].trim() == 'refAccount'){
+                // purchase upgrade rank mining
+                // find the account who purchase the rank
+                const purchaseId = arrTrans[1];
+                const accountId = arrToken[1];
+
+                // check if the account exist
+                Account.findById(accountId,(err,account) => {
+                  if(!err && account){
+                    // fing the buy referral transaction
+                    BuyInAccoount.findById(purchaseId,(err,buyData) => {
+                      if(!err && buyData){
+                        // check if transaction already payed
+                        if(!buyData.isPaymentSuccess){
+                          // generate referral codes
+                          createReferralCodes(buyData._id,account._id,buyData.quantity).then(data => {
+                            // check if generated referral codes is equal to count
+                            // save and update buydata
+                            buyData.isPaymentSuccess = true;
+                            buyData.paymentDateSuccess = Date.now();
+                            buyData.transactionAddress = req.query.addr;
+                            buyData.referralCodes.push(...data);
+                            buyData.save(err => {
+                              if(err){
+                                console.log('Error when updating buy data information');
+                              }
+                            });
+                            // get the purchase details of the  account
+                            Purchase.findById(account.purchaseId,(err,purchase) => {
+                              if(!err && purchase){
+                                purchase.referralCodes.push(buyData._id);
+                                // save and update purchase details
+                                purchase.save(err => {
+                                  if(err){
+                                    // error when updating purchase details
+                                    console.log('Error when updating purchase');
+                                  } else {
+                                    // successfully payed
+                                    res.redirect('/dashboard/referralcodes');
+                                  }
+                                });
+                              } else {
+                                // error when finding the purchase data of the account
+                                console.log('No purchase record found in the account');
+                                res.redirect('/dashboard/network');
+                              }
+                            });
+                          });
+                        } else {
+                          // transaction data already payed
+                          console.log('Transaction data already payed');
+                          res.redirect('/dashboard/network');
+                        }
+                      } else {
+                        // cannot find the transaction data
+                        console.log('Canoot find the transaction data');
+                        res.redirect('/dashboard/network');
+                      }
+                    });
+                  } else {
+                    // cannot find the token account
+                    console.log('Cannot find the token account');
+                    res.redirect('/dashboard/network');
+                  }
+                });
               }
               else {
                 // invalid transaction type
@@ -181,5 +248,20 @@ router.get("/purchase/payment/success",(req,res) => {
     res.redirect('/dashboard');
   }
 });
+
+async function createReferralCodes(buyId,ownerId,count){
+  let referralCodes = [];
+  for(let i=0; i < count; i++){
+    try{
+      const referralCode = await GeneratedReferralCode.create({buyId: buyId,ownerAccountId: ownerId});
+      if(referralCodes){
+        referralCodes.push(referralCode._id);
+      }
+    } catch(err){
+      console.log(err);
+    }
+  }
+  return referralCodes;
+}
 
 module.exports = router;

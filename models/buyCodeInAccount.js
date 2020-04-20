@@ -19,7 +19,13 @@ const buyCodeInAccount = new mongoose.Schema({
   dateCreated: {
     type: Date,
     default: Date.now
-  }
+  },
+  referralCodes:[
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'generatedReferralCode'
+    }
+  ]
 });
 
 module.exports = mongoose.model('buyCodeInAccount',buyCodeInAccount);

@@ -70,12 +70,12 @@ async function createBuyCodeInAccountPromise(buyId,accountId,count){
 }
 
 router.get('/test',(req,res) => {
-  const data = {
-    header: 'Upgrade Rank',
-    title: ' We\'ve got your order!',
-    body: 'Your order has been placed. We send a message to your email to continue your payment.'
-  };
-  res.render('dashboard/message',{data: data});
+  // const data = {
+  //   header: 'Upgrade Rank',
+  //   title: ' We\'ve got your order!',
+  //   body: 'Your order has been placed. We send a message to your email to continue your payment.'
+  // };
+  res.render('dashboard/payReferral');
 });
 
 router.get('/test/buycode',(req,res) => {
@@ -84,7 +84,7 @@ router.get('/test/buycode',(req,res) => {
 
   Account.findById(id,(err,account) => {
     if(!err && account){
-      BuyCodeInAccount.create({accountId: id,quantity: count,totalUsdPrice: 0}).then(buyData => {
+      BuyCodeInAccount.create({accountId: id,quantity: count,totalUsdPrice: 0,referralCodes: []}).then(buyData => {
         Purchase.findById(account.purchaseId,(err,purchase) => {
           if(!err && purchase){
             purchase.referralCodes.push(buyData._id);
@@ -104,8 +104,15 @@ router.get('/test/buycode',(req,res) => {
                 accountReferralResult.referralCodes.push(r[i]);
                 accountReferralResult.unUsedReferralCodes.push(r[i]);
                 accountReferralResult.unAssignCodes.push(r[i]);
+                buyData.referralCodes.push(r[i]);
               }
               
+              // save and update buyInAccount data
+              buyData.save(err => {
+                if(err){
+                  console.log('Error when saving buy in account data');
+                }
+              });
               // update and save accountReferralCodes
               accountReferralResult.save(err => {
                 // update accountSummary

@@ -1,0 +1,106 @@
+<%- include('../partials/header') %>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Buy Referral Codes</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">        
+            <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/dashboard/network">Network</a></li>
+            <li class="breadcrumb-item active">Buy Referral</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <section class="content">
+    <section class="content">
+      <!-- Default box -->
+      <div class="card card-solid">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-sm-6">
+              <h3 class="d-inline-block d-sm-none">Xerrance Referral Codes</h3>
+              <div class="col-12">
+                <img src="dist/img/xerrance_qr.jpg" class="product-image" alt="Product Image">
+              </div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <form method="POST" action="/dashboard/network/buyreferral">
+                <h3 class="my-3">Xerrance Referral Codes</h3>
+                <p>Get free Bitmain Antminer S17 with Hashrate 56 th/s, 2520 Power and earn <br> $ 0.59 a day</p>
+                <hr>
+                <h3>Price</h3>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <input id="price" class="form-control form-control-lg" type="number" value="70.00" disabled>
+                </div>
+                <h3 class="mt-3">Quantity</h3>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <input id="quantity" class="form-control form-control-lg" type="number" placeholder="1" name="quantity" onkeypress="return isNumberKey(event)" oninput="totals()">
+                </div>
+                <div class="bg-gray py-2 px-3 mt-4">
+                  <h1 id="totals" class="mb-0">$ 70.00</h1>
+                  <h4 class="mt-0">
+                    <small>Ex Tax: $0.00 </small>
+                  </h4>
+                </div>
+                <div class="mt-4">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-cart-plus fa-lg mr-2"></i> 
+                    Order Now
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+    </section>
+    <!-- /.card-body -->
+  </section>
+</div>
+<!-- /.content-wrapper -->
+<%- include('../partials/footer') %>
+<script>
+  function total(){
+    var a = document.getElementById("price").value;
+    var b = parseInt(document.getElementById("quantity").value);
+    var c = a * b;
+    document.getElementById("totals").innerHTML = "$ " + c + ".00";
+  }
+
+  function totals()
+  {
+    var a = document.getElementById("price").value;
+    var b = parseInt(document.getElementById("quantity").value);
+    if(b <= 0 || document.getElementById("quantity").value == "")
+    {
+      document.getElementById("quantity").value = "";
+      document.getElementById("totals").innerHTML = "$ 70.00";
+      return;
+    }
+    var c = a * b;
+    document.getElementById("totals").innerHTML = "$ " + c.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  }
+  function isNumberKey(evt)
+  {
+    
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+    {
+       return false;
+    }
+    return true;
+  }
+
+</script>
