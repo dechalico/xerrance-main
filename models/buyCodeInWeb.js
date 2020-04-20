@@ -8,6 +8,12 @@ const buyCodeInWeb = new mongoose.Schema({
   totalUsdPrice: Number,
   isEmailConfirmed: Boolean,
   dateEmailConfirmed: Date,
+  isPaymentSuccess:{
+    type: Boolean,
+    default: false
+  },
+  paymentDateSuccess: Date,
+  transactionAddress: String,
   dateCreated: {
     type: Date,
     default : Date.now

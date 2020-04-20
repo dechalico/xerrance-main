@@ -4,8 +4,74 @@ const passport = require('passport');
 const register = require('../lib/code/register');
 const verifyMember = require('../lib/code/verifyMember');
 const Member = require('../models/member');
+const BuyCodeInWeb = require('../models/buyCodeInWeb');
+const helper =require('../lib/helpers');
 
 const router = express.Router();
+
+router.get('/buyreferralcode',(req,res) => {
+  res.render('buyReferral');
+});
+
+router.post('/buyreferralcode',(req,res) => {
+  const email = typeof(req.body.email) == 'string' && req.body.email.trim().length > 5 ? req.body.email.trim() : false;
+  if(email){
+    const data = {
+      email: email,
+      usdPrice: 70,
+      discountPercent: 0,
+      totalUsdPrice: 70,
+      isEmailConfirmed: false,
+    };
+    BuyCodeInWeb.create(data,(err,buyData) => {
+      if(!err && buyData){
+        const link = process.env.HOST + '/order/buyreferral?token=' + buyData._id;
+        const message = 'Thank you for buying referral code. Please follow this link ' + link + ' to continue your transaction';
+        helper.sendMail(email,'Buy Referral Code',message,(err) => {
+          const data = {
+            head: 'Email Confirmation',
+            title: 'Hello there,  We\'ve got your Order!',
+            body: 'Thank you for your purchase order of Xerrance Referral Code. Please check your inbox for a confirmation email. Click the link in the email to confirm and proceed to the payment.'
+          };
+          res.render('orderNotification',{data: data});
+        });
+      } else {
+        res.redirect('/buyreferralcode');
+      }
+    });
+  }else {
+    res.redirect('/buyreferralcode');
+  }
+});
+
+router.get('/order/buyreferral',(req,res) => {
+  const token = typeof(req.query.token) == 'string' ? req.query.token.trim() : false;
+  if(token){
+    // check if token is valid
+    BuyCodeInWeb.findById(token,(err,buyData) => {
+      if(!err && buyData){
+        const data = {
+          totalPrice: buyData.totalUsdPrice,
+          email: buyData.email,
+          id: buyData._id
+        };
+        buyData.isEmailConfirmed = true;
+        buyData.dateEmailConfirmed = Date.now();
+        buyData.save(err => {
+          if(err){
+            res.redirect('/buyreferralcode');
+          } else {
+            res.render('payReferral',{data: data});
+          }
+        });
+      } else {
+        res.redirect('/buyreferralcode');
+      }
+    });
+  } else {
+    res.redirect('/buyreferralcode');
+  }
+});
 
 router.get('/',(req,res) => {
   res.render('index',{host: process.env.HOST});

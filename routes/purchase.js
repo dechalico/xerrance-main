@@ -8,6 +8,7 @@ const Ranking = require('../models/ranking');
 const BuyInAccoount = require('../models/buyCodeInAccount');
 const GeneratedReferralCode = require('../models/generatedReferralCode');
 const AccountReferralCodes = require('../models/accountReferralCode');
+const BuyInWeb = require('../models/buyCodeInWeb');
 
 const router = express.Router();
 
@@ -43,8 +44,58 @@ router.get("/purchase/payment/success",(req,res) => {
               // valid extra data
               // check what kind of payment transaction
               if(arrTypes[1].trim() === 'head'){
-                // buy one referral code type
-
+                // buy one referral code directly in web
+                const purchaseId = arrTrans[1];
+                // find the transaction
+                BuyInWeb.findById(purchaseId,(err,buyData) => {
+                  if(!err && buyData){
+                    // update buy data details
+                    // check if payment already successfull
+                    if(!buyData.isPaymentSuccess){
+                      buyData.isPaymentSuccess = true;
+                      buyData.paymentDateSuccess = Date.now();
+                      buyData.transactionAddress = req.query.addr;
+                      buyData.save(err => {
+                        if(err){
+                          // when error when updating buydata
+                          console.log('Error when updating buy data');
+                          res.redirect('buyreferralcode');
+                        } else {
+                          // generate Referra Code
+                          const data = {
+                            buyId: buyData._id,
+                            email: buyData.email,
+                          };
+                          GeneratedReferralCode.create(data,(err,referralCode) => {
+                            if(!err && referralCode){
+                              const message = 'Thank you for buying referral code. You referral code is: ' + referralCode._id;
+                              helper.sendMail(buyData.email,'Referral Code',message,() => {
+                                const data = {
+                                  head: 'Referral Code Send',
+                                  title: 'Hello there,  We\'ve send you a message!',
+                                  body: 'Thank you for your purchase order of Xerrance Referral Code. Please check your inbox to know your referral code. Click the link in the email to confirm and proceed to the payment.'
+                                };
+                                res.redirect('orderNotification',{data: data});
+                              });
+                            } else {
+                              // when error when updating buydata
+                              console.log('Error when creating referral code');
+                              res.redirect('buyreferralcode');
+                            }
+                          });
+                        }
+                      });
+                    } else {
+                      // payment already successfull
+                      console.log('Paymeny already successfull');
+                      res.redirect('buyreferralcode');
+                    }
+                  } else {
+                    // transaction not found
+                    console.log('Transaction not found');
+                    res.redirect('/buyreferralcode');
+                  }
+                });
               } 
               else if(arrTypes[1].trim() === 'rank'){
                 // purchase upgrade rank mining
