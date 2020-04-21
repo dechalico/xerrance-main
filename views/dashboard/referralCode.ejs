@@ -54,15 +54,15 @@
                   <dd>Not been use</dd>
                 <% } %>  
               </dl>
-              <% if(data.isPending) { %>
+              <% if(!data.isUsed) { %>
                 <div class="row">
                   <div class="col-md-3">
                     <form method="POST" action="/dashboard/referralcodes/<%- data.id %> ">
                       <div class="form-group">
                         <label>Assign Leg</label>
                         <select class="form-control" name="leg">
-                          <option>Left Leg</option>
-                          <option>Right Leg</option>
+                          <option <%- data.status == 'Left Leg' ? 'selected' : '' %>>Left Leg</option>
+                          <option <%- data.status == 'Right Leg' ? 'selected' : '' %>>Right Leg</option>
                         </select>
                       </div>
                       <button type="submit" class="btn btn-primary">Assign Leg</button>

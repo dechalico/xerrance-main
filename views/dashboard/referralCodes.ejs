@@ -44,12 +44,12 @@
 										<% let day = dateCreated.getDate().toString(); %>
 										<% day = day.length > 1 ? day : '0' + day; %> 
 										<tr>
-											<td><%- month + "/" + day + "/" + dateCreated.getFullYear() %></td>
-											<td><%- codes._id %></td>
+											<td class="<%- codes.isDirectReferral ? 'text-danger' : '' %>"> <%- month + "/" + day + "/" + dateCreated.getFullYear() %></td>
+											<td class="<%- codes.isDirectReferral ? 'text-danger' : '' %>"><%- codes._id %></td>
 											<td>
 												<input type="checkbox" disabled <%- codes.isUsed ? 'checked' : '' %>>
 											</td>
-											<td><%- codes.leg || 'Not Assigned' %> </td>
+											<td class="<%- codes.isDirectReferral ? 'text-danger' : '' %>"><%- codes.leg || 'Not Assigned' %> </td>
 											<td><a href="/dashboard/referralcodes/<%- codes._id %> ">View</a></td>
 										</tr>
 									<% } %>
