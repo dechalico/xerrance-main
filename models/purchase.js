@@ -14,10 +14,6 @@ const purchase = new mongoose.Schema({
       price: Number,
       rankName: String,
       dateOrder: Date,
-      isValidated: {
-        type: Boolean,
-        default: false
-      },
       isPaymentSuccess: {
         type: Boolean,
         default: false

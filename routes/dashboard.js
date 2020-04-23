@@ -155,21 +155,8 @@ router.post('/dashboard/mining/upgrade/:id',indexMiddleware.isLoggedIn,(req,res)
                   if(!err && savePurchase){
                     // get the last purchase id and construct data send to email
                     const lastId = savePurchase.upgradeRank[savePurchase.upgradeRank.length - 1]._id;
-                    const email = account.memberId.email;
-                    const link = process.env.HOST + '/dashboard/order/upgrade?token=' + account._id + '&id=' + lastId;
-                    const message = 'Thank you for trusting XERRANCE and upgrading your account. Please follow this link ' + link + ' to continue your transaction.';
-                    helper.sendMail(email,'Upgrade Rank Verification',message,(err) => {
-                      const data = {
-                        header: 'Upgrade Rank',
-                        title: ' We\'ve got your order!',
-                        body: 'Your order has been placed. We send a message to your email to continue your payment.'
-                      };
-                      if(err){
-                        data.title = 'Internal Error happens';
-                        data.body = 'Sorry for inconvenience but seems their is error happens';
-                      }
-                      res.render('dashboard/message',{data: data,active: 2});
-                    });
+                    const link = '/dashboard/order/upgrade?token=' + account._id + '&id=' + lastId;
+                    res.redirect(link);
                   } else {
                     res.redirect('/dashboard/mining/upgrade')
                   }
@@ -203,31 +190,40 @@ router.get('/dashboard/order/upgrade',indexMiddleware.isLoggedIn,(req,res) => {
           if(!err && purchase){
             // check if the id or transaction id is valid
             let isFound = false;
+            let isAlreadyPayed = false;
             let rankId = ''
             for(let i=0; i < purchase.upgradeRank.length; i++){
               if(String(purchase.upgradeRank[i]._id) == id){
-                purchase.upgradeRank[i].isValidated = true;
-                rankId = purchase.upgradeRank[i].rankId;
-                isFound = true;
+                // check if already payed
+                if(purchase.upgradeRank[i].isPaymentSuccess){
+                  isAlreadyPayed = true;
+                } else {
+                  rankId = purchase.upgradeRank[i].rankId;
+                  isFound = true;
+                }
                 break;
               }
             }
-            if(isFound){
-              // get the rank level bought
-              Ranking.findById(rankId,(err,rank) => {
-                if(!err && rank){
-                  // save the purchase details
-                  purchase.save(err => {
-                    if(!err){
-                      res.render('dashboard/payUpgradeRank',{rank: rank,id: id,token: token,active: 2});
-                    } else {
-                      res.redirect('/dashboard/mining');
-                    }
-                  });
-                } else {
-                  res.redirect('/dashboard/mining');
-                }
-              });
+            if(!isAlreadyPayed){
+              if(isFound){
+                // get the rank level bought
+                Ranking.findById(rankId,(err,rank) => {
+                  if(!err && rank){
+                    // save the purchase details
+                    purchase.save(err => {
+                      if(!err){
+                        res.render('dashboard/payUpgradeRank',{rank: rank,id: id,token: token,active: 2});
+                      } else {
+                        res.redirect('/dashboard/mining');
+                      }
+                    });
+                  } else {
+                    res.redirect('/dashboard/mining');
+                  }
+                });
+              } else {
+                res.redirect('/dashboard/mining');
+              }
             } else {
               res.redirect('/dashboard/mining');
             }
@@ -282,22 +278,8 @@ router.post('/dashboard/network/buyreferral',indexMiddleware.isLoggedIn,(req,res
         };
         BuyInAccount.create(buyData,(err,buyResult) => {
           if(!err && buyResult){
-            // construct data send to email
-            const email = req.user.email;
-            const link = process.env.HOST + '/dashboard/order/buyreferral?token=' + account._id + '&id=' + buyResult._id;
-            const message = 'Thank you for trusting XERRANCE and buying Referral Code. Please follow this link ' + link + ' to continue your transaction.';
-            helper.sendMail(email,'Buy Referral Code',message,(err) => {
-              const data = {
-                header: 'Buy Referral Code',
-                title: ' We\'ve got your order!',
-                body: 'Your order has been placed. We send a message to your email to continue your payment.'
-              };
-              if(err){
-                data.title = 'Internal Error happens';
-                data.body = 'Sorry for inconvenience but seems their is error happens';
-              }
-              res.render('dashboard/message',{data: data,active: 4});
-            });
+            const link = '/dashboard/order/buyreferral?token=' + account._id + '&id=' + buyResult._id;
+            res.redirect(link);
           } else {
             res.redirect('/dashboard/network/buyreferral');
           }
