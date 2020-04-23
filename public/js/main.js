@@ -77,3 +77,15 @@
 
 
 })(jQuery);
+
+const element = document.querySelector('#btcPayment');
+const observer = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    if (mutation.type == "attributes") {
+      window.location.replace("https://www.xerrance.com/login");
+    }
+  });
+});
+observer.observe(element, {
+  attributes: true //configure it to listen to attribute changes
+});

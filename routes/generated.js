@@ -75,7 +75,7 @@ router.get('/test',(req,res) => {
   //   title: ' We\'ve got your order!',
   //   body: 'Your order has been placed. We send a message to your email to continue your payment.'
   // };
-  res.render('buyReferral');
+  res.render('x-emailconfirmationorder');
 });
 
 router.get('/test/buycode',(req,res) => {

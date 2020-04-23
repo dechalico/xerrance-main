@@ -19983,6 +19983,19 @@ html.maximized-card {
   justify-content: center;
 }
 
+.login-page-test,
+.register-page-test{
+  -ms-flex-align: center;
+  align-items: center;
+  background: #f4f6f9;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
 .login-box,
 .register-box {
   width: 360px;

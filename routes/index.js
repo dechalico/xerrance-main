@@ -6,11 +6,119 @@ const verifyMember = require('../lib/code/verifyMember');
 const Member = require('../models/member');
 const BuyCodeInWeb = require('../models/buyCodeInWeb');
 const helper =require('../lib/helpers');
+const ForgotPassword = require('../models/forgotPasswordRequest');
 
 const router = express.Router();
 
 router.get('/buyreferralcode',(req,res) => {
   res.render('buyReferral');
+});
+
+router.get('/terms',(req,res) => {
+  res.render('terms');
+});
+
+router.get('/faq',(req,res) => {
+  res.render('faq');
+});
+
+router.get('/forgot-password',(req,res) => {
+  res.render('forgotPassword');
+});
+
+router.post('/forgot-password',(req,res) => {
+  const email = typeof(req.body.email) == 'string' ? req.body.email.trim() : false;
+  if(email){
+    // try to find email
+    Member.find({email: email},(err,member) => {
+      if(!err && member && member.length > 0){
+        ForgotPassword.create({email: email},(err,forgotPassword) => {
+          if(!err && forgotPassword){
+            const link = process.env.HOST + "/account-recovery?token=" + forgotPassword._id;
+            helper.sendMail(email,"Account Recovery","Please visit this link " + link + " to change your password",(err) => {
+              const data = {
+                message: 'We send an email in your inbox to continue recover your account',
+                title: 'Recover Account'
+              }
+              res.render('message',{data: data});
+            });
+          } else {
+            res.render('forgotPassword',{isEmailValid: false,message: 'Internal error happen, request again later'});
+          }
+        });
+      } else {
+        res.render('forgotPassword',{isEmailValid: false,message: 'Specified email not found on the server'});
+      }
+    });
+  } else {
+    res.redirect('/forgot-password');
+  }
+});
+
+router.get('/account-recovery',(req,res) => {
+  const token = typeof(req.query.token) == 'string' ? req.query.token.trim() : false;
+  const data = {
+    message: 'The link you requested is already expired',
+    title: 'Session Expired'
+  };
+
+  if(token){
+    ForgotPassword.findById(token,(err,forgotPassword) => {
+      if(!err && forgotPassword && !forgotPassword.isRecoverSuccessfull){
+        res.render('recoverAccount',{token: token});
+      } else {
+        res.render('message',{data: data});
+      }
+    });
+  } else {
+    res.render('message',{data: data});
+  }
+});
+
+router.post('/account-recovery',(req,res) => {
+  // validate fields
+  const password = typeof(req.body.password) == 'string' && typeof(req.body.password2) == 'string' &&
+    req.body.password.trim() == req.body.password2.trim() && req.body.password.trim().length > 7 ? req.body.password.trim() : false;
+  const token = req.body.token;
+  if(password){
+    // check if the token is valid
+    ForgotPassword.findById(token,(err,forgotPassword) => {
+      if(!err && forgotPassword && !forgotPassword.isRecoverSuccessfull){
+        // find the mmeber by username. passport local api
+        Member.findByUsername(forgotPassword.email,(err,member) => {
+          if(!err && member){
+            // change the password
+            member.setPassword(password,() => {
+              // save and update the member
+              member.save();
+              // save and update the forgot password details
+              forgotPassword.isRecoverSuccessfull = true;
+              forgotPassword.save(err => {
+                if(err){
+                  console.log('Error when updating forgotPassword data');
+                }
+              });
+              const data = {
+                message: 'Account Successfully Recovered.',
+                title: 'Recover Account'
+              };
+              res.render('message',{data: data});
+            });
+          } else {
+            res.render('recoverAccount',{email: email});
+          }
+        });
+      } else {
+        const data = {
+          message: 'The link you requested is already expired',
+          title: 'Session Expired'
+        };
+        res.render('message',{data: data});
+      }
+    });
+  } else {
+    res.render('recoverAccount',{message: 'Possible error: Password did not match, Password must be at least 8 characters',token: token});
+  }
 });
 
 router.post('/buyreferralcode',(req,res) => {

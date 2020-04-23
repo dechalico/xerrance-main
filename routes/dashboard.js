@@ -368,4 +368,8 @@ router.get('/dashboard/setting',indexMiddleware.isLoggedIn,(req,res) => {
   res.render('dashboard/siteSetting',{active: 5});
 });
 
+router.get('/dashboard/*',(req,res) => {
+  res.render('dashboard/notfound');
+});
+
 module.exports = router;

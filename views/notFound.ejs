@@ -1,172 +1,90 @@
-<!doctype html>
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
 <html lang="en">
-  <head>
-    <title>Xerrance</title>
-    <!-- Required meta tags -->
-		<meta charset="utf-8">
-		<base href="<%- host %>">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- carousel CSS -->
-    <link rel="stylesheet" href="cryptian/assets/css/owl.carousel.min.css">
-    <!--header icon CSS -->
-    <link rel="icon" href="images/icons/favicon.ico">
-    <!-- animations CSS -->
-    <link rel="stylesheet" href="cryptian/assets/css/animate.min.css">
-    <!-- font-awsome CSS -->
-    <link rel="stylesheet" href="cryptian/assets/css/font-awesome.min.css">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="cryptian/assets/css/bootstrap.min.css">
-    <!-- mobile menu CSS -->
-    <link rel="stylesheet" href="cryptian/assets/css/slicknav.min.css">
-    <!--css animation-->
-    <link rel="stylesheet" href="cryptian/assets/css/animation.css">
-    <!--css animation-->
-    <link rel="stylesheet" href="cryptian/assets/css/material-design-iconic-font.min.css">
-    <!-- style CSS -->
-    <link rel="stylesheet" href="cryptian/style.css">
-    <!-- responsive CSS -->
-    <link rel="stylesheet" href="cryptian/assets/css/responsive.css">
-  </head>
-  <body>
-    <!--header area start-->
-    <div class="header-area wow fadeInDown header-absolate" id="nav" data-0="position:fixed;" data-top-top="position:fixed;top:0;" data-edge-strategy="set">
-      <div class="container">
-        <div class="row">
-          <div class="col-4 d-block d-lg-none">
-            <div class="mobile-menu"></div>
-          </div>
-          <div class="col-4 col-lg-2 ">
-            <div class="logo-area">
-              <a href="#"><img src="assets/img/logo-top.png" alt=""></a>
-            </div>
-          </div>
-          <div class="col-4 col-lg-8 d-none d-lg-block">
-            <div class="main-menu text-center">
-              <nav>
-                <ul id="slick-nav">
-                    
-                </ul>
-              </nav>
-            </div>
-          </div>
-          <div class="col-4 col-lg-2 text-right">
-            <a href="/login" class="logibtn gradient-btn">login</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--header area end-->
-    
-    <!--welcome area start-->
-    <div class="welcome-area v2 wow fadeInUp" id="home">
-      <div id="particles-js"></div>
-      <div class="container">
-        <div class="row">
-          <div class="row justify-content-md-center">
-            <div class="col-md-8 col-lg-5">
-              <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Page not found.</h3>
-              <p>
-                We could not find the page you were looking for.
-                Meanwhile, you may <a href="/">return to home page</a> or try using the search form.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--welcome area end-->
-      
-      <!--footer area start-->
-      <div class="footera-area wow fadeInDown">
-        <div class="container">
-          <div class="row">
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="single-footer">
-                <div class="logo-area footer">
-                  <a href="#"><img src="assets/img/logo-top.png" alt=""></a>
-                </div>
-                <div class="space-20"></div>
-                <p>Xerrance Digital Mining Firm</p>
-                <div class="space-10"></div>
-                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | Developed</i> by <a href="https://xerrance.com" target="_blank">Team Xerrance</a>
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                </p>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-2">
-              <div class="single-footer">
-                <ul>
-                    
-                </ul>
-              </div>
-            </div>
-            <div class="col-6 col-lg-2">
-              <div class="single-footer">
-                <ul>
-                    
-                </ul>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="single-footer">
-                <p>Subscribe to our Newsletter</p>
-                <div class="space-20"></div>
-                <div class="footer-form v2">
-                  <form action="#">
-                    <input type="email" placeholder="Email Address">
-                    <a href="" class="gradient-btn subscribe">GO</a>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--footer area end-->
-    </div>
-    <!--community area end-->
-    <script>
-		console.log();
-		const lib = {
-			days: document.getElementById('days'),
-			hours: document.getElementById('hours'),
-			minutes: document.getElementById('minutes'),
-			seconds: document.getElementById('seconds'),
-			dateEnd: new Date(2020,4,16)
-		};
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-		lib.countdown = () => {
-			setInterval(() => {
-				const countdownDate = (lib.dateEnd - new Date());
-				const todayDate = new Date();
-				lib.days.innerText = parseInt((lib.dateEnd - todayDate) / (1000 * 60 * 60 * 24));
-				lib.hours.innerText = parseInt(Math.abs(lib.dateEnd - todayDate) / (1000 * 60 * 60) % 24);
-				lib.minutes.innerText = parseInt(Math.abs(lib.dateEnd.getTime() - todayDate.getTime()) / (1000 * 60) % 60);
-				lib.seconds.innerText = parseInt(Math.abs(lib.dateEnd.getTime() - todayDate.getTime()) / (1000) % 60); 
-			},1000);
-		};
-		
-		lib.countdown();
-	</script>
-    <!-- jquery 2.2.4 js-->
-    <script src="cryptian/assets/js/jquery-2.2.4.min.js"></script>
-    <!-- popper js-->
-    <!-- <script src="cryptian/assets/js/popper.js"></script> -->
-    <!-- carousel js-->
-    <script src="cryptian/assets/js/owl.carousel.min.js"></script>
-    <!-- wow js-->
-    <script src="cryptian/assets/js/wow.min.js"></script>
-    <!-- bootstrap js-->
-    <!-- <script src="cryptian/assets/js/bootstrap.min.js"></script> -->
-    <!--skroller js-->
-    <!-- <script src="cryptian/assets/js/skrollr.min.js"></script> -->
-    <!--mobile menu js-->
-    <script src="cryptian/assets/js/jquery.slicknav.min.js"></script>
-    <!--particle s-->
-    <script src="cryptian/assets/js/particles.min.js"></script>
-    <!-- main js-->
-    <script src="cryptian/assets/js/main.js"></script>
+  <title>Xerrance | 404 Page Not Found</title>
+  <base href="<%- host %>">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition layout-top-nav">
+<div class="wrapper" >
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white" style="background-color: #343a40;">
+    <div class="container">
+      <a href="/" class="navbar-brand" style="color: white;">
+        <img src="dist/img/xerrance.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+             style="opacity: .8">
+        <span class="brand-text font-weight-light">Xerrance Digital Mining</span>
+      </a>
+    </div>
+  </nav>
+  <!-- /.navbar -->
 
-  </body>
+   <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Page Not Found<small></small></h1>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="error-page">
+        <h2 class="headline text-warning"> 404</h2>
+        <div class="error-content">
+          <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Page not found.</h3>
+          <p>
+            We could not find the page you were looking for.
+            Meanwhile, you may <a href="/">return to Home</a>.
+          </p>
+  
+        </div>
+        <!-- /.error-content -->
+      </div>
+      <!-- /.error-page -->
+   </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="float-right d-none d-sm-inline">
+      <strong>Version</strong> 1.0.0
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2020 <a href="https://xerrance.com">Team Xerrance</a>.</strong> All rights reserved.
+  </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+</body>
 </html>
