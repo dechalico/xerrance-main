@@ -18,6 +18,7 @@ const purchase = new mongoose.Schema({
         type: Boolean,
         default: false
       },
+      addr: String,
       datePayed: Date
     }
   ]

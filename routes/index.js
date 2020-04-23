@@ -157,7 +157,8 @@ router.get('/order/buyreferral',(req,res) => {
   if(token){
     // check if token is valid
     BuyCodeInWeb.findById(token,(err,buyData) => {
-      if(!err && buyData){
+      // check if their is data and check if the transaction is already payed
+      if(!err && buyData && !buyData.isPaymentSuccess){
         const data = {
           totalPrice: buyData.totalUsdPrice,
           email: buyData.email,

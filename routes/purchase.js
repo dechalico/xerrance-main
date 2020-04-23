@@ -122,6 +122,7 @@ router.get("/purchase/payment/success",(req,res) => {
                             } else {
                               purchase.upgradeRank[i].isPaymentSuccess = true;
                               purchase.upgradeRank[i].datePayed = Date.now();
+                              purchase.upgradeRank[i].addr = req.query.addr;
                               rankId = purchase.upgradeRank[i].rankId;
                               isFound = true;
                             }
