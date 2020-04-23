@@ -25,6 +25,7 @@ router.get("/purchase/payment/success",(req,res) => {
   // check if token string is valid for security purpose
   if(typeof(req.query.token) === 'string' && req.query.token.trim() === process.env.CALLBACK_TOKEN && typeof(req.query.addr) == 'string'){
     // if token is valid then check the transaction data
+    console.log(req.query + " All the requset query params data");
     helper.getBTCTransaction(req.query.addr,(err,data) => {
       if(!err){
         // if thier is no error in getting transaction data and status == 2 means successfully paid
