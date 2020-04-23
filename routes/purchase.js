@@ -25,10 +25,10 @@ router.get("/purchase/payment/success",(req,res) => {
   // check if token string is valid for security purpose
   if(typeof(req.query.token) === 'string' && req.query.token.trim() === process.env.CALLBACK_TOKEN && typeof(req.query.addr) == 'string'){
     // if token is valid then check the transaction data
-    console.log(req.query + " All the requset query params data");
     helper.getBTCTransaction(req.query.addr,(err,data) => {
       if(!err){
         // if thier is no error in getting transaction data and status == 2 means successfully paid
+        const amount = data.value;
         if(data.status === 2) {
           // check if their is extra data value
           const extraData = typeof(data.data.extradata) === 'string' ? data.data.extradata.trim() : false;
@@ -49,7 +49,8 @@ router.get("/purchase/payment/success",(req,res) => {
                 const purchaseId = arrTrans[1];
                 // find the transaction
                 BuyInWeb.findById(purchaseId,(err,buyData) => {
-                  if(!err && buyData){
+                  // check if their is transaction and check the amount payed
+                  if(!err && buyData && buyData.totalUsdPrice <= amount){
                     // update buy data details
                     // check if payment already successfull
                     if(!buyData.isPaymentSuccess){
@@ -107,89 +108,103 @@ router.get("/purchase/payment/success",(req,res) => {
                   if(!err && account){
                     // get the account purchase details
                     Purchase.findById(account.purchaseId,(err,purchase) => {
-                      if(!err && purchase){
+                      // check if their is transaction and check the amount payed
+                      if(!err && purchase && purchase.price <= amount){
                         // check if the id or transaction id is valid
                         let isFound = false;
+                        let isTransactionAlreadyPayed = false;
                         let rankId = ''
                         for(let i=0; i < purchase.upgradeRank.length; i++){
                           if(String(purchase.upgradeRank[i]._id) == purchaseId){
-                            purchase.upgradeRank[i].isPaymentSuccess = true;
-                            purchase.upgradeRank[i].datePayed = Date.now();
-                            rankId = purchase.upgradeRank[i].rankId;
-                            isFound = true;
+                            // check if the transaction already payed
+                            if(purchase.isPaymentSuccess){
+                              isTransactionAlreadyPayed = true;
+                            } else {
+                              purchase.upgradeRank[i].isPaymentSuccess = true;
+                              purchase.upgradeRank[i].datePayed = Date.now();
+                              rankId = purchase.upgradeRank[i].rankId;
+                              isFound = true;
+                            }
                             break;
                           }
                         }
-                        // if the transaction id is valid
-                        if(isFound){
-                          // get the rank level bought
-                          Ranking.findById(rankId,(err,rank) => {
-                            if(!err && rank){
-                              // save the purchase details
-                              purchase.save(err => {
-                                if(!err){
-                                  // find the mining engine of the account
-                                  MiningEngine.findById(account.miningEngineId,(err,miningEngine) => {
-                                    if(!err && miningEngine){
-                                      // upgrade history data
-                                      const upgradeHistData = {
-                                        dateUpgraded: Date.now(),
-                                        prevRank: account.miningPower,
-                                        upgradedRank: rank._id
-                                      }
-                                      // save and update the account
-                                      account.miningPower = rank._id;
-                                      account.save(err => {
-                                        if(err){
-                                          // Error when updating account
-                                          console.log('Error when updating account');
-                                          res.redirect('/dashboard/mining');
-                                        } else {
-                                          // create upgrade history to account
-                                          UpgradeHist.create(upgradeHistData,(err,data) => {
-                                            if(!err && data){
-                                              // save and update mining engine of the account
-                                              miningEngine.upgradeHistory.push(data._id);
-                                              miningEngine.save(err => {
-                                                if(err){
-                                                  // Error when updating mining engine
-                                                  console.log('Error when updating mining engine');
-                                                  res.redirect('/dashboard/mining');
-                                                  res.end();
-                                                } else{
-                                                  res.redirect('/dashboard/mining');
-                                                }
-                                              });
-                                            } else {
-                                              // Error when creating upgrade rank history in the account
-                                              console.log('Error when creating upgrade rank history in the account');
-                                              res.redirect('/dashboard/mining');
-                                            }
-                                          });
-                                        }
-                                      });
-                                    } else {
-                                      // Can\'t find mining engine of the account
-                                      console.log('Can\'t find mining engine of the account');
-                                      res.redirect('/dashboard/mining');
-                                    }
-                                  });
-                                } else {
-                                  // Error when updating the purchase transaction
-                                  console.log('Error when updating the purchase transaction');
-                                  res.redirect('/dashboard/mining');
-                                }
-                              });
-                            } else {
-                              // Cannot find rank bought
-                              console.log('Cannot find rank bought');
-                              res.redirect('/dashboard/mining');
-                            }
-                          });
-                        } else {
-                          // Transaction not found in upgrade ranking
-                          console.log('Transaction not found in upgrade ranking');
+                        // if thransaction already payed
+                        if(isTransactionAlreadyPayed){
+                          // transaction already payed
                           res.redirect('/dashboard/mining');
+                          res.end();
+                        } else {
+                          // if the transaction id is valid
+                          if(isFound){
+                            // get the rank level bought
+                            Ranking.findById(rankId,(err,rank) => {
+                              if(!err && rank){
+                                // save the purchase details
+                                purchase.save(err => {
+                                  if(!err){
+                                    // find the mining engine of the account
+                                    MiningEngine.findById(account.miningEngineId,(err,miningEngine) => {
+                                      if(!err && miningEngine){
+                                        // upgrade history data
+                                        const upgradeHistData = {
+                                          dateUpgraded: Date.now(),
+                                          prevRank: account.miningPower,
+                                          upgradedRank: rank._id
+                                        }
+                                        // save and update the account
+                                        account.miningPower = rank._id;
+                                        account.save(err => {
+                                          if(err){
+                                            // Error when updating account
+                                            console.log('Error when updating account');
+                                            res.redirect('/dashboard/mining');
+                                          } else {
+                                            // create upgrade history to account
+                                            UpgradeHist.create(upgradeHistData,(err,data) => {
+                                              if(!err && data){
+                                                // save and update mining engine of the account
+                                                miningEngine.upgradeHistory.push(data._id);
+                                                miningEngine.save(err => {
+                                                  if(err){
+                                                    // Error when updating mining engine
+                                                    console.log('Error when updating mining engine');
+                                                    res.redirect('/dashboard/mining');
+                                                    res.end();
+                                                  } else{
+                                                    res.redirect('/dashboard/mining');
+                                                  }
+                                                });
+                                              } else {
+                                                // Error when creating upgrade rank history in the account
+                                                console.log('Error when creating upgrade rank history in the account');
+                                                res.redirect('/dashboard/mining');
+                                              }
+                                            });
+                                          }
+                                        });
+                                      } else {
+                                        // Can\'t find mining engine of the account
+                                        console.log('Can\'t find mining engine of the account');
+                                        res.redirect('/dashboard/mining');
+                                      }
+                                    });
+                                  } else {
+                                    // Error when updating the purchase transaction
+                                    console.log('Error when updating the purchase transaction');
+                                    res.redirect('/dashboard/mining');
+                                  }
+                                });
+                              } else {
+                                // Cannot find rank bought
+                                console.log('Cannot find rank bought');
+                                res.redirect('/dashboard/mining');
+                              }
+                            });
+                          } else {
+                            // Transaction not found in upgrade ranking
+                            console.log('Transaction not found in upgrade ranking');
+                            res.redirect('/dashboard/mining');
+                          }
                         }
                       } else {
                         // Purchase transaction not found
@@ -214,7 +229,8 @@ router.get("/purchase/payment/success",(req,res) => {
                   if(!err && account){
                     // fing the buy referral transaction
                     BuyInAccoount.findById(purchaseId,(err,buyData) => {
-                      if(!err && buyData){
+                      // check if their is data and check the amount payed
+                      if(!err && buyData && buyData.totalUsdPrice <= amount){
                         // check if transaction already payed
                         if(!buyData.isPaymentSuccess){
                           // generate referral codes
