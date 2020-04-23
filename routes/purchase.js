@@ -109,13 +109,14 @@ router.get("/purchase/payment/success",(req,res) => {
                     // get the account purchase details
                     Purchase.findById(account.purchaseId,(err,purchase) => {
                       // check if their is transaction and check the amount payed
-                      if(!err && purchase && purchase.price <= amount){
+                      if(!err && purchase){
                         // check if the id or transaction id is valid
                         let isFound = false;
                         let isTransactionAlreadyPayed = false;
                         let rankId = ''
                         for(let i=0; i < purchase.upgradeRank.length; i++){
-                          if(String(purchase.upgradeRank[i]._id) == purchaseId){
+                          // check the amount payed
+                          if(String(purchase.upgradeRank[i]._id) == purchaseId && purchase.upgradeRank[i].price <= amount){
                             // check if the transaction already payed
                             if(purchase.isPaymentSuccess){
                               isTransactionAlreadyPayed = true;
