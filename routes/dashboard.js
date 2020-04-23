@@ -21,7 +21,7 @@ router.get('/dashboard/home',indexMiddleware.isLoggedIn,(req,res) => {
   const user = req.user;
   DashboardIndex(user.accountId,(isValid,data) => {
     if(isValid){
-      res.render('dashboard/index',{data: data,active: 1});
+      res.render('dashboard/index',{data: data,active: 1,title: 'Xerrance | Dashboard'});
     } else {
       res.redirect('/logout');
     }
@@ -38,7 +38,7 @@ router.get('/dashboard/mining',indexMiddleware.isLoggedIn,(req,res) => {
           Number(req.query.page.trim()) > 0 && Number(req.query.page.trim()) <= dif ? Number(req.query.page.trim()) : 1;
   DashboardMinings(user.accountId,0,page,(isValid,data) => {
     if(isValid){
-      res.render('dashboard/minings',{data: data,active: 2});
+      res.render('dashboard/minings',{data: data,active: 2,title: 'Xerrance | Mining'});
     } else {
       res.redirect('/logout');
     }
@@ -51,7 +51,7 @@ router.get('/dashboard/referralcodes',indexMiddleware.isLoggedIn,(req,res) => {
           Number(req.query.page.trim()) > 0 && Number(req.query.page.trim()) <= dif ? Number(req.query.page.trim()) : 1;
   DashboardReferralCodes(user.accountId,0,page,(isValid,data) => {
     if(isValid){
-      res.render('dashboard/referralCodes',{data: data,active: 3});
+      res.render('dashboard/referralCodes',{data: data,active: 3,title: 'Xerrance | Referral Codes'});
     } else {
       res.redirect('/logout');
     }
@@ -63,7 +63,7 @@ router.get('/dashboard/referralcodes/:id',indexMiddleware.isLoggedIn,(req,res) =
   const user = req.user;
   DashboardReferralCode(user.accountId,req.params.id,(isValid,data) => {
     if(isValid){
-      res.render('dashboard/referralCode',{data: data,active: 3});
+      res.render('dashboard/referralCode',{data: data,active: 3,title: 'Xerrance | Referral Codes'});
     } else {
       res.redirect('/dashboard/referralcodes');
     }
@@ -96,7 +96,7 @@ router.get('/dashboard/mining/upgrade',indexMiddleware.isLoggedIn,(req,res) => {
               ranking: rankingResult,
               currentRankLevel: accoungRank.rankLevel
             }
-            res.render('dashboard/upgrades',{data: data,active: 2});
+            res.render('dashboard/upgrades',{data: data,active: 2,title: 'Xerrance | Upgrade Mining'});
           } else {
             res.redirect('/dashboard');
           }
@@ -118,7 +118,7 @@ router.get('/dashboard/mining/upgrade/:id',indexMiddleware.isLoggedIn,(req,res) 
           if(account.miningPower.rankLevel >= rank.rankLevel){
             res.redirect('/dashboard/mining/upgrade');
           } else {
-            res.render('dashboard/buyUpgradeRank',{rank: rank,active: 2});
+            res.render('dashboard/buyUpgradeRank',{rank: rank,active: 2,title: 'Xerrance | Upgrade Mining'});
           }
         } else {
           res.redirect('/dashboard/mining/upgrade');
@@ -212,7 +212,7 @@ router.get('/dashboard/order/upgrade',indexMiddleware.isLoggedIn,(req,res) => {
                     // save the purchase details
                     purchase.save(err => {
                       if(!err){
-                        res.render('dashboard/payUpgradeRank',{rank: rank,id: id,token: token,active: 2});
+                        res.render('dashboard/payUpgradeRank',{rank: rank,id: id,token: token,active: 2,title: 'Xerrance | Order Upgrade'});
                       } else {
                         res.redirect('/dashboard/mining');
                       }
@@ -245,7 +245,7 @@ router.get('/dashboard/network',indexMiddleware.isLoggedIn,(req,res) => {
   const user = req.user;
   DashboardNetwork(user.accountId,(isValid,data) => {
     if(isValid){ 
-      res.render('dashboard/network',{data: data,isSearch : false,active: 4});
+      res.render('dashboard/network',{data: data,isSearch : false,active: 4,title: 'Xerrance | Network'});
     } else {
       res.redirect('/logout');
     } 
@@ -253,7 +253,7 @@ router.get('/dashboard/network',indexMiddleware.isLoggedIn,(req,res) => {
 });
 
 router.get('/dashboard/network/buyreferral',indexMiddleware.isLoggedIn,(req,res) => {
-  res.render('dashboard/buyReferral',{active: 4});
+  res.render('dashboard/buyReferral',{active: 4,title: 'Xerrance | Network - Buy Referral Code'});
 });
 
 router.post('/dashboard/network/buyreferral',indexMiddleware.isLoggedIn,(req,res) => {
@@ -317,7 +317,7 @@ router.get('/dashboard/order/buyreferral',indexMiddleware.isLoggedIn,(req,res) =
                 id: id,
                 token: token
               };
-              res.render('dashboard/payReferral',{data: data,active: 4});
+              res.render('dashboard/payReferral',{data: data,active: 4,title: 'Xerrance | Network - Pay Referral Code'});
             }
           } else {
             res.redirect('/dashboard/network/buyreferral');
@@ -337,7 +337,7 @@ router.get('/dashboard/network/:id',indexMiddleware.isLoggedIn,(req,res) => {
   const user = req.user;
   DashboardNetworkAccount(user.accountId,req.params.id,(isValid,data) => {
     if(isValid){ 
-      res.render('dashboard/network',{data: data,isSearch: true,active: 4});
+      res.render('dashboard/network',{data: data,isSearch: true,active: 4,title: 'Xerrance | Network'});
     } else {
       res.redirect('/logout');
     }
@@ -347,11 +347,11 @@ router.get('/dashboard/network/:id',indexMiddleware.isLoggedIn,(req,res) => {
 router.get('/dashboard/setting',indexMiddleware.isLoggedIn,(req,res) => {
   // assign user to session user and create referral link
   const user = req.user;
-  res.render('dashboard/siteSetting',{active: 5});
+  res.render('dashboard/siteSetting',{active: 5,title: 'Xerrance | Settings'});
 });
 
 router.get('/dashboard/*',(req,res) => {
-  res.render('dashboard/notfound');
+  res.render('dashboard/notfound',{title: 'Xerrance | Page Not Found'});
 });
 
 module.exports = router;

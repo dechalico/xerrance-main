@@ -1,115 +1,57 @@
-<!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-
-  <title>Xerrance | Buy Referral Code</title>
-  <base href="<%- _host %>">
-  <link rel="icon" href="images/icons/favicon.ico">
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/adminlte.css">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-</head>
-<body class="hold-transition layout-top-nav">
-<div class="wrapper" >
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white" style="background-color: #343a40;">
+<%- include('partials/index-header') %>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
     <div class="container">
-      <a href="/" class="navbar-brand" style="color: white;">
-        <img src="dist/img/xerrance.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-             style="opacity: .8">
-        <span class="brand-text font-weight-light">Xerrance Digital Mining</span>
-      </a>
-    </div>
-  </nav>
-  <!-- /.navbar -->
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Buy Referral Code<small></small></h1>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <div class="content">
-      <div class="container login-page-test">
-        <div class="card card-solid">
-          <div class="card-body">   
-            <div class="row">
-              <div class="col-12 col-sm-6">
-                <h3 class="d-inline-block d-sm-none">Xerrance Referral Code</h3>
-                  <img src="dist/img/xerrance_qr.jpg" class="product-image" alt="product-image">
-              </div>
-              <div class="col-12 col-sm-6">
-                <form method="POST" action="/buyreferralcode">
-                  <h3 class="my-3">Xerrance Referral Code</h3>
-                  <p>Get free Bitmain Antminer S17 with Hashrate 56 th/s, 2520 Power and earn <br> $ 0.59 a day</p>
-                  <hr>
-                  <h3 class="mt-3">Enter Email Address</h3>
-                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <input id="email" class="form-control form-control-lg" type="email" name="email" required placeholder="Email">
-                    <div class="input-group-text">
-                        <span class="fas fa-envelope"></span>
-                      </div>
-                  </div>
-
-                  <div class="bg-gray py-2 px-3 mt-4">
-                    <h1 id="totals" class="mb-0">$ 70.00</h1>
-                    <h4 class="mt-0">
-                      <small>Ex Tax: $0.00 </small>
-                    </h4>
-                    </div>
-                  <div class="mt-4">
-                    <button type="submit" class="btn btn-primary">
-                      <i class="fas fa-cart-plus fa-lg mr-2"></i> 
-                      Order Now
-                    </button>
-                  </div>
-                </form>
-                </div>
-              </div>
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Buy Referral Code<small></small></h1>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+  <!-- Main content -->
+  <div class="content">
+    <div class="container login-page-test">
+      <div class="card card-solid">
+        <div class="card-body">   
+          <div class="row">
+            <div class="col-12 col-sm-6">
+              <h3 class="d-inline-block d-sm-none">Xerrance Referral Code</h3>
+              <img src="dist/img/xerrance_qr.jpg" class="product-image" alt="product-image">
             </div>
-       </div>
-      </div>
+            <div class="col-12 col-sm-6">
+              <form method="POST" action="/buyreferralcode">
+                <h3 class="my-3">Xerrance Referral Code</h3>
+                <p>Get free Bitmain Antminer S17 with Hashrate 56 th/s, 2520 Power and earn <br> $ 0.59 a day</p>
+                <hr>
+                <h3 class="mt-3">Enter Email Address</h3>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <input id="email" class="form-control form-control-lg" type="email" name="email" required placeholder="Email">
+                  <div class="input-group-text">
+                    <span class="fas fa-envelope"></span>
+                  </div>
+                </div>
+                <div class="bg-gray py-2 px-3 mt-4">
+                  <h1 id="totals" class="mb-0">$ 70.00</h1>
+                  <h4 class="mt-0">
+                    <small>Ex Tax: $0.00 </small>
+                  </h4>
+                </div>
+                <div class="mt-4">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-cart-plus fa-lg mr-2"></i> 
+                    Order Now
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+     </div>
     </div>
   </div>
-
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
-    <div class="float-right d-none d-sm-inline">
-      <strong>Version</strong> 1.0.0
-    </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2020 <a href="/">Team Xerrance</a>.</strong> All rights reserved.
-  </footer>
 </div>
-<!-- ./wrapper -->
-
-<!-- REQUIRED SCRIPTS -->
-
-<!-- jQuery -->
-<script src="plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
-</body>
-</html>
+<%- include('partials/index-footer') %>

@@ -11,19 +11,19 @@ const ForgotPassword = require('../models/forgotPasswordRequest');
 const router = express.Router();
 
 router.get('/buyreferralcode',(req,res) => {
-  res.render('buyReferral');
+  res.render('buyReferral',{title: 'Xerrance | Buy Referral Code'});
 });
 
 router.get('/terms',(req,res) => {
-  res.render('terms');
+  res.render('terms',{title: 'Xerrance | Terms and Condition'});
 });
 
 router.get('/faq',(req,res) => {
-  res.render('faq');
+  res.render('faq',{title: 'Xerrance | FAQ'});
 });
 
 router.get('/forgot-password',(req,res) => {
-  res.render('forgotPassword');
+  res.render('forgotPassword',{title: 'Xerrance | Forgot Password'});
 });
 
 router.post('/forgot-password',(req,res) => {
@@ -40,14 +40,14 @@ router.post('/forgot-password',(req,res) => {
                 message: 'We send an email in your inbox to continue recover your account',
                 title: 'Recover Account'
               }
-              res.render('message',{data: data});
+              res.render('message',{data: data,title: 'Xerrance | Recover Account Notification'});
             });
           } else {
-            res.render('forgotPassword',{isEmailValid: false,message: 'Internal error happen, request again later'});
+            res.render('forgotPassword',{isEmailValid: false,message: 'Internal error happen, request again later',title: 'Xerrance | Forgot Password'});
           }
         });
       } else {
-        res.render('forgotPassword',{isEmailValid: false,message: 'Specified email not found on the server'});
+        res.render('forgotPassword',{isEmailValid: false,message: 'Specified email not found on the server',title: 'Xerrance | Forgot Password'});
       }
     });
   } else {
@@ -65,13 +65,13 @@ router.get('/account-recovery',(req,res) => {
   if(token){
     ForgotPassword.findById(token,(err,forgotPassword) => {
       if(!err && forgotPassword && !forgotPassword.isRecoverSuccessfull){
-        res.render('recoverAccount',{token: token});
+        res.render('recoverAccount',{token: token,title: 'Xerrance | Recover Account'});
       } else {
-        res.render('message',{data: data});
+        res.render('message',{data: data,title: 'Xerrance | Recover Account Notification'});
       }
     });
   } else {
-    res.render('message',{data: data});
+    res.render('message',{data: data,title: 'Xerrance | Recover Account Notification'});
   }
 });
 
@@ -102,10 +102,10 @@ router.post('/account-recovery',(req,res) => {
                 message: 'Account Successfully Recovered.',
                 title: 'Recover Account'
               };
-              res.render('message',{data: data});
+              res.render('message',{data: data,title: 'Xerrance | Recover Account Notification'});
             });
           } else {
-            res.render('recoverAccount',{email: email});
+            res.render('recoverAccount',{email: email,title: 'Xerrance | Recover Account'});
           }
         });
       } else {
@@ -113,11 +113,11 @@ router.post('/account-recovery',(req,res) => {
           message: 'The link you requested is already expired',
           title: 'Session Expired'
         };
-        res.render('message',{data: data});
+        res.render('message',{data: data,title: 'Xerrance | Recover Account Notification'});
       }
     });
   } else {
-    res.render('recoverAccount',{message: 'Possible error: Password did not match, Password must be at least 8 characters',token: token});
+    res.render('recoverAccount',{message: 'Possible error: Password did not match, Password must be at least 8 characters',token: token,title: 'Xerrance | Recover Account'});
   }
 });
 
@@ -141,7 +141,7 @@ router.post('/buyreferralcode',(req,res) => {
             title: 'Hello there,  We\'ve got your Order!',
             body: 'Thank you for your purchase order of Xerrance Referral Code. Please check your inbox for a confirmation email. Click the link in the email to confirm and proceed to the payment.'
           };
-          res.render('orderNotification',{data: data});
+          res.render('orderNotification',{data: data,title: 'Xerrance | Buy Referral Code Notification'});
         });
       } else {
         res.redirect('/buyreferralcode');
@@ -170,7 +170,7 @@ router.get('/order/buyreferral',(req,res) => {
           if(err){
             res.redirect('/buyreferralcode');
           } else {
-            res.render('payReferral',{data: data});
+            res.render('payReferral',{data: data,title: 'Xerrance | Referral Code Payment'});
           }
         });
       } else {
@@ -183,14 +183,14 @@ router.get('/order/buyreferral',(req,res) => {
 });
 
 router.get('/',(req,res) => {
-  res.render('index',{host: process.env.HOST});
+  res.render('index');
 });
 
 router.get('/register',(req,res) => {
   if(req.isAuthenticated()){
     res.redirect('/dashboard');
   } else {
-    res.render('register',{host: process.env.HOST});
+    res.render('register',{title: 'Xerrance | Registration'});
   }
 });
 
@@ -226,7 +226,7 @@ router.get('/login',(req,res) => {
     if(req.query.callback && req.query.id){
       data = req.query.callback + "&id=" + req.query.id;
     }
-    res.render('login',{host: process.env.HOST, data: data});
+    res.render('login',{title: 'Xerrance | Login'});
   }
 });
 
@@ -236,15 +236,15 @@ router.post('/login', function(req, res, next) {
     if(!err && member && member.isEmailVerified){
       passport.authenticate('local', function(err, user, info) {
         if (err) {
-          return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.", email: email},host: process.env.HOST});
+          return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.", email: email},title: 'Xerrance | Login'});
         }
         if (!user) {
-          return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
+          return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},title: 'Xerrance | Login'});
         }
         // try to login and set sesssion the account
         req.logIn(user, function(err) {
           if (err) { 
-            return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
+            return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},title: 'Xerrance | Login'});
           }
           if(typeof(req.body.callback) == 'string' && req.body.callback.trim().length > 10){
             res.redirect(req.body.callback.trim());
@@ -254,7 +254,7 @@ router.post('/login', function(req, res, next) {
         });
       })(req, res, next);
     } else {
-      return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},host: process.env.HOST});
+      return res.render('login',{message: {error: "Invalid credentials, or account not verified yet.",email: email},title: 'Xerrance | Login'});
     }
   });
 });

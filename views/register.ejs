@@ -1,197 +1,134 @@
-<!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-
-  <title>Xerrance | Register</title>
-  <base href="<%- _host %>">
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/adminlte.css">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-</head>
-<body class="hold-transition layout-top-nav">
-<div class="wrapper" >
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white" style="background-color: #343a40;">
+<%- include('partials/index-header') %>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
     <div class="container">
-      <a href="/" class="navbar-brand" style="color: white;">
-        <img src="dist/img/xerrance.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-             style="opacity: .8">
-        <span class="brand-text font-weight-light">Xerrance Digital Mining</span>
-      </a>
-    </div>
-  </nav>
-  <!-- /.navbar -->
-
-   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Member Sign up<small></small></h1>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <div class="content  ">
-      <div class="container register-page-test">
-        <div class="register-box">
-          <div class="card">
-            <div class="card-body register-card-body">
-              <p class="login-box-msg">Register a new membership</p>
-        
-              <form action="/register" method="post">
-                <% if(typeof(message) === 'object' && typeof(message.firstname.error) === 'string') { %>
-                  <span class="text-sm text-danger"><%- message.firstname.error %></span>
-                <% } %>  
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="First Name" name="firstname" value="<%- typeof(message) === 'object' ? message.firstname.value : '' %>"">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-user"></span>
-                    </div>
-                  </div>
-                </div>
-                <% if(typeof(message) == 'object' && typeof(message.lastname.error) === 'string') { %>
-                  <span class="text-sm text-danger"><%- message.lastname.error %></span>
-                <% } %>
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="Last Name" name="lastname" value="<%- typeof(message) === 'object' ? message.lastname.value : ''  %>">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-user"></span>
-                    </div>
-                  </div>
-                </div>
-        
-                <% if(typeof(message) == 'object' && typeof(message.address.error) === 'string') { %>
-                  <span class="text-sm text-danger"><%- message.address.error %></span>
-                <% } %>
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="Address" name="address" value="<%- typeof(message) === 'object' ? message.address.value : ''  %>">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-map-marker-alt"></span>
-                    </div>
-                  </div>
-                </div>
-        
-                <% if(typeof(message) == 'object' && typeof(message.referral.error) === 'string') { %>
-                  <span class="text-sm text-danger"><%- message.referral.error %></span>
-                <% } %>
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="Referral Code" name="referral" value="<%- typeof(message) === 'object' ? message.referral.value : ''  %>">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-code"></span>
-                    </div>
-                  </div>
-                </div>
-        
-                <% if(typeof(message) == 'object' && typeof(message.email.error) === 'string') { %>
-                  <span class="text-sm text-danger"><%- message.email.error %></span>
-                <% } %>
-                <div class="input-group mb-3">
-                  <input type="email" class="form-control" placeholder="Email" name="email" value="<%- typeof(message) === 'object' ? message.email.value : ''  %>">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-envelope"></span>
-                    </div>
-                  </div>
-                </div>
-        
-                <% if(typeof(message) == 'object' && typeof(message.password.error) === 'string') { %>
-                  <span class="text-sm text-danger"><%- message.password.error %></span>
-                <% } %>
-                <div class="input-group mb-3">
-                  <input type="password" class="form-control" placeholder="Password" name="password" value="<%- typeof(message) === 'object' ? message.password.value : ''  %>">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-lock"></span>
-                    </div>
-                  </div>
-                </div>
-        
-                <% if(typeof(message) == 'object' && typeof(message.password2.error) === 'string') { %>
-                  <span class="text-sm text-danger"><%- message.password2.error %></span>
-                <% } %>
-                <div class="input-group mb-3">
-                  <input type="password" class="form-control" placeholder="Retype password" name="password2" value="<%- typeof(message) === 'object' ? message.password2.value : ''  %>">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-lock"></span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-8">
-                    <div class="icheck-primary">
-                      <input type="checkbox" id="agreeTerms" name="condition" value="agree">
-                      I agree to the <a href="/terms">Terms of Service, Privacy and Refund Policy</a>
-                    </div>
-                    <% if(typeof(message) == 'object' && typeof(message.condition.error) === 'string') { %>
-                      <span class="text-danger"><%- message.condition.error %></span>
-                    <% } %>
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-4">
-                    <button type="submit" class="btn btn-primary btn-block">Register</button>
-                  </div>
-                  <!-- /.col -->
-                </div>
-              </form>
-              <div class="social-auth-links text-center mb-3">
-                <p>- Be a Leader and build a Network<br>Get a Direct Referral from us.-</p>
-                <a href="/buyreferralcode" class="btn btn-block btn-warning"> Buy Referral Code</a>
-              </div>
-              <!-- /.social-auth-links -->
-              <a href="/login" class="text-center">I already have a membership</a>
-            </div>
-            <!-- /.form-box -->
-          </div><!-- /.card -->
-        </div>
-        <!-- /.login-box -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content -->
-
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Member Sign up<small></small></h1>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
   </div>
-  <!-- /.content-wrapper -->
+  <!-- /.content-header -->
 
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
-    <div class="float-right d-none d-sm-inline">
-      <strong>Version</strong> 1.0.0
-    </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2020 <a href="/">Team Xerrance</a>.</strong> All rights reserved.
-  </footer>
+  <!-- Main content -->
+  <div class="content  ">
+    <div class="container register-page-test">
+      <div class="register-box">
+        <div class="card">
+          <div class="card-body register-card-body">
+            <p class="login-box-msg">Register a new membership</p>
+            <form action="/register" method="post">
+              <% if(typeof(message) === 'object' && typeof(message.firstname.error) === 'string') { %>
+                <span class="text-sm text-danger"><%- message.firstname.error %></span>
+              <% } %>  
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="First Name" name="firstname" value="<%- typeof(message) === 'object' ? message.firstname.value : '' %>"">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                  </div>
+                </div>
+              </div>
+              <% if(typeof(message) == 'object' && typeof(message.lastname.error) === 'string') { %>
+                <span class="text-sm text-danger"><%- message.lastname.error %></span>
+              <% } %>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Last Name" name="lastname" value="<%- typeof(message) === 'object' ? message.lastname.value : ''  %>">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                  </div>
+                </div>
+              </div>
+              <% if(typeof(message) == 'object' && typeof(message.address.error) === 'string') { %>
+                <span class="text-sm text-danger"><%- message.address.error %></span>
+              <% } %>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Address" name="address" value="<%- typeof(message) === 'object' ? message.address.value : ''  %>">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-map-marker-alt"></span>
+                  </div>
+                </div>
+              </div>
+              <% if(typeof(message) == 'object' && typeof(message.referral.error) === 'string') { %>
+                <span class="text-sm text-danger"><%- message.referral.error %></span>
+              <% } %>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Referral Code" name="referral" value="<%- typeof(message) === 'object' ? message.referral.value : ''  %>">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-code"></span>
+                  </div>
+                </div>
+              </div>
+              <% if(typeof(message) == 'object' && typeof(message.email.error) === 'string') { %>
+                <span class="text-sm text-danger"><%- message.email.error %></span>
+              <% } %>
+              <div class="input-group mb-3">
+                <input type="email" class="form-control" placeholder="Email" name="email" value="<%- typeof(message) === 'object' ? message.email.value : ''  %>">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-envelope"></span>
+                  </div>
+                </div>
+              </div>
+              <% if(typeof(message) == 'object' && typeof(message.password.error) === 'string') { %>
+                <span class="text-sm text-danger"><%- message.password.error %></span>
+              <% } %>
+              <div class="input-group mb-3">
+                <input type="password" class="form-control" placeholder="Password" name="password" value="<%- typeof(message) === 'object' ? message.password.value : ''  %>">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                  </div>
+                </div>
+              </div>
+              <% if(typeof(message) == 'object' && typeof(message.password2.error) === 'string') { %>
+                <span class="text-sm text-danger"><%- message.password2.error %></span>
+              <% } %>
+              <div class="input-group mb-3">
+                <input type="password" class="form-control" placeholder="Retype password" name="password2" value="<%- typeof(message) === 'object' ? message.password2.value : ''  %>">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-8">
+                  <div class="icheck-primary">
+                    <input type="checkbox" id="agreeTerms" name="condition" value="agree">
+                    I agree to the <a href="/terms">Terms of Service, Privacy and Refund Policy</a>
+                  </div>
+                  <% if(typeof(message) == 'object' && typeof(message.condition.error) === 'string') { %>
+                    <span class="text-danger"><%- message.condition.error %></span>
+                  <% } %>
+                </div>
+                <!-- /.col -->
+                <div class="col-4">
+                  <button type="submit" class="btn btn-primary btn-block">Register</button>
+                </div>
+                <!-- /.col -->
+              </div>
+            </form>
+            <div class="social-auth-links text-center mb-3">
+              <p>- Be a Leader and build a Network<br>Get a Direct Referral from us.-</p>
+              <a href="/buyreferralcode" class="btn btn-block btn-warning"> Buy Referral Code</a>
+            </div>
+            <!-- /.social-auth-links -->
+            <a href="/login" class="text-center">I already have a membership</a>
+          </div>
+          <!-- /.form-box -->
+        </div><!-- /.card -->
+      </div>
+      <!-- /.login-box -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content -->
 </div>
-<!-- ./wrapper -->
-
-<!-- REQUIRED SCRIPTS -->
-
-<!-- jQuery -->
-<script src="plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
-</body>
-</html>
+<!-- /.content-wrapper -->
+<%- include('partials/index-footer') %>

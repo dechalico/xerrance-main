@@ -1,123 +1,55 @@
-<!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-
-  <title>Xerrance | FAQ</title>
-  <base href="<%- _host %>">
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/adminlte.css">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-</head>
-<body class="hold-transition layout-top-nav">
-<div class="wrapper" >
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white" style="background-color: #343a40;">
+<%- include('partials/index-header') %>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
     <div class="container">
-      <a href="/" class="navbar-brand" style="color: white;">
-        <img src="dist/img/xerrance.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-             style="opacity: .8">
-        <span class="brand-text font-weight-light">Xerrance Digital Mining</span>
-      </a>
-    </div>
-  </nav>
-  <!-- /.navbar -->
-
-   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container">
-        <div class="row mb-2">
-            <h1 class="m-0 text-dark">FAQ's<small></small></h1>
-        </div>   
-            
-            <p><h5>Is this working automatic?</h5>
-              Yes. Everything is working automatic; you don't need to be all time online or have open web browser. You can go to sleep and mining will continue.<br>
-              </p>
-
-            <p><h5>When does mining start?</h5>
-              Cloud Mining Contracts start immediately after payment confirmations.<br>
-              </p>
-
-            <p><h5>How to withdraw funds to the wallet?</h5>
-              Insert your wallet address. Click on Withdraw button and type amount you would like to withdraw. You will see your transaction in Withdrawal Request section with status.<br>
-              </p>
-
-            <p><h5>What are your payment methods?</h5>
-              We accepted only payments with cryptocurrencies Bitcoin<br>
-              </p>
-
-            <p><h5>Where is your mining farm located?</h5>
-              Our Mining Data Centers are located in Cyprus. For security reasons, we do not disclose the exact location of our mining farms.<br>
-              </p>
-            
-            <p><h5>How frequently will I receive my payouts?</h5>
-              Payouts are generated daily, but you will receive your payouts only once they have accumulated to a certain quantity. For example, as to March 2018, the minimum payout for BTC was 0.005 BTC in May 2018 is 0.003 BTC. This minimum payout is set in order to avoid that customers pay excessive fees for receiving small payouts in their wallets.<br>
-              </p>
-
-            <p>How long does the contract last?</h5>
-              124 days. After 124 days You can renew contract.<br>
-              </p>
-            
-            <p><h5>What is Reinvest? How do I use it?</h5>
-              The Reinvest function allows You to buy again hash power with us. You can payout it on Your wallet or You can buy more hash power, account and increase income.<br>
-              </p>
-
-            <p><h5>How does the Referral Program work?</h5>
-              Invite your friends to Xerrance. You can simply increase Your income and give Your friends opportunity to earn money. You will receive affiliate commission every person you invite. Up to 10 referrals only, beyond 10 referrals, this will automatically be added to the persons you invite, depending upon which is the lowest referrals among your invited person.<br>
-              </p>
-
-            <p><h5>Do I have to have an active investment to participate in your Referral Program?</h5>
-              Yes
-              </p>
-
-            <p><h5>How can I promote my referral link?</h5>
-              There are a lot of ways promoting your referral link. You can provide your it to your friends during personal communication, emails, messengers chats, etc. You can also create a banner or text advertising campaigns (of course you should obey the advertising system rules). You can post your links in different kinds of investment-related chats, groups and forums. You can use any other king of promotions, but please remember, that we strictly forbid sending any kind of SPAM content.<br>
-              </p>
-
-            <p><h5>Can I withdraw my mining commission?</h5>
-              Yes. You can withdraw all your balance when you achieve the minimum request.<br>
-              </p>
-
-            <p><h5>How much is the 1st request withdrawal?</h5>
-              $25.00. After the 1st withdrawal, you can withdraw after 30 days.<br>
-              </p>
-
-            <p><h5>What is the maximal investments amount?</h5>
-              At the moment we don't limit the maximal investment amount.<br>
-              </p>
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
-    <div class="float-right d-none d-sm-inline">
-      <strong>Version</strong> 1.0.0
-    </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2020 <a href="/">Team Xerrance</a>.</strong> All rights reserved.
-  </footer>
+      <div class="row mb-2">
+        <h1 class="m-0 text-dark">FAQ's<small></small></h1>
+      </div>   
+      <p><h5>Is this working automatic?</h5>
+        Yes. Everything is working automatic; you don't need to be all time online or have open web browser. You can go to sleep and mining will continue.<br>
+      </p>
+      <p><h5>When does mining start?</h5>
+        Cloud Mining Contracts start immediately after payment confirmations.<br>
+      </p>
+      <p><h5>How to withdraw funds to the wallet?</h5>
+        Insert your wallet address. Click on Withdraw button and type amount you would like to withdraw. You will see your transaction in Withdrawal Request section with status.<br>
+      </p>
+      <p><h5>What are your payment methods?</h5>
+        We accepted only payments with cryptocurrencies Bitcoin<br>
+      </p>
+      <p><h5>Where is your mining farm located?</h5>
+        Our Mining Data Centers are located in Cyprus. For security reasons, we do not disclose the exact location of our mining farms.<br>
+      </p>
+      <p><h5>How frequently will I receive my payouts?</h5>
+        Payouts are generated daily, but you will receive your payouts only once they have accumulated to a certain quantity. For example, as to March 2018, the minimum payout for BTC was 0.005 BTC in May 2018 is 0.003 BTC. This minimum payout is set in order to avoid that customers pay excessive fees for receiving small payouts in their wallets.<br>
+      </p>
+      <p>How long does the contract last?</h5>
+        124 days. After 124 days You can renew contract.<br>
+      </p>
+      <p><h5>What is Reinvest? How do I use it?</h5>
+        The Reinvest function allows You to buy again hash power with us. You can payout it on Your wallet or You can buy more hash power, account and increase income.<br>
+      </p>
+      <p><h5>How does the Referral Program work?</h5>
+        Invite your friends to Xerrance. You can simply increase Your income and give Your friends opportunity to earn money. You will receive affiliate commission every person you invite. Up to 10 referrals only, beyond 10 referrals, this will automatically be added to the persons you invite, depending upon which is the lowest referrals among your invited person.<br>
+      </p>
+      <p><h5>Do I have to have an active investment to participate in your Referral Program?</h5>
+        Yes
+      </p>
+      <p><h5>How can I promote my referral link?</h5>
+        There are a lot of ways promoting your referral link. You can provide your it to your friends during personal communication, emails, messengers chats, etc. You can also create a banner or text advertising campaigns (of course you should obey the advertising system rules). You can post your links in different kinds of investment-related chats, groups and forums. You can use any other king of promotions, but please remember, that we strictly forbid sending any kind of SPAM content.<br>
+      </p>
+      <p><h5>Can I withdraw my mining commission?</h5>
+        Yes. You can withdraw all your balance when you achieve the minimum request.<br>
+      </p>
+      <p><h5>How much is the 1st request withdrawal?</h5>
+        $25.00. After the 1st withdrawal, you can withdraw after 30 days.<br>
+      </p>
+      <p><h5>What is the maximal investments amount?</h5>
+        At the moment we don't limit the maximal investment amount.<br>
+      </p>
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
 </div>
-<!-- ./wrapper -->
-
-<!-- REQUIRED SCRIPTS -->
-
-<!-- jQuery -->
-<script src="plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
-</body>
-</html>
+<%- include('partials/index-footer') %>
